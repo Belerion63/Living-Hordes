@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="fr" data-title-fr="Son - Living Hordes" data-title-en="Sound - Living Hordes">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Son - Living Hordes</title>
+<link rel="stylesheet" href="assets/site.css?v=6">
+<script>
+(function () {
+  var d = document.documentElement, t = null, l = null;
+  try {
+    t = localStorage.getItem("lh-theme");
+    l = localStorage.getItem("lh-lang");
+  } catch (e) {}
+  if (t) d.setAttribute("data-theme", t);
+  if (l !== "fr" && l !== "en") {
+    l = (navigator.language || "en").toLowerCase().indexOf("fr") === 0 ? "fr" : "en";
+  }
+  d.setAttribute("data-sitelang", l);
+  d.setAttribute("lang", l);
+  var tt = d.getAttribute("data-title-" + l);
+  if (tt) document.title = tt;
+})();
+</script>
+</head>
+<body data-page="sound">
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <a class="brand" href="index.html"><b>Living Hordes</b><span>Documentation</span></a>
+    <nav class="sitenav">
+      <a href="simulation.html">Simulation</a>
+      <a href="density.html"><span data-lang="fr">Densit&eacute;</span><span data-lang="en">Density</span></a>
+      <a href="migration.html">Migration</a>
+      <a href="hordes.html">Hordes</a>
+      <a href="sealing.html"><span data-lang="fr">Scellement</span><span data-lang="en">Sealing</span></a>
+      <a href="defense.html"><span data-lang="fr">D&eacute;fense</span><span data-lang="en">Defense</span></a>
+      <a href="sound.html" aria-current="page"><span data-lang="fr">Son</span><span data-lang="en">Sound</span></a>
+      <a href="sandbox.html">Sandbox</a>
+    </nav>
+    <div class="tools">
+      <div class="langtoggle">
+        <button type="button" data-setlang="fr">FR</button>
+        <button type="button" data-setlang="en">EN</button>
+      </div>
+      <button class="motiontoggle" id="motion-toggle" type="button" aria-pressed="false"
+              title="Animations">Anim.</button>
+      <button class="themetoggle" id="theme-toggle" type="button"
+              title="Th&egrave;me / Theme">&#9680;</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <aside class="toc">
+    <div class="toc-sticky">
+      <h2><span data-lang="fr">Sur cette page</span><span data-lang="en">On this page</span></h2>
+      <a href="#entendu"><span data-lang="fr">Ce qui est entendu</span><span data-lang="en">What gets heard</span></a>
+      <a href="#portees"><span data-lang="fr">Deux port&eacute;es</span><span data-lang="en">Two ranges</span></a>
+      <a href="#individus"><span data-lang="fr">Ce que fait un individu</span><span data-lang="en">What an individual does</span></a>
+      <a href="#hordes"><span data-lang="fr">Ce que fait une horde</span><span data-lang="en">What a horde does</span></a>
+      <a href="#memoire"><span data-lang="fr">La m&eacute;moire</span><span data-lang="en">Memory</span></a>
+    </div>
+  </aside>
+
+  <main>
+    <div class="prose pagehead">
+      <p class="eyebrow"><span data-lang="fr">Syst&egrave;mes centraux</span><span data-lang="en">Core systems</span></p>
+      <h1><span data-lang="fr">Son</span><span data-lang="en">Sound</span></h1>
+      <p class="lead" data-lang="fr">Un coup de feu ne r&eacute;veille pas seulement ce qui est visible.
+      Il traverse les trois couches de la simulation, et ce qu'il atteint r&eacute;agit
+      d'autant plus fort qu'il en est proche.</p>
+      <p class="lead" data-lang="en">A gunshot does not only wake what is visible. It travels
+      through all three layers of the simulation, and what it reaches reacts in proportion
+      to how close it is.</p>
+    </div>
+
+    <h2 id="entendu"><span data-lang="fr">Ce qui est entendu, et ce qui ne l'est pas</span><span data-lang="en">What gets heard, and what does not</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Le mod ne r&eacute;agit pas &agrave; tout. Un bruit dont la port&eacute;e est
+      inf&eacute;rieure &agrave; un seuil est purement ignor&eacute; : marcher, ouvrir une
+      porte, frapper &agrave; mains nues ne produit rien du tout. C'est ce premier filtre
+      qui garde le syst&egrave;me silencieux la plupart du temps.</p>
+      <p data-lang="en">The mod does not react to everything. A sound whose range falls below
+      a threshold is simply ignored: walking, opening a door, striking with bare hands
+      produce nothing at all. This first filter is what keeps the system quiet most of the
+      time.</p>
+      <p data-lang="fr">Au-dessus de ce seuil, deux sortes de bruits arrivent. Les sons du monde, coups de
+      feu, alarmes de maison, moteurs, qui apportent leur position, leur port&eacute;e et
+      leur volume. Et les &eacute;v&eacute;nements lointains du jeu, d&eacute;tonations
+      hors champ, cris, chiens, h&eacute;licopt&egrave;re, qui n'arrivent qu'avec un nom et
+      un endroit. Ces derniers re&ccedil;oivent une port&eacute;e et un volume attribu&eacute;s
+      selon leur nature, l'h&eacute;licopt&egrave;re &eacute;tant de tr&egrave;s loin
+      l'&eacute;v&eacute;nement le plus puissant du jeu.</p>
+      <p data-lang="en">Above that threshold, two kinds of sound arrive. World sounds,
+      gunshots, house alarms, engines, which carry their position, their range and their
+      volume. And the game's distant events, off-screen detonations, shouts, dogs, the
+      helicopter, which arrive with nothing but a name and a place. These last receive a
+      range and a volume assigned according to their nature, the helicopter being by far the
+      most powerful event in the game.</p>
+      <p data-lang="fr">Les bruits proches les uns des autres sont regroup&eacute;s. Le groupe retient la
+      position du plus fort et compte combien de bruits l'ont form&eacute;, ce qui sert
+      ensuite &agrave; d&eacute;terminer la dur&eacute;e de la m&eacute;moire.</p>
+      <p data-lang="en">Sounds close to one another are grouped. The group keeps the position
+      of the loudest and counts how many sounds formed it, which then determines how long
+      the memory lasts.</p>
+    </div>
+
+    <h2 id="portees"><span data-lang="fr">Deux port&eacute;es, pas une</span><span data-lang="en">Two ranges, not one</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Un bruit modeste n'atteint que les zombies d&eacute;j&agrave; proches. Il faut
+      d&eacute;passer une seconde port&eacute;e, nettement plus &eacute;lev&eacute;e, pour
+      qu'une horde enti&egrave;re se mette en mouvement.</p>
+      <p data-lang="en">A modest sound reaches only the zombies already nearby. A second,
+      considerably higher range must be exceeded before an entire horde sets off.</p>
+      <p data-lang="fr">La s&eacute;paration existe pour &eacute;viter l'exc&egrave;s. Sans elle,
+      n'importe quel g&eacute;n&eacute;rateur en marche ou n'importe quel mod bruyant
+      d&eacute;placerait la moiti&eacute; du comt&eacute;. Les deux seuils sont
+      li&eacute;s : abaisser le premier abaisse le second dans la m&ecirc;me proportion,
+      donc un seul r&eacute;glage suffit &agrave; rendre le monde plus ou moins
+      r&eacute;actif.</p>
+      <p data-lang="en">The separation exists to avoid excess. Without it, any running
+      generator or any noisy mod would move half the county. The two thresholds are linked:
+      lowering the first lowers the second in the same proportion, so a single setting is
+      enough to make the world more or less reactive.</p>
+    </div>
+
+    <figure>
+      <svg viewBox="0 0 620 300" xmlns="http://www.w3.org/2000/svg" role="img"
+           aria-label="Un bruit au centre, une port&eacute;e proche touchant les individus et une port&eacute;e lointaine touchant les hordes.">
+        <circle cx="310" cy="150" r="130" fill="var(--l2)" fill-opacity="0.10"
+                stroke="var(--l2)" stroke-width="1.5" stroke-dasharray="6 5"/>
+        <circle cx="310" cy="150" r="66" fill="var(--l3)" fill-opacity="0.16"
+                stroke="var(--l3)" stroke-width="1.5"/>
+
+        <g fill="var(--l3)">
+          <circle cx="310" cy="150" r="6"/>
+        </g>
+        <text x="310" y="140" font-size="11" text-anchor="middle" fill="var(--text-dim)"
+              font-family="ui-monospace, monospace" data-lang="fr">le bruit</text>
+        <text x="310" y="140" font-size="11" text-anchor="middle" fill="var(--text-dim)"
+              font-family="ui-monospace, monospace" data-lang="en">the sound</text>
+
+        <g fill="var(--l2)">
+          <circle cx="266" cy="118" r="4"/><circle cx="352" cy="126" r="4"/>
+          <circle cx="286" cy="192" r="4"/><circle cx="346" cy="186" r="4"/>
+        </g>
+
+        <g stroke="var(--l1)" stroke-width="2" fill="var(--l1)" fill-opacity="0.25">
+          <circle cx="196" cy="90" r="22"/>
+          <circle cx="434" cy="206" r="26"/>
+          <circle cx="546" cy="112" r="20"/>
+        </g>
+
+        <text x="310" y="256" font-size="11.5" fill="var(--l3)" text-anchor="middle" data-lang="fr">port&eacute;e proche : les individus</text>
+        <text x="310" y="256" font-size="11.5" fill="var(--l3)" text-anchor="middle" data-lang="en">near range: individuals</text>
+        <text x="310" y="292" font-size="11.5" fill="var(--l2)" text-anchor="middle" data-lang="fr">port&eacute;e lointaine : les hordes</text>
+        <text x="310" y="292" font-size="11.5" fill="var(--l2)" text-anchor="middle" data-lang="en">far range: hordes</text>
+        <text x="546" y="150" font-size="10.5" fill="var(--text-faint)" text-anchor="middle"
+              font-family="ui-monospace, monospace" data-lang="fr">hors de port&eacute;e</text>
+        <text x="546" y="150" font-size="10.5" fill="var(--text-faint)" text-anchor="middle"
+              font-family="ui-monospace, monospace" data-lang="en">out of range</text>
+      </svg>
+      <figcaption data-lang="fr">Les petits points sont des individus, les disques des hordes. Celle de
+      droite est trop loin : elle ne saura jamais que le coup de feu a
+      &eacute;t&eacute; tir&eacute;.</figcaption>
+      <figcaption data-lang="en">The small dots are individuals, the discs are hordes. The one
+      on the right is too far away: it will never know the shot was fired.</figcaption>
+    </figure>
+
+    <h2 id="individus"><span data-lang="fr">Ce que fait un individu</span><span data-lang="en">What an individual does</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Un zombie &agrave; port&eacute;e cesse d'errer et se dirige vers la source. Il ne
+      suit pas le bruit, il <strong>retient l'endroit</strong> : m&ecirc;me si le tir
+      s'arr&ecirc;te, il continue vers l&agrave; o&ugrave; il l'a entendu.</p>
+      <p data-lang="en">A zombie in range stops wandering and heads for the source. It does
+      not follow the sound, it <strong>remembers the place</strong>: even once the firing
+      stops, it keeps going towards where it heard it.</p>
+      <p data-lang="fr">La vitesse de cette poursuite d&eacute;pend du volume, et sa dur&eacute;e d&eacute;pend
+      de l'insistance. Un bruit isol&eacute; occupe environ une minute, un bruit qui se
+      r&eacute;p&egrave;te dans le m&ecirc;me secteur peut en occuper le double.</p>
+      <p data-lang="en">The speed of that pursuit depends on the volume, and its duration on
+      the insistence. A single sound occupies about a minute, a sound repeated in the same
+      area can occupy twice that.</p>
+      <p data-lang="fr">Quand la m&eacute;moire s'&eacute;puise, l'individu ne se fige pas : il repart dans
+      une direction quelconque. Une foule attir&eacute;e par un coup de feu ne reste donc
+      pas plant&eacute;e sur place une fois le souvenir dissip&eacute;, elle se
+      d&eacute;lite.</p>
+      <p data-lang="en">When the memory runs out, the individual does not freeze: it sets off
+      again in an arbitrary direction. A crowd drawn by a gunshot therefore does not stand
+      rooted once the memory has faded, it disperses.</p>
+    </div>
+
+    <h2 id="hordes"><span data-lang="fr">Ce que fait une horde</span><span data-lang="en">What a horde does</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Une horde ne se comporte pas comme un individu, et sa r&eacute;action
+      d&eacute;pend enti&egrave;rement de ce qu'elle &eacute;tait en train de faire.</p>
+      <p data-lang="en">A horde does not behave like an individual, and its reaction depends
+      entirely on what it was doing.</p>
+    </div>
+
+    <figure class="wide-fig">
+      <svg viewBox="0 0 900 250" xmlns="http://www.w3.org/2000/svg" role="img"
+           aria-label="Les trois r&eacute;actions d'une horde selon son &eacute;tat : en migration, en errance, stationnaire.">
+        <defs>
+          <marker id="sarr" viewBox="0 0 10 10" refX="9" refY="5"
+                  markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--l2)"/>
+          </marker>
+          <marker id="sarr3" viewBox="0 0 10 10" refX="9" refY="5"
+                  markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--l3)"/>
+          </marker>
+        </defs>
+        <g font-size="10.5" font-family="ui-monospace, monospace" fill="var(--text-faint)"
+           text-anchor="middle">
+          <text x="150" y="20" data-lang="fr">EN MIGRATION</text>
+          <text x="150" y="20" data-lang="en">MIGRATING</text>
+          <text x="450" y="20" data-lang="fr">EN ERRANCE</text>
+          <text x="450" y="20" data-lang="en">ROAMING</text>
+          <text x="750" y="20" data-lang="fr">STATIONNAIRE</text>
+          <text x="750" y="20" data-lang="en">STATIONARY</text>
+        </g>
+
+        <!-- migration : la destination pivote -->
+        <circle cx="80" cy="160" r="26" fill="var(--l1)" fill-opacity="0.28" stroke="var(--l1)" stroke-width="2"/>
+        <circle cx="248" cy="58" r="5" fill="var(--l3)"/>
+        <text x="248" y="46" font-size="10" fill="var(--l3)" text-anchor="middle"
+              font-family="ui-monospace, monospace" data-lang="fr">bruit</text>
+        <text x="248" y="46" font-size="10" fill="var(--l3)" text-anchor="middle"
+              font-family="ui-monospace, monospace" data-lang="en">sound</text>
+        <path d="M 106 152 L 250 128" stroke="var(--text-faint)" stroke-width="1.5"
+              stroke-dasharray="5 4"/>
+        <path d="M 106 146 L 240 98" stroke="var(--l2)" stroke-width="2.5" marker-end="url(#sarr)"/>
+        <path d="M 196 132 A 60 60 0 0 1 204 110" fill="none" stroke="var(--l2)" stroke-width="1.5"/>
+        <text x="150" y="222" font-size="11" fill="var(--text-dim)" text-anchor="middle" data-lang="fr">
+          sa destination pivote vers le bruit</text>
+        <text x="150" y="222" font-size="11" fill="var(--text-dim)" text-anchor="middle" data-lang="en">
+          its destination pivots towards the sound</text>
+
+        <!-- errance : biais -->
+        <circle cx="410" cy="150" r="26" fill="var(--l1)" fill-opacity="0.28" stroke="var(--l1)" stroke-width="2"/>
+        <circle cx="556" cy="70" r="5" fill="var(--l3)"/>
+        <g stroke="var(--l2)" stroke-width="2" fill="none" opacity="0.85">
+          <path d="M 436 142 L 476 122" marker-end="url(#sarr)"/>
+          <path d="M 430 172 L 462 158" marker-end="url(#sarr)"/>
+          <path d="M 424 118 L 452 100" marker-end="url(#sarr)"/>
+        </g>
+        <text x="450" y="222" font-size="11" fill="var(--text-dim)" text-anchor="middle" data-lang="fr">
+          elle continue d'errer, mais penche</text>
+        <text x="450" y="222" font-size="11" fill="var(--text-dim)" text-anchor="middle" data-lang="en">
+          it keeps roaming, but leans</text>
+
+        <!-- stationnaire : un morceau part -->
+        <circle cx="700" cy="160" r="30" fill="var(--l1)" fill-opacity="0.28" stroke="var(--l1)" stroke-width="2"/>
+        <circle cx="862" cy="70" r="5" fill="var(--l3)"/>
+        <circle cx="778" cy="112" r="15" fill="var(--l3)" fill-opacity="0.30" stroke="var(--l3)" stroke-width="2"/>
+        <path d="M 796 100 L 846 78" stroke="var(--l3)" stroke-width="2.5" marker-end="url(#sarr3)"/>
+        <text x="750" y="222" font-size="11" fill="var(--text-dim)" text-anchor="middle" data-lang="fr">
+          un morceau se d&eacute;tache et part</text>
+        <text x="750" y="222" font-size="11" fill="var(--text-dim)" text-anchor="middle" data-lang="en">
+          a fragment breaks off and leaves</text>
+
+        <g stroke="var(--rule)" stroke-width="1">
+          <path d="M 300 32 L 300 200"/><path d="M 600 32 L 600 200"/>
+        </g>
+      </svg>
+      <figcaption data-lang="fr">Une horde en route ne s'arr&ecirc;te pas pour aller voir : elle
+      infl&eacute;chit sa course. Une horde pos&eacute;e n'y va pas enti&egrave;rement non
+      plus, elle en envoie une partie.</figcaption>
+      <figcaption data-lang="en">A horde already on the move does not stop to go and look: it
+      bends its course. A settled horde does not go in full either, it sends part of
+      itself.</figcaption>
+    </figure>
+
+    <div class="prose">
+      <p data-lang="fr"><strong>En migration</strong>, la destination elle-m&ecirc;me se d&eacute;place
+      vers la source, et le trajet suit. Le mouvement est progressif et ne d&eacute;passe
+      jamais la direction du bruit : la horde s'aligne dessus au mieux, sans jamais faire
+      demi-tour.</p>
+      <p data-lang="en"><strong>While migrating</strong>, the destination itself moves towards
+      the source, and the route follows. The shift is gradual and never overshoots the
+      direction of the sound: the horde aligns with it at best, never turning back.</p>
+      <p data-lang="fr"><strong>En errance</strong>, elle continue de tourner comme avant, mais chacun de
+      ses pas penche vers la source. Ce qui &eacute;tait une patrouille sans but devient une
+      d&eacute;rive orient&eacute;e.</p>
+      <p data-lang="en"><strong>While roaming</strong>, it keeps circling as before, but every
+      step leans towards the source. What was an aimless patrol becomes a directed drift.</p>
+      <p data-lang="fr"><strong>&Agrave; l'arr&ecirc;t</strong>, elle ne se l&egrave;ve pas tout
+      enti&egrave;re. Une fraction se d&eacute;tache, proportionnelle &agrave; la force du
+      bruit, et part en direction de ce qu'elle a entendu avec un surcro&icirc;t de vitesse
+      qui s'estompe en chemin. Le reste demeure. Un tir attire donc un morceau de la ville,
+      pas la ville enti&egrave;re.</p>
+      <p data-lang="en"><strong>At rest</strong>, it does not rise as a whole. A fraction
+      breaks off, proportional to the strength of the sound, and leaves towards what it
+      heard with an extra burst of speed that fades along the way. The rest stays. A shot
+      therefore draws a piece of the town, not the whole town.</p>
+      <p data-lang="fr">Et la destination de ce morceau n'est pas exactement le point d'origine, mais un
+      endroit quelconque &agrave; proximit&eacute;. Deux hordes r&eacute;veill&eacute;es par
+      le m&ecirc;me coup de feu ne convergent donc pas sur la m&ecirc;me case.</p>
+      <p data-lang="en">And that fragment's destination is not exactly the point of origin,
+      but somewhere arbitrary nearby. Two hordes woken by the same gunshot therefore do not
+      converge on the same tile.</p>
+    </div>
+
+    <h2 id="memoire"><span data-lang="fr">L'&eacute;loignement compte</span><span data-lang="en">Distance counts</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Tout ce qui pr&eacute;c&egrave;de s'att&eacute;nue avec la distance, et le volume
+      module l'ensemble. Un zombie au bord de la port&eacute;e ne re&ccedil;oit presque
+      rien, un zombie au centre re&ccedil;oit tout. Une horde lointaine penche &agrave;
+      peine, une horde proche se d&eacute;tourne franchement.</p>
+      <p data-lang="en">Everything above weakens with distance, and volume scales all of it.
+      A zombie at the edge of the range receives almost nothing, a zombie at the centre
+      receives everything. A distant horde barely leans, a nearby horde turns outright.</p>
+      <p data-lang="fr">Le r&eacute;sultat se lit &agrave; l'&eacute;chelle de la carte : un coup de feu
+      isol&eacute; d&eacute;place ce qui &eacute;tait d&eacute;j&agrave; dans le quartier,
+      une fusillade prolong&eacute;e r&eacute;organise la r&eacute;gion.</p>
+      <p data-lang="en">The result reads at map scale: a single gunshot moves what was already
+      in the neighbourhood, a sustained firefight reorganises the region.</p>
+    </div>
+
+    <div class="note">
+      <p data-lang="fr"><strong>Ce que &ccedil;a change en jeu :</strong> le bruit ne fait pas venir des
+      zombies, il d&eacute;place ceux qui existent d&eacute;j&agrave;. L'endroit d'o&ugrave;
+      ils viennent se vide d'autant.</p>
+      <p data-lang="en"><strong>What this changes in play:</strong> sound does not bring
+      zombies into being, it moves the ones that already exist. The place they came from
+      empties by the same amount.</p>
+    </div>
+  </main>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span data-lang="fr">Documentation Living Hordes</span>
+    <span data-lang="en">Living Hordes documentation</span>
+    <span><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3691686404"><span data-lang="fr">Page Workshop</span><span data-lang="en">Workshop page</span></a></span>
+  </div>
+</footer>
+
+<script src="assets/site.js?v=6"></script>
+</body>
+</html>

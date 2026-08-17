@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="fr" data-title-fr="Densit&eacute; de population - Living Hordes" data-title-en="Population density - Living Hordes">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Densit&eacute; de population - Living Hordes</title>
+<link rel="stylesheet" href="assets/site.css?v=6">
+<script>
+(function () {
+  var d = document.documentElement, t = null, l = null;
+  try {
+    t = localStorage.getItem("lh-theme");
+    l = localStorage.getItem("lh-lang");
+  } catch (e) {}
+  if (t) d.setAttribute("data-theme", t);
+  if (l !== "fr" && l !== "en") {
+    l = (navigator.language || "en").toLowerCase().indexOf("fr") === 0 ? "fr" : "en";
+  }
+  d.setAttribute("data-sitelang", l);
+  d.setAttribute("lang", l);
+  var tt = d.getAttribute("data-title-" + l);
+  if (tt) document.title = tt;
+})();
+</script>
+</head>
+<body data-page="density">
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <a class="brand" href="index.html"><b>Living Hordes</b><span>Documentation</span></a>
+    <nav class="sitenav">
+      <a href="simulation.html">Simulation</a>
+      <a href="density.html" aria-current="page"><span data-lang="fr">Densit&eacute;</span><span data-lang="en">Density</span></a>
+      <a href="migration.html">Migration</a>
+      <a href="hordes.html">Hordes</a>
+      <a href="sealing.html"><span data-lang="fr">Scellement</span><span data-lang="en">Sealing</span></a>
+      <a href="defense.html"><span data-lang="fr">D&eacute;fense</span><span data-lang="en">Defense</span></a>
+      <a href="sound.html"><span data-lang="fr">Son</span><span data-lang="en">Sound</span></a>
+      <a href="sandbox.html">Sandbox</a>
+    </nav>
+    <div class="tools">
+      <div class="langtoggle">
+        <button type="button" data-setlang="fr">FR</button>
+        <button type="button" data-setlang="en">EN</button>
+      </div>
+      <button class="motiontoggle" id="motion-toggle" type="button" aria-pressed="false"
+              title="Animations">Anim.</button>
+      <button class="themetoggle" id="theme-toggle" type="button"
+              title="Th&egrave;me / Theme">&#9680;</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <aside class="toc">
+    <div class="toc-sticky">
+      <h2><span data-lang="fr">Sur cette page</span><span data-lang="en">On this page</span></h2>
+      <a href="#fui"><span data-lang="fr">O&ugrave; les gens ont fui</span><span data-lang="en">Where people fled</span></a>
+      <a href="#declare"><span data-lang="fr">Ce que la carte d&eacute;clare</span><span data-lang="en">What the map already declares</span></a>
+      <a href="#scan"><span data-lang="fr">Le scan</span><span data-lang="en">The scan</span></a>
+      <a href="#nombre"><span data-lang="fr">D'un poids &agrave; un nombre</span><span data-lang="en">From a weight to a number</span></a>
+      <a href="#budget"><span data-lang="fr">R&eacute;partir le budget</span><span data-lang="en">Spreading the budget</span></a>
+      <a href="#loterie"><span data-lang="fr">Une carte, plusieurs mondes</span><span data-lang="en">One map, many worlds</span></a>
+      <a href="#moddees"><span data-lang="fr">Cartes modd&eacute;es</span><span data-lang="en">Modded maps</span></a>
+      <a href="#derive"><span data-lang="fr">&Ccedil;a ne reste pas fig&eacute;</span><span data-lang="en">It does not stay fixed</span></a>
+    </div>
+  </aside>
+
+  <main>
+    <div class="prose pagehead">
+      <p class="eyebrow"><span data-lang="fr">Syst&egrave;mes centraux</span><span data-lang="en">Core systems</span></p>
+      <h1><span data-lang="fr">Densit&eacute; de population</span><span data-lang="en">Population density</span></h1>
+      <p class="lead" data-lang="fr">Personne n'a plac&eacute; les zombies. &Agrave; la cr&eacute;ation
+      d'une partie, le mod lit la carte enti&egrave;re, d&eacute;cide &agrave; quel point
+      chaque endroit doit &ecirc;tre peupl&eacute;, et transforme &ccedil;a en population.</p>
+      <p class="lead" data-lang="en">Nobody placed the zombies. When a game is created, the mod reads
+      the entire map, decides how populated each place should be, and turns that into a
+      population.</p>
+    </div>
+
+    <h2 id="fui"><span data-lang="fr">O&ugrave; les gens ont fui, pas o&ugrave; ils vivaient</span><span data-lang="en">Where people fled, not where they lived</span></h2>
+    <div class="prose">
+      <p data-lang="fr">L'approche &eacute;vidente serait la densit&eacute; d'habitation. Il y a des
+      maisons partout, donc la banlieue l'emporte. Sauf que c'est l&agrave; que les gens
+      <em>vivaient</em>, et c'est la mauvaise question pendant une &eacute;pid&eacute;mie.</p>
+      <p data-lang="en">The obvious approach would be housing density. There are houses everywhere,
+      so the suburbs win. Except that is where people <em>lived</em>, and that is the wrong question
+      during an outbreak.</p>
+      <p data-lang="fr">Personne ne reste chez soi quand une ville tombe. On va vers ce qui promet la
+      s&eacute;curit&eacute; : commissariats, postes militaires, h&ocirc;pitaux, et les
+      &eacute;glises et &eacute;coles ouvertes en refuge. C'est l&agrave; qu'&eacute;taient
+      les foules au moment o&ugrave; &ccedil;a a bascul&eacute;, et c'est l&agrave; que sont
+      les corps.</p>
+      <p data-lang="en">Nobody stays home when a town falls. People head for whatever promises
+      safety: police stations, military posts, hospitals, and the churches and schools opened as
+      shelters. That is where the crowds were at the moment it tipped over, and that is where the
+      bodies are.</p>
+      <p data-lang="fr">Une prison p&egrave;se donc plus lourd que les fermes autour, et un bowling est
+      presque vide.</p>
+      <p data-lang="en">A prison therefore weighs more than the farms around it, and a bowling alley
+      is almost empty.</p>
+    </div>
+
+    <figure>
+      <svg viewBox="0 0 620 320" xmlns="http://www.w3.org/2000/svg" role="img"
+           aria-label="Les douze cat&eacute;gories de densit&eacute; class&eacute;es par poids.">
+        <g font-size="12" fill="var(--text-dim)" text-anchor="end">
+          <text x="128" y="30" data-lang="fr">militaire</text><text x="128" y="30" data-lang="en">military</text>
+          <text x="128" y="54" data-lang="fr">m&eacute;dical</text><text x="128" y="54" data-lang="en">medical</text>
+          <text x="128" y="78" data-lang="fr">collectif</text><text x="128" y="78" data-lang="en">communal</text>
+          <text x="128" y="102" data-lang="fr">commercial</text><text x="128" y="102" data-lang="en">commercial</text>
+          <text x="128" y="126" data-lang="fr">motel</text><text x="128" y="126" data-lang="en">motel</text>
+          <text x="128" y="150" data-lang="fr">r&eacute;sidentiel</text><text x="128" y="150" data-lang="en">residential</text>
+          <text x="128" y="174" data-lang="fr">industriel</text><text x="128" y="174" data-lang="en">industrial</text>
+          <text x="128" y="198" data-lang="fr">restauration</text><text x="128" y="198" data-lang="en">catering</text>
+          <text x="128" y="222" data-lang="fr">ferme</text><text x="128" y="222" data-lang="en">farm</text>
+          <text x="128" y="246" data-lang="fr">loisirs</text><text x="128" y="246" data-lang="en">leisure</text>
+          <text x="128" y="270" data-lang="fr">ruine</text><text x="128" y="270" data-lang="en">ruin</text>
+          <text x="128" y="294" data-lang="fr">service</text><text x="128" y="294" data-lang="en">utility</text>
+        </g>
+        <g fill="var(--l3)">
+          <rect x="140" y="19"  width="400" height="15" rx="2"/>
+          <rect x="140" y="43"  width="340" height="15" rx="2" fill-opacity="0.92"/>
+          <rect x="140" y="67"  width="280" height="15" rx="2" fill-opacity="0.84"/>
+          <rect x="140" y="91"  width="260" height="15" rx="2" fill-opacity="0.76"/>
+          <rect x="140" y="115" width="220" height="15" rx="2" fill-opacity="0.68"/>
+          <rect x="140" y="139" width="200" height="15" rx="2" fill-opacity="0.60"/>
+          <rect x="140" y="163" width="120" height="15" rx="2" fill-opacity="0.48"/>
+          <rect x="140" y="187" width="80"  height="15" rx="2" fill-opacity="0.40"/>
+          <rect x="140" y="211" width="60"  height="15" rx="2" fill-opacity="0.32"/>
+          <rect x="140" y="235" width="60"  height="15" rx="2" fill-opacity="0.32"/>
+          <rect x="140" y="259" width="20"  height="15" rx="2" fill-opacity="0.24"/>
+          <rect x="140" y="283" width="20"  height="15" rx="2" fill-opacity="0.24"/>
+        </g>
+        <text x="140" y="314" font-size="11" fill="var(--text-faint)" data-lang="fr">Chacune est un curseur en sandbox.</text><text x="140" y="314" font-size="11" fill="var(--text-faint)" data-lang="en">Each one is a sandbox slider.</text>
+      </svg>
+      <figcaption data-lang="fr">Les refuges en haut, les endroits o&ugrave; personne n'a couru en bas.
+      Les loisirs sont avec les fermes, et c'est volontaire.</figcaption>
+      <figcaption data-lang="en">Shelters at the top, the places nobody ran to at the bottom. Leisure
+      sits with the farms, and that is deliberate.</figcaption>
+    </figure>
+
+    <figure class="wide-fig">
+      <svg viewBox="0 0 900 330" xmlns="http://www.w3.org/2000/svg" role="img"
+           aria-label="Plan d'un quartier o&ugrave; chaque b&acirc;timent est ombr&eacute; selon son poids de densit&eacute;.">
+        <rect x="0" y="150" width="900" height="40" fill="var(--text-faint)" fill-opacity="0.13"/>
+        <rect x="420" y="0" width="40" height="330" fill="var(--text-faint)" fill-opacity="0.13"/>
+        <g stroke="var(--l3)" stroke-width="1.5">
+          <rect x="60"  y="55"  width="130" height="80" fill="var(--l3)" fill-opacity="0.80"/>
+          <rect x="215" y="55"  width="52"  height="80" fill="var(--l3)" fill-opacity="0.40"/>
+          <rect x="277" y="55"  width="52"  height="80" fill="var(--l3)" fill-opacity="0.40"/>
+          <rect x="339" y="55"  width="52"  height="80" fill="var(--l3)" fill-opacity="0.40"/>
+          <rect x="490" y="55"  width="190" height="80" fill="var(--l3)" fill-opacity="0.68"/>
+          <rect x="705" y="55"  width="155" height="80" fill="var(--l3)" fill-opacity="0.56"/>
+          <rect x="60"  y="210" width="190" height="95" fill="var(--l3)" fill-opacity="0.56"/>
+          <rect x="275" y="210" width="116" height="95" fill="var(--l3)" fill-opacity="0.16"/>
+          <rect x="490" y="210" width="200" height="95" fill="var(--l3)" fill-opacity="0.12"/>
+          <rect x="715" y="210" width="145" height="95" fill="var(--l3)" fill-opacity="0.04"/>
+        </g>
+        <g font-size="12.5" text-anchor="middle" fill="var(--text)">
+          <text x="125" y="92" data-lang="fr">commissariat</text><text x="125" y="92" data-lang="en">police station</text>
+          <text x="303" y="92" data-lang="fr">maisons</text><text x="303" y="92" data-lang="en">houses</text>
+          <text x="585" y="92" data-lang="fr">h&ocirc;pital</text><text x="585" y="92" data-lang="en">hospital</text>
+          <text x="782" y="92" data-lang="fr">&eacute;glise</text><text x="782" y="92" data-lang="en">church</text>
+          <text x="155" y="252" data-lang="fr">&eacute;cole</text><text x="155" y="252" data-lang="en">school</text>
+          <text x="333" y="252" data-lang="fr">restaurant</text><text x="333" y="252" data-lang="en">restaurant</text>
+          <text x="590" y="252" data-lang="fr">ferme</text><text x="590" y="252" data-lang="en">farm</text>
+          <text x="787" y="252" data-lang="fr">ruine</text><text x="787" y="252" data-lang="en">ruin</text>
+        </g>
+        <g font-size="11" text-anchor="middle" fill="var(--text-dim)"
+           font-family="ui-monospace, monospace">
+          <text x="125" y="110" data-lang="both">1.00</text><text x="303" y="110" data-lang="both">0.50</text>
+          <text x="585" y="110" data-lang="both">0.85</text><text x="782" y="110" data-lang="both">0.70</text>
+          <text x="155" y="270" data-lang="both">0.70</text><text x="333" y="270" data-lang="both">0.20</text>
+          <text x="590" y="270" data-lang="both">0.15</text><text x="787" y="270" data-lang="both">0.05</text>
+        </g>
+      </svg>
+      <figcaption data-lang="fr">Le m&ecirc;me p&acirc;t&eacute; de maisons, pond&eacute;r&eacute;. Les
+      trois maisons r&eacute;unies ne valent toujours pas le commissariat du coin, et la
+      ruine en bord de ville est pratiquement vide.</figcaption>
+      <figcaption data-lang="en">The same city block, weighted. The three houses together still do
+      not match the police station on the corner, and the ruin on the edge of town is practically
+      empty.</figcaption>
+    </figure>
+
+    <h2 id="declare"><span data-lang="fr">Ce que la carte d&eacute;clare d&eacute;j&agrave;</span><span data-lang="en">What the map already declares</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Une partie du monde arrive &eacute;tiquet&eacute;e par celui qui l'a
+      construite : poste militaire, prison, commissariat, &eacute;cole, &eacute;glise,
+      camp de caravanes. Le mod prend ces &eacute;tiquettes pour argent comptant
+      plut&ocirc;t que de les redeviner.</p>
+      <p data-lang="en">Part of the world arrives labelled by whoever built it: military post,
+      prison, police station, school, church, trailer park. The mod takes those labels at face value
+      rather than guessing them again.</p>
+      <p data-lang="fr">Le reste est class&eacute; d'apr&egrave;s les noms de ses pi&egrave;ces, en
+      ignorant couloirs et r&eacute;serves : ce sont les pi&egrave;ces les plus nombreuses
+      de n'importe quel grand b&acirc;timent et elles ne disent rien de son usage.</p>
+      <p data-lang="en">The rest is classified from the names of its rooms, ignoring corridors and
+      storage: they are the most numerous rooms in any large building and they say nothing about its
+      purpose.</p>
+      <p data-lang="fr">&Agrave; l'int&eacute;rieur d'une cat&eacute;gorie, les lieux nomm&eacute;s gardent
+      leur propre classement. Un poste militaire p&egrave;se plus qu'une prison, une prison
+      plus qu'un commissariat, et les trois restent militaires. Le centre commercial reste
+      le b&acirc;timent commercial le plus fr&eacute;quent&eacute; de la carte m&ecirc;me si
+      toute sa cat&eacute;gorie est aplatie.</p>
+      <p data-lang="en">Within a category, named places keep their own ranking. A military post
+      weighs more than a prison, a prison more than a police station, and all three stay military.
+      The shopping mall remains the busiest commercial building on the map even if its whole category
+      is flattened.</p>
+    </div>
+
+    <ul class="stats">
+      <li><b>12</b><span data-lang="fr">cat&eacute;gories de densit&eacute;</span><span data-lang="en">density categories</span></li>
+      <li><b>400</b><span data-lang="fr">noms de pi&egrave;ces reconnus</span><span data-lang="en">recognised room names</span></li>
+      <li><b>256</b><span data-lang="fr">tuiles de c&ocirc;t&eacute; par cellule</span><span data-lang="en">tiles per cell side</span></li>
+    </ul>
+
+    <h2 id="scan"><span data-lang="fr">Le scan, et pourquoi il prend son temps</span><span data-lang="en">The scan, and why it takes its time</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Lire une carte enti&egrave;re n'est pas gratuit. Knox County fait des milliers de
+      cellules contenant chacune des centaines de b&acirc;timents, et tout demander au
+      moteur d'un coup g&egrave;lerait le jeu assez longtemps pour ressembler &agrave; un
+      plantage.</p>
+      <p data-lang="en">Reading an entire map is not free. Knox County runs to thousands of cells
+      each containing hundreds of buildings, and asking the engine for all of it at once would freeze
+      the game long enough to look like a crash.</p>
+      <p data-lang="fr">Le scan est donc &eacute;tal&eacute; sur plusieurs images avec un budget de temps
+      strict, en trois passes qui reprennent chacune l&agrave; o&ugrave; la
+      pr&eacute;c&eacute;dente s'est arr&ecirc;t&eacute;e. La barre de progression du
+      chargement montre ce travail plut&ocirc;t que de laisser croire &agrave; un blocage.</p>
+      <p data-lang="en">The scan is therefore spread over several frames with a strict time budget,
+      in three passes that each resume where the previous one stopped. The loading progress bar shows
+      that work rather than letting it look like a hang.</p>
+      <p data-lang="fr">Tout ce qu'il trouve est mis en cache et sauvegard&eacute;. Recharger le
+      m&ecirc;me monde ne rescanne rien.</p>
+      <p data-lang="en">Everything it finds is cached and saved. Reloading the same world rescans
+      nothing.</p>
+    </div>
+
+    <h2 id="nombre"><span data-lang="fr">D'un poids &agrave; un nombre de zombies</span><span data-lang="en">From a weight to a number of zombies</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Un poids de cat&eacute;gorie n'est pas une population. C'est une valeur entre
+      z&eacute;ro et un qui doit devenir un effectif, et &ccedil;a se fait cellule par
+      cellule.</p>
+      <p data-lang="en">A category weight is not a population. It is a value between zero and one
+      that has to become a headcount, and that happens cell by cell.</p>
+      <p data-lang="fr">La carte est d&eacute;coup&eacute;e en cellules de 256 tuiles de c&ocirc;t&eacute;.
+      Dans chacune, le plus fort l'emporte : une cellule qui contient des maisons et un
+      commissariat prend le ton du commissariat. Le nombre de pi&egrave;ces qu'elle contient
+      vient ensuite amplifier ce poids, mais sur une courbe qui s'aplatit. Les cent
+      premi&egrave;res pi&egrave;ces comptent beaucoup, la milli&egrave;me ne change presque
+      plus rien, ce qui emp&ecirc;che une vaste zone d'entrep&ocirc;ts de passer devant un
+      h&ocirc;pital.</p>
+      <p data-lang="en">The map is cut into cells 256 tiles on a side. In each of them the strongest
+      wins: a cell containing houses and a police station takes the tone of the police station. The
+      number of rooms it contains then amplifies that weight, but on a curve that flattens. The first
+      hundred rooms count a great deal, the thousandth barely changes anything, which stops a vast
+      warehouse district from outranking a hospital.</p>
+      <p data-lang="fr">La somme de toutes les cellules donne un seul nombre pour la carte, et la
+      population totale est ce nombre multipli&eacute; par la quantit&eacute; de zombies
+      voulue par unit&eacute; de densit&eacute;, qui est un r&eacute;glage. C'est tout le
+      dimensionnement. Le reste n'est que r&eacute;partition.</p>
+      <p data-lang="en">The sum of every cell gives one single number for the map, and the total
+      population is that number multiplied by the zombies wanted per unit of density, which is a
+      setting. That is the whole of the sizing. The rest is only distribution.</p>
+    </div>
+
+    <figure class="wide-fig">
+      <svg viewBox="0 0 900 250" xmlns="http://www.w3.org/2000/svg" role="img"
+           aria-label="Comment une balise de carte devient un nombre de zombies plac&eacute;s dans une cellule.">
+        <defs>
+          <marker id="step" viewBox="0 0 10 10" refX="9" refY="5"
+                  markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--text-faint)"/>
+          </marker>
+        </defs>
+        <g font-size="10.5" font-family="ui-monospace, monospace" fill="var(--text-faint)">
+          <text x="20"  y="18" data-lang="fr">1 &middot; UNE CELLULE</text><text x="20"  y="18" data-lang="en">1 &middot; ONE CELL</text>
+          <text x="250" y="18" data-lang="fr">2 &middot; SA DENSIT&Eacute;</text><text x="250" y="18" data-lang="en">2 &middot; ITS DENSITY</text>
+          <text x="480" y="18" data-lang="fr">3 &middot; SA PART</text><text x="480" y="18" data-lang="en">3 &middot; ITS SHARE</text>
+          <text x="720" y="18" data-lang="fr">4 &middot; O&Ugrave; ILS VONT</text><text x="720" y="18" data-lang="en">4 &middot; WHERE THEY GO</text>
+        </g>
+
+        <rect x="20" y="40" width="170" height="150" rx="4" fill="var(--l3)" fill-opacity="0.10"
+              stroke="var(--rule)" stroke-width="1.5"/>
+        <rect x="36" y="56" width="66" height="46" fill="var(--l3)" fill-opacity="0.75"/>
+        <rect x="118" y="56" width="30" height="46" fill="var(--l3)" fill-opacity="0.35"/>
+        <rect x="36" y="120" width="44" height="52" fill="var(--l3)" fill-opacity="0.35"/>
+        <rect x="96" y="120" width="76" height="52" fill="var(--l3)" fill-opacity="0.20"/>
+        <text x="105" y="212" font-size="11" text-anchor="middle" fill="var(--text-dim)" data-lang="fr">un commissariat,</text><text x="105" y="212" font-size="11" text-anchor="middle" fill="var(--text-dim)" data-lang="en">a police station,</text>
+        <text x="105" y="228" font-size="11" text-anchor="middle" fill="var(--text-dim)" data-lang="fr">des maisons, 140 pi&egrave;ces</text><text x="105" y="228" font-size="11" text-anchor="middle" fill="var(--text-dim)" data-lang="en">houses, 140 rooms</text>
+
+        <line x1="200" y1="115" x2="240" y2="115" stroke="var(--text-faint)" stroke-width="1.5"
+              marker-end="url(#step)"/>
+
+        <rect x="250" y="40" width="170" height="150" rx="4" fill="var(--bg-sunken)"
+              stroke="var(--rule)" stroke-width="1.5"/>
+        <text x="335" y="112" font-size="30" text-anchor="middle" fill="var(--l3)"
+              font-family="ui-monospace, monospace" data-lang="both">1.18</text>
+        <text x="335" y="140" font-size="11" text-anchor="middle" fill="var(--text-dim)" data-lang="fr">la balise la plus forte,</text><text x="335" y="140" font-size="11" text-anchor="middle" fill="var(--text-dim)" data-lang="en">the strongest tag,</text>
+        <text x="335" y="156" font-size="11" text-anchor="middle" fill="var(--text-dim)" data-lang="fr">amplifi&eacute;e par les pi&egrave;ces</text><text x="335" y="156" font-size="11" text-anchor="middle" fill="var(--text-dim)" data-lang="en">amplified by the rooms</text>
+
+        <line x1="430" y1="115" x2="470" y2="115" stroke="var(--text-faint)" stroke-width="1.5"
+              marker-end="url(#step)"/>
+
+        <rect x="480" y="40" width="180" height="150" rx="4" fill="var(--bg-sunken)"
+              stroke="var(--rule)" stroke-width="1.5"/>
+        <text x="570" y="92" font-size="13" text-anchor="middle" fill="var(--text-dim)"
+              font-family="ui-monospace, monospace" data-lang="both">1.18 &times; 1000</text>
+        <line x1="512" y1="106" x2="628" y2="106" stroke="var(--rule)" stroke-width="1"/>
+        <text x="570" y="144" font-size="30" text-anchor="middle" fill="var(--l1)"
+              font-family="ui-monospace, monospace" data-lang="both">1180</text>
+        <text x="570" y="168" font-size="11" text-anchor="middle" fill="var(--text-dim)" data-lang="fr">zombies pour cette cellule</text><text x="570" y="168" font-size="11" text-anchor="middle" fill="var(--text-dim)" data-lang="en">zombies for this cell</text>
+
+        <line x1="670" y1="115" x2="710" y2="115" stroke="var(--text-faint)" stroke-width="1.5"
+              marker-end="url(#step)"/>
+
+        <rect x="720" y="40" width="160" height="150" rx="4" fill="var(--l3)" fill-opacity="0.10"
+              stroke="var(--rule)" stroke-width="1.5"/>
+        <rect x="734" y="56" width="62" height="44" fill="var(--l3)" fill-opacity="0.75"/>
+        <rect x="812" y="56" width="28" height="44" fill="var(--l3)" fill-opacity="0.35"/>
+        <rect x="734" y="118" width="42" height="50" fill="var(--l3)" fill-opacity="0.35"/>
+        <rect x="792" y="118" width="70" height="50" fill="var(--l3)" fill-opacity="0.20"/>
+        <g fill="var(--l1)">
+          <circle cx="746" cy="66" r="2.6"/><circle cx="760" cy="76" r="2.6"/>
+          <circle cx="774" cy="64" r="2.6"/><circle cx="786" cy="80" r="2.6"/>
+          <circle cx="752" cy="88" r="2.6"/><circle cx="768" cy="92" r="2.6"/>
+          <circle cx="782" cy="68" r="2.6"/><circle cx="740" cy="78" r="2.6"/>
+          <circle cx="822" cy="70" r="2.6"/><circle cx="830" cy="86" r="2.6"/>
+          <circle cx="746" cy="134" r="2.6"/><circle cx="762" cy="150" r="2.6"/>
+          <circle cx="812" cy="140" r="2.6"/><circle cx="840" cy="152" r="2.6"/>
+        </g>
+        <text x="800" y="212" font-size="11" text-anchor="middle" fill="var(--text-dim)" data-lang="fr">le poids du b&acirc;timent d&eacute;cide</text><text x="800" y="212" font-size="11" text-anchor="middle" fill="var(--text-dim)" data-lang="en">the building weight decides</text>
+        <text x="800" y="228" font-size="11" text-anchor="middle" fill="var(--text-dim)" data-lang="fr">quelle tuile, pas combien</text><text x="800" y="228" font-size="11" text-anchor="middle" fill="var(--text-dim)" data-lang="en">which tile, not how many</text>
+      </svg>
+      <figcaption data-lang="fr">Deux nombres diff&eacute;rents, faciles &agrave; confondre.
+      L'&eacute;tape 2 d&eacute;cide <em>combien</em> de zombies re&ccedil;oit une cellule.
+      L'&eacute;tape 4 d&eacute;cide <em>o&ugrave; dedans</em> ils se tiennent.</figcaption>
+      <figcaption data-lang="en">Two different numbers, easy to confuse. Step 2 decides <em>how
+      many</em> zombies a cell receives. Step 4 decides <em>where inside it</em> they stand.</figcaption>
+    </figure>
+
+    <div class="prose">
+      <p data-lang="fr">Une cellule fait 256 tuiles de c&ocirc;t&eacute;, donc conna&icirc;tre son effectif
+      ne dit rien de la r&eacute;partition. C'est le deuxi&egrave;me calcul, et c'est pour
+      lui que les b&acirc;timents sont mesur&eacute;s un par un. Chacun porte un poids qui
+      combine sa cat&eacute;gorie et sa surface int&eacute;rieure, compt&eacute;e sur tous
+      les niveaux, de sorte qu'un immeuble de trois &eacute;tages attire plus qu'un
+      plain-pied de m&ecirc;me emprise. La surface entre att&eacute;nu&eacute;e, sans quoi
+      un centre commercial p&egrave;serait plus lourd qu'une banlieue enti&egrave;re.</p>
+      <p data-lang="en">A cell is 256 tiles on a side, so knowing its headcount says nothing about
+      the distribution. That is the second calculation, and it is what the buildings are measured
+      one by one for. Each carries a weight combining its category and its interior floor area,
+      counted across every level, so that a three-storey block draws more than a single-storey of the
+      same footprint. The area enters damped, without which a shopping mall would weigh more than an
+      entire suburb.</p>
+    </div>
+
+    <h2 id="budget"><span data-lang="fr">R&eacute;partir le budget</span><span data-lang="en">Spreading the budget</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Le total de la carte est un budget, et le distribuer est un probl&egrave;me &agrave;
+      part enti&egrave;re. Il n'est d'ailleurs pas d&eacute;pens&eacute; d'un coup : un
+      r&eacute;glage d&eacute;cide de la part pr&eacute;sente au premier jour, et le reste
+      arrive plus tard par les bords de la carte.</p>
+      <p data-lang="en">The map total is a budget, and distributing it is a problem in its own
+      right. It is not spent all at once either: a setting decides the share present on day one, and
+      the rest arrives later through the map edges.</p>
+      <p data-lang="fr">Chaque cellule demande une part proportionnelle &agrave; sa densit&eacute;, et la
+      duret&eacute; de cette proportion se r&egrave;gle. Adoucie, la carte tend vers une
+      r&eacute;partition uniforme ; durcie, les villes avalent presque tout pendant que les
+      campagnes se vident.</p>
+      <p data-lang="en">Each cell asks for a share proportional to its density, and how harsh that
+      proportion is can be tuned. Softened, the map tends towards a uniform spread; hardened, the
+      cities swallow nearly everything while the countryside empties.</p>
+      <p data-lang="fr">Mais une cellule a aussi un plafond, parce que la densit&eacute; est un rapport et
+      qu'une petite cellule peut &ecirc;tre tr&egrave;s dense sans avoir la place
+      d'accueillir mille corps. Ce qu'elle demande au-del&agrave; devient un surplus,
+      redistribu&eacute; aux cellules qui ont encore de la place plut&ocirc;t que perdu.</p>
+      <p data-lang="en">But a cell also has a ceiling, because density is a ratio and a small cell
+      can be very dense without having room for a thousand bodies. What it asks for beyond that
+      becomes a surplus, redistributed to the cells that still have room rather than lost.</p>
+      <p data-lang="fr">Le point de d&eacute;part du joueur re&ccedil;oit le m&ecirc;me traitement. Rien
+      n'est plac&eacute; dans un rayon prot&eacute;g&eacute; autour de lui, et la population
+      qui aurait d&ucirc; s'y trouver rejoint le surplus. La partie commence dans un endroit
+      calme, pas dans un monde qui contient moins de zombies.</p>
+      <p data-lang="en">The player's starting point gets the same treatment. Nothing is placed within
+      a protected radius around it, and the population that should have been there joins the surplus.
+      The game begins in a quiet place, not in a world containing fewer zombies.</p>
+    </div>
+
+    <h2 id="loterie"><span data-lang="fr">Une carte, plusieurs mondes</span><span data-lang="en">One map, many worlds</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Les poids des b&acirc;timents ne produisent pas un plan. Ils produisent les chances
+      d'un tirage, et le budget de la cellule est d&eacute;pens&eacute; en y puisant
+      jusqu'&agrave; &eacute;puisement.</p>
+      <p data-lang="en">Building weights do not produce a layout. They produce the odds of a draw,
+      and the cell's budget is spent by drawing from it until nothing is left.</p>
+      <p data-lang="fr">Deux choses font que chaque tirage tombe diff&eacute;remment. Un b&acirc;timent
+      perd de son attrait &agrave; mesure qu'il se remplit, jusqu'&agrave; ne plus &ecirc;tre
+      tir&eacute; du tout, ce qui &eacute;tale la foule au lieu de l'entasser dans le seul
+      b&acirc;timent le plus lourd du quartier. Et la taille des hordes est tir&eacute;e au
+      sort plut&ocirc;t que divis&eacute;e, chaque tirage prenant une part variable de ce
+      qui reste, si bien qu'une cellule dense produit quelques tr&egrave;s grosses hordes et
+      une cellule vide quelques petites, sans que rien n'ait eu &agrave; en d&eacute;cider.</p>
+      <p data-lang="en">Two things make each draw fall differently. A building loses its appeal as it
+      fills, until it stops being drawn at all, which spreads the crowd instead of piling it into the
+      single heaviest building in the block. And horde sizes are drawn at random rather than divided,
+      each draw taking a variable share of what remains, so that a dense cell produces a few very
+      large hordes and an empty cell a few small ones, without anything having had to decide it.</p>
+      <p data-lang="fr">La cons&eacute;quence est ce qu'il faut retenir : <strong>la carte de densit&eacute;
+      est toujours la m&ecirc;me, la r&eacute;partition ne l'est jamais.</strong> Deux
+      parties lanc&eacute;es sur la m&ecirc;me carte avec les m&ecirc;mes r&eacute;glages
+      donnent des villes aussi dangereuses, mais pas dangereuses aux m&ecirc;mes endroits.
+      La prison est toujours la pire adresse de Rosewood. Quelle aile &eacute;viter se
+      d&eacute;cide au moment o&ugrave; la partie se cr&eacute;e.</p>
+      <p data-lang="en">The consequence is what matters: <strong>the density map is always the same,
+      the distribution never is.</strong> Two games started on the same map with the same settings
+      give towns that are just as dangerous, but not dangerous in the same places. The prison is
+      always the worst address in Rosewood. Which wing to avoid is decided at the moment the game is
+      created.</p>
+    </div>
+
+    <h2 id="moddees"><span data-lang="fr">Cartes modd&eacute;es</span><span data-lang="en">Modded maps</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Environ quatre cents noms de pi&egrave;ces vanilla sont associ&eacute;s &agrave; la
+      main. Tout ce que le mod n'a jamais vu passe par une reconnaissance de motifs, donc
+      une pi&egrave;ce nomm&eacute;e comme un entrep&ocirc;t atterrit en industriel et une
+      salle de classe en collectif. Les &eacute;tiquettes inconnues re&ccedil;oivent un
+      poids par d&eacute;faut et sont consign&eacute;es par leur nom, ce qui rend un
+      &eacute;cart trouvable au lieu de le laisser deviner.</p>
+      <p data-lang="en">Around four hundred vanilla room names are mapped by hand. Anything the mod
+      has never seen goes through pattern matching, so a room named like a warehouse lands in
+      industrial and a classroom in communal. Unknown labels receive a default weight and are logged
+      by name, which makes a discrepancy findable instead of leaving it to guesswork.</p>
+      <p data-lang="fr">Ce que &ccedil;a ne garantit pas, c'est l'&eacute;quilibrage. Une carte
+      personnalis&eacute;e sera peupl&eacute;e de fa&ccedil;on coh&eacute;rente avec ses
+      propres noms de pi&egrave;ces, ce qui n'est pas la m&ecirc;me chose qu'&ecirc;tre
+      peupl&eacute;e justement.</p>
+      <p data-lang="en">What that does not guarantee is the balance. A custom map will be populated
+      consistently with its own room names, which is not the same thing as being populated
+      correctly.</p>
+    </div>
+
+    <h2 id="derive"><span data-lang="fr">&Ccedil;a ne reste pas fig&eacute;</span><span data-lang="en">It does not stay fixed</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Le scan tourne une fois. Ce qu'il produit est un point de d&eacute;part, pas une
+      v&eacute;rit&eacute; d&eacute;finitive.</p>
+      <p data-lang="en">The scan runs once. What it produces is a point of departure, not a
+      definitive truth.</p>
+      <p data-lang="fr">Ensuite la carte d&eacute;rive d'elle-m&ecirc;me : les groupes absorbent les
+      isol&eacute;s l&agrave; o&ugrave; c'est dense et perdent des tra&icirc;nards l&agrave;
+      o&ugrave; c'est vide, donc les villes continuent de se remplir et les campagnes de se
+      vider tant que la sauvegarde tourne. Le d&eacute;tail est sur la
+      <a href="hordes.html">page dynamique des hordes</a>.</p>
+      <p data-lang="en">After that the map drifts by itself: groups absorb the isolated where it is
+      dense and shed stragglers where it is empty, so the cities keep filling and the countryside
+      keeps emptying for as long as the save runs. The detail is on the
+      <a href="hordes.html">horde dynamics page</a>.</p>
+    </div>
+
+    <div class="note">
+      <p data-lang="fr"><strong>Ce que &ccedil;a change en jeu :</strong> une ville se lit avant d'y
+      entrer. Ce que sont les b&acirc;timents annonce combien, et lesquels ils sont annonce
+      o&ugrave;.</p>
+      <p data-lang="en"><strong>What this changes in play:</strong> a town can be read before being
+      entered. What the buildings are announces how many, and which ones they are announces
+      where.</p>
+    </div>
+  </main>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span data-lang="fr">Documentation Living Hordes</span><span data-lang="en">Living Hordes documentation</span>
+    <span><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3691686404"><span data-lang="fr">Page Workshop</span><span data-lang="en">Workshop page</span></a></span>
+  </div>
+</footer>
+
+<script src="assets/site.js?v=6"></script>
+</body>
+</html>

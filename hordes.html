@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="fr" data-title-fr="Dynamique des hordes - Living Hordes" data-title-en="Horde dynamics - Living Hordes">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dynamique des hordes - Living Hordes</title>
+<link rel="stylesheet" href="assets/site.css?v=6">
+<script>
+(function () {
+  var d = document.documentElement, t = null, l = null;
+  try {
+    t = localStorage.getItem("lh-theme");
+    l = localStorage.getItem("lh-lang");
+  } catch (e) {}
+  if (t) d.setAttribute("data-theme", t);
+  if (l !== "fr" && l !== "en") {
+    l = (navigator.language || "en").toLowerCase().indexOf("fr") === 0 ? "fr" : "en";
+  }
+  d.setAttribute("data-sitelang", l);
+  d.setAttribute("lang", l);
+  var tt = d.getAttribute("data-title-" + l);
+  if (tt) document.title = tt;
+})();
+</script>
+</head>
+<body data-page="hordes">
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <a class="brand" href="index.html"><b>Living Hordes</b><span>Documentation</span></a>
+    <nav class="sitenav">
+      <a href="simulation.html">Simulation</a>
+      <a href="density.html"><span data-lang="fr">Densit&eacute;</span><span data-lang="en">Density</span></a>
+      <a href="migration.html">Migration</a>
+      <a href="hordes.html" aria-current="page">Hordes</a>
+      <a href="sealing.html"><span data-lang="fr">Scellement</span><span data-lang="en">Sealing</span></a>
+      <a href="defense.html"><span data-lang="fr">D&eacute;fense</span><span data-lang="en">Defense</span></a>
+      <a href="sound.html"><span data-lang="fr">Son</span><span data-lang="en">Sound</span></a>
+      <a href="sandbox.html">Sandbox</a>
+    </nav>
+    <div class="tools">
+      <div class="langtoggle">
+        <button type="button" data-setlang="fr">FR</button>
+        <button type="button" data-setlang="en">EN</button>
+      </div>
+      <button class="motiontoggle" id="motion-toggle" type="button" aria-pressed="false"
+              title="Animations">Anim.</button>
+      <button class="themetoggle" id="theme-toggle" type="button"
+              title="Th&egrave;me / Theme">&#9680;</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <aside class="toc">
+    <div class="toc-sticky">
+      <h2><span data-lang="fr">Sur cette page</span><span data-lang="en">On this page</span></h2>
+      <a href="#graine"><span data-lang="fr">La graine</span><span data-lang="en">The seed</span></a>
+      <a href="#taille"><span data-lang="fr">La taille et l'emprise</span><span data-lang="en">Size and footprint</span></a>
+      <a href="#absorption"><span data-lang="fr">L'absorption</span><span data-lang="en">Absorption</span></a>
+      <a href="#ancres"><span data-lang="fr">Les ancres</span><span data-lang="en">Anchors</span></a>
+      <a href="#scission"><span data-lang="fr">La scission</span><span data-lang="en">Splitting</span></a>
+      <a href="#mega"><span data-lang="fr">Les m&eacute;ga-hordes</span><span data-lang="en">Mega hordes</span></a>
+      <a href="#reforme"><span data-lang="fr">Se disperser n'est pas dispara&icirc;tre</span><span data-lang="en">Scattering is not vanishing</span></a>
+      <a href="#derive"><span data-lang="fr">Ce que &ccedil;a produit</span><span data-lang="en">What it produces</span></a>
+    </div>
+  </aside>
+
+  <main>
+    <div class="prose pagehead">
+      <p class="eyebrow"><span data-lang="fr">Syst&egrave;mes centraux</span><span data-lang="en">Core systems</span></p>
+      <h1><span data-lang="fr">Dynamique des hordes</span><span data-lang="en">Horde dynamics</span></h1>
+      <p class="lead" data-lang="fr">Aucune horde ne se comporte comme une autre, et rien de tout cela
+      n'est &eacute;crit &agrave; l'avance. Chacune na&icirc;t avec une graine et vit avec
+      ses cons&eacute;quences.</p>
+      <p class="lead" data-lang="en">No horde behaves like any other, and none of it is
+      written in advance. Each is born with a seed and lives with its consequences.</p>
+    </div>
+
+    <h2 id="graine"><span data-lang="fr">La graine</span><span data-lang="en">The seed</span></h2>
+    <div class="prose">
+      <p data-lang="fr">&Agrave; sa cr&eacute;ation, une horde re&ccedil;oit un nombre qui ne changera
+      plus. De ce nombre d&eacute;coulent sa vitesse, sa patience, sa sensibilit&eacute; au
+      bruit, son go&ucirc;t pour l'errance, sa coh&eacute;sion, sa dispersion, la
+      fa&ccedil;on dont elle se d&eacute;pose au sol et jusqu'&agrave; sa tendance &agrave;
+      changer d'avis en route.</p>
+      <p data-lang="en">When it is created, a horde receives a number that will never change.
+      From that number follow its speed, its patience, its sensitivity to sound, its taste
+      for roaming, its cohesion, its spread, the way it settles on the ground and even its
+      tendency to change its mind along the way.</p>
+      <p data-lang="fr">Il n'y a pas de types de hordes, pas de liste d'arch&eacute;types &agrave;
+      apprendre. Deux hordes de m&ecirc;me taille au m&ecirc;me endroit peuvent l'une rester
+      deux jours et repartir droit vers la ville suivante, l'autre tourner en rond dans le
+      quartier pendant des heures avant de se disperser sur une route. Rien ne le
+      pr&eacute;dit de l'ext&eacute;rieur.</p>
+      <p data-lang="en">There are no horde types, no list of archetypes to learn. Of two
+      hordes of the same size in the same place, one may stay two days and then head straight
+      for the next town, the other circle the neighbourhood for hours before scattering along
+      a road. Nothing predicts it from the outside.</p>
+    </div>
+
+    <h2 id="taille"><span data-lang="fr">La taille et l'emprise</span><span data-lang="en">Size and footprint</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Une horde occupe une surface proportionnelle &agrave; son effectif, mais pas
+      lin&eacute;airement : elle s'&eacute;tale de moins en moins vite &agrave; mesure
+      qu'elle grossit. Un groupe de quatre tient dans un jardin, un groupe de quatre-vingts
+      couvre un p&acirc;t&eacute; de maisons, et non vingt fois plus de terrain.</p>
+      <p data-lang="en">A horde occupies an area proportional to its numbers, but not
+      linearly: it spreads more and more slowly as it grows. A group of four fits in a
+      garden, a group of eighty covers a city block, not twenty times as much ground.</p>
+      <p data-lang="fr">C'est cette emprise qui d&eacute;cide de tout le reste. Deux hordes
+      interagissent quand leurs disques se touchent, et une horde entre dans le champ
+      d'un joueur quand son disque y entre.</p>
+      <p data-lang="en">That footprint is what decides everything else. Two hordes interact
+      when their discs touch, and a horde enters a player's field when its disc does.</p>
+    </div>
+
+    <h2 id="absorption"><span data-lang="fr">L'absorption</span><span data-lang="en">Absorption</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Quand deux hordes se rencontrent, la plus petite se vide progressivement dans la
+      plus grande. Le transfert n'est jamais instantan&eacute; : il s'&eacute;coule, zombie
+      par zombie, tant que le contact dure.</p>
+      <p data-lang="en">When two hordes meet, the smaller drains gradually into the larger.
+      The transfer is never instant: it flows, zombie by zombie, for as long as the contact
+      lasts.</p>
+      <p data-lang="fr">Le d&eacute;bit d&eacute;pend de la taille de celle qui c&egrave;de. Un petit
+      groupe est absorb&eacute; rapidement, un gros r&eacute;siste et se vide lentement.
+      Deux hordes importantes qui se croisent ne fusionnent donc pas d'un bloc : elles se
+      m&eacute;langent le temps de se traverser, et il reste souvent quelque chose de
+      chacune.</p>
+      <p data-lang="en">The rate depends on the size of the one giving way. A small group is
+      absorbed quickly, a large one resists and drains slowly. Two sizeable hordes crossing
+      paths therefore do not merge in one piece: they mix for as long as it takes to pass
+      through each other, and something of each often remains.</p>
+    </div>
+
+    <figure class="wide-fig">
+      <svg viewBox="0 0 900 210" xmlns="http://www.w3.org/2000/svg" role="img"
+           aria-label="Deux hordes en contact, la plus petite se vidant progressivement dans la plus grande.">
+        <defs>
+          <marker id="flow2" viewBox="0 0 10 10" refX="9" refY="5"
+                  markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--l2)"/>
+          </marker>
+        </defs>
+        <g font-size="10.5" font-family="ui-monospace, monospace" fill="var(--text-faint)"
+           text-anchor="middle">
+          <text x="150" y="20" data-lang="fr">CONTACT</text><text x="150" y="20" data-lang="en">CONTACT</text>
+          <text x="450" y="20" data-lang="fr">PENDANT</text><text x="450" y="20" data-lang="en">DURING</text>
+          <text x="750" y="20" data-lang="fr">APR&Egrave;S</text><text x="750" y="20" data-lang="en">AFTER</text>
+        </g>
+
+        <circle cx="112" cy="112" r="52" fill="var(--l1)" fill-opacity="0.30" stroke="var(--l1)" stroke-width="2"/>
+        <circle cx="206" cy="112" r="34" fill="var(--l3)" fill-opacity="0.30" stroke="var(--l3)" stroke-width="2"/>
+        <text x="112" y="118" font-size="15" text-anchor="middle" fill="var(--text)"
+              font-family="ui-monospace, monospace" data-lang="both">60</text>
+        <text x="206" y="117" font-size="13" text-anchor="middle" fill="var(--text)"
+              font-family="ui-monospace, monospace" data-lang="both">24</text>
+
+        <circle cx="412" cy="112" r="56" fill="var(--l1)" fill-opacity="0.30" stroke="var(--l1)" stroke-width="2"/>
+        <circle cx="506" cy="112" r="27" fill="var(--l3)" fill-opacity="0.30" stroke="var(--l3)" stroke-width="2"/>
+        <text x="412" y="118" font-size="15" text-anchor="middle" fill="var(--text)"
+              font-family="ui-monospace, monospace" data-lang="both">70</text>
+        <text x="506" y="117" font-size="12" text-anchor="middle" fill="var(--text)"
+              font-family="ui-monospace, monospace" data-lang="both">14</text>
+        <path d="M 486 112 L 452 112" stroke="var(--l2)" stroke-width="2.5" marker-end="url(#flow2)"/>
+        <g fill="var(--l2)">
+          <circle class="xfer" cx="500" cy="104" r="3"/>
+          <circle class="xfer" cx="500" cy="112" r="3" style="animation-delay:2s"/>
+          <circle class="xfer" cx="500" cy="120" r="3" style="animation-delay:4s"/>
+        </g>
+
+        <circle cx="726" cy="112" r="60" fill="var(--l1)" fill-opacity="0.30" stroke="var(--l1)" stroke-width="2"/>
+        <circle cx="818" cy="112" r="17" fill="var(--l3)" fill-opacity="0.30" stroke="var(--l3)" stroke-width="2"/>
+        <text x="726" y="118" font-size="15" text-anchor="middle" fill="var(--text)"
+              font-family="ui-monospace, monospace" data-lang="both">79</text>
+        <text x="818" y="116" font-size="11" text-anchor="middle" fill="var(--text)"
+              font-family="ui-monospace, monospace" data-lang="both">5</text>
+
+        <g font-size="11" fill="var(--text-dim)" text-anchor="middle">
+          <text x="150" y="192" data-lang="fr">les disques se touchent</text><text x="150" y="192" data-lang="en">the discs touch</text>
+          <text x="450" y="192" data-lang="fr">le transfert s'&eacute;coule</text><text x="450" y="192" data-lang="en">the transfer flows</text>
+          <text x="750" y="192" data-lang="fr">le contact cesse avant la fin</text><text x="750" y="192" data-lang="en">contact ends before it finishes</text>
+        </g>
+        <g stroke="var(--rule)" stroke-width="1">
+          <path d="M 300 34 L 300 172"/><path d="M 600 34 L 600 172"/>
+        </g>
+      </svg>
+      <figcaption data-lang="fr">Le transfert prend le temps du contact. Si les deux hordes se
+      s&eacute;parent avant la fin, la plus petite survit, plus petite encore.</figcaption>
+      <figcaption data-lang="en">The transfer takes as long as the contact. If the two hordes
+      separate before it finishes, the smaller survives, smaller still.</figcaption>
+    </figure>
+
+    <h2 id="ancres"><span data-lang="fr">Les ancres</span><span data-lang="en">Anchors</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Deux hordes qui se recouvrent se repoussent aussi, pour ne pas se superposer
+      ind&eacute;finiment. Mais la pouss&eacute;e n'est pas sym&eacute;trique : une horde
+      pos&eacute;e sur un lieu ne bouge pas, seule celle qui traverse est
+      d&eacute;vi&eacute;e.</p>
+      <p data-lang="en">Two overlapping hordes also push each other apart, so as not to stack
+      indefinitely. But the push is not symmetric: a horde settled on a place does not move,
+      only the one passing through is deflected.</p>
+      <p data-lang="fr">Les hordes stationnaires se comportent donc comme des ancres, et les hordes en
+      migration <strong>contournent les zones denses</strong> au lieu de les traverser en y
+      creusant un couloir vide. Une ville tenue reste tenue, et le trafic qui la longe
+      s'&eacute;coule autour.</p>
+      <p data-lang="en">Stationary hordes therefore act as anchors, and migrating hordes
+      <strong>go around dense areas</strong> instead of cutting an empty corridor through
+      them. A held town stays held, and the traffic passing by flows around it.</p>
+    </div>
+
+    <h2 id="scission"><span data-lang="fr">La scission</span><span data-lang="en">Splitting</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Une horde peut se diviser &agrave; trois moments : en chemin, lors d'une de ses
+      &eacute;valuations de route ; en arrivant sur un point d'int&eacute;r&ecirc;t ; ou
+      simplement parce qu'elle est devenue trop grosse. Plus elle d&eacute;passe sa taille
+      normale, plus elle se fragmente violemment.</p>
+      <p data-lang="en">A horde can divide at three moments: on the way, during one of its
+      route evaluations; on arriving at a point of interest; or simply because it has grown
+      too large. The further it exceeds its normal size, the more violently it
+      fragments.</p>
+      <p data-lang="fr">Le morceau d&eacute;tach&eacute; est &eacute;ject&eacute; devant, hors de
+      l'emprise du parent, et il ne peut pas revenir s'y fondre imm&eacute;diatement. Sans
+      ce d&eacute;lai, une horde se scinderait et se recomposerait sans fin au m&ecirc;me
+      endroit.</p>
+      <p data-lang="en">The detached piece is ejected ahead, outside the parent's footprint,
+      and it cannot immediately melt back into it. Without that delay, a horde would split
+      and reassemble endlessly in the same spot.</p>
+      <p data-lang="fr">Si le point de sortie tombe dans l'eau, d'autres directions sont
+      essay&eacute;es autour du parent. Quand aucune ne convient, ce qui n'arrive que sur
+      une langue de terre enti&egrave;rement cern&eacute;e, la scission est
+      annul&eacute;e.</p>
+      <p data-lang="en">If the exit point falls in water, other directions are tried around
+      the parent. When none is suitable, which only happens on a strip of land entirely
+      surrounded, the split is cancelled.</p>
+    </div>
+
+    <h2 id="mega"><span data-lang="fr">Les m&eacute;ga-hordes</span><span data-lang="en">Mega hordes</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Au-del&agrave; du double de sa taille normale, une horde peut basculer dans un
+      &eacute;tat particulier. Ce n'est pas automatique : le tirage se fait une seule fois,
+      et sa chance d&eacute;pend de la coh&eacute;sion h&eacute;rit&eacute;e de la graine.
+      Une horde tr&egrave;s soud&eacute;e a plus de chances d'y arriver.</p>
+      <p data-lang="en">Beyond double its normal size, a horde can tip into a particular
+      state. It is not automatic: the roll happens once, and its odds depend on the cohesion
+      inherited from the seed. A very tight-knit horde is more likely to get there.</p>
+      <p data-lang="fr">Une m&eacute;ga-horde ne se scinde plus, ne se laisse absorber par personne, et
+      <strong>ne s'arr&ecirc;te pas</strong>. Si elle bascule alors qu'elle stationnait,
+      elle repart aussit&ocirc;t. L'&eacute;tat dure un temps limit&eacute;, avec une chance
+      de se prolonger, et prend fin de lui-m&ecirc;me si elle redescend sous le seuil.</p>
+      <p data-lang="en">A mega horde no longer splits, lets nobody absorb it, and <strong>does
+      not stop</strong>. If it tips over while stationed, it sets off at once. The state lasts
+      a limited time, with a chance of extending, and ends by itself if the horde drops back
+      below the threshold.</p>
+      <p data-lang="fr">Le r&eacute;glage existe pour d&eacute;sactiver enti&egrave;rement le
+      ph&eacute;nom&egrave;ne.</p>
+      <p data-lang="en">A setting exists to disable the phenomenon entirely.</p>
+    </div>
+
+    <h2 id="reforme"><span data-lang="fr">Se disperser n'est pas dispara&icirc;tre</span><span data-lang="en">Scattering is not vanishing</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Une horde qui croise un joueur se d&eacute;fait : elle devient une poign&eacute;e
+      d'individus, dont certains deviennent des zombies bien r&eacute;els. C'est le
+      m&eacute;canisme d&eacute;crit sur la <a href="simulation.html">page simulation</a>.</p>
+      <p data-lang="en">A horde that runs into a player comes apart: it becomes a handful of
+      individuals, some of which become entirely real zombies. That is the mechanism described
+      on the <a href="simulation.html">simulation page</a>.</p>
+      <p data-lang="fr">Ce qui arrive ensuite compte autant. Quand ces individus s'&eacute;loignent, ils
+      cherchent d'abord leur horde d'origine et la rejoignent si elle existe encore. Sinon
+      ils se rallient au premier morceau issu de la m&ecirc;me horde, ou &agrave; n'importe
+      quel petit groupe orphelin qui tra&icirc;ne dans le voisinage. En dernier recours ils
+      reforment une horde, <strong>et celle-ci reprend la graine de la
+      pr&eacute;c&eacute;dente</strong>.</p>
+      <p data-lang="en">What happens next matters just as much. When those individuals move
+      away, they first look for their horde of origin and rejoin it if it still exists.
+      Failing that they fall in with the first fragment from the same horde, or with any small
+      orphan group loitering nearby. As a last resort they form a horde again, <strong>and that
+      one takes up the previous horde's seed</strong>.</p>
+      <p data-lang="fr">Une horde qui traverse une ville habit&eacute;e ressort donc de l'autre
+      c&ocirc;t&eacute; en &eacute;tant toujours la m&ecirc;me : m&ecirc;me
+      temp&eacute;rament, m&ecirc;me fa&ccedil;on de se d&eacute;poser, m&ecirc;me
+      go&ucirc;t pour l'errance. Ce qu'elle a perdu, ce sont les zombies tu&eacute;s en
+      chemin.</p>
+      <p data-lang="en">A horde crossing an inhabited town therefore comes out the other side
+      still being the same one: same temperament, same way of settling, same taste for
+      roaming. What it has lost is the zombies killed on the way.</p>
+    </div>
+
+    <h2 id="derive"><span data-lang="fr">Ce que &ccedil;a produit &agrave; l'&eacute;chelle de la carte</span><span data-lang="en">What it produces at map scale</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Ces r&egrave;gles ne d&eacute;crivent que des rencontres locales, et pourtant elles
+      produisent un mouvement d'ensemble.</p>
+      <p data-lang="en">These rules describe nothing but local encounters, and yet they produce
+      an overall movement.</p>
+      <p data-lang="fr">L&agrave; o&ugrave; les hordes sont nombreuses, elles se rencontrent souvent, donc
+      elles se rassemblent. L&agrave; o&ugrave; elles sont rares, elles perdent des
+      tra&icirc;nards que rien ne vient r&eacute;cup&eacute;rer. Avec le temps, <strong>les
+      villes se densifient et les campagnes s'&eacute;claircissent</strong>, sans qu'aucune
+      r&egrave;gle ne l'ait demand&eacute;.</p>
+      <p data-lang="en">Where hordes are numerous they meet often, so they gather. Where they
+      are scarce they shed stragglers that nothing comes to collect. Over time, <strong>cities
+      grow denser and the countryside thins out</strong>, without any rule having asked for
+      it.</p>
+      <p data-lang="fr">La carte de densit&eacute; construite au d&eacute;but de la partie n'est donc
+      qu'un point de d&eacute;part. Ce qui la fait &eacute;voluer ensuite, ce sont ces
+      contacts, un par un.</p>
+      <p data-lang="en">The density map built at the start of the game is therefore only a
+      point of departure. What makes it evolve afterwards is those contacts, one by one.</p>
+    </div>
+
+    <div class="note">
+      <p data-lang="fr"><strong>Ce que &ccedil;a change en jeu :</strong> une ville laiss&eacute;e
+      tranquille n'est pas une ville stable. Elle attire, elle retient, et elle grossit
+      pendant qu'on regarde ailleurs.</p>
+      <p data-lang="en"><strong>What this changes in play:</strong> a town left alone is not a
+      stable town. It attracts, it holds, and it grows while attention is elsewhere.</p>
+    </div>
+  </main>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span data-lang="fr">Documentation Living Hordes</span><span data-lang="en">Living Hordes documentation</span>
+    <span><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3691686404"><span data-lang="fr">Page Workshop</span><span data-lang="en">Workshop page</span></a></span>
+  </div>
+</footer>
+
+<script src="assets/site.js?v=6"></script>
+</body>
+</html>

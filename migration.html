@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="fr" data-title-fr="Migration - Living Hordes" data-title-en="Migration - Living Hordes">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Migration - Living Hordes</title>
+<link rel="stylesheet" href="assets/site.css?v=6">
+<script>
+(function () {
+  var d = document.documentElement, t = null, l = null;
+  try {
+    t = localStorage.getItem("lh-theme");
+    l = localStorage.getItem("lh-lang");
+  } catch (e) {}
+  if (t) d.setAttribute("data-theme", t);
+  if (l !== "fr" && l !== "en") {
+    l = (navigator.language || "en").toLowerCase().indexOf("fr") === 0 ? "fr" : "en";
+  }
+  d.setAttribute("data-sitelang", l);
+  d.setAttribute("lang", l);
+  var tt = d.getAttribute("data-title-" + l);
+  if (tt) document.title = tt;
+})();
+</script>
+</head>
+<body data-page="migration">
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <a class="brand" href="index.html"><b>Living Hordes</b><span>Documentation</span></a>
+    <nav class="sitenav">
+      <a href="simulation.html">Simulation</a>
+      <a href="density.html"><span data-lang="fr">Densit&eacute;</span><span data-lang="en">Density</span></a>
+      <a href="migration.html" aria-current="page">Migration</a>
+      <a href="hordes.html">Hordes</a>
+      <a href="sealing.html"><span data-lang="fr">Scellement</span><span data-lang="en">Sealing</span></a>
+      <a href="defense.html"><span data-lang="fr">D&eacute;fense</span><span data-lang="en">Defense</span></a>
+      <a href="sound.html"><span data-lang="fr">Son</span><span data-lang="en">Sound</span></a>
+      <a href="sandbox.html">Sandbox</a>
+    </nav>
+    <div class="tools">
+      <div class="langtoggle">
+        <button type="button" data-setlang="fr">FR</button>
+        <button type="button" data-setlang="en">EN</button>
+      </div>
+      <button class="motiontoggle" id="motion-toggle" type="button" aria-pressed="false"
+              title="Animations">Anim.</button>
+      <button class="themetoggle" id="theme-toggle" type="button"
+              title="Th&egrave;me / Theme">&#9680;</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <aside class="toc">
+    <div class="toc-sticky">
+      <h2><span data-lang="fr">Sur cette page</span><span data-lang="en">On this page</span></h2>
+      <a href="#destination"><span data-lang="fr">Choisir une destination</span><span data-lang="en">Choosing a destination</span></a>
+      <a href="#trajet"><span data-lang="fr">La forme d'un trajet</span><span data-lang="en">The shape of a route</span></a>
+      <a href="#eau"><span data-lang="fr">L'eau</span><span data-lang="en">Water</span></a>
+      <a href="#errance"><span data-lang="fr">L'errance</span><span data-lang="en">Roaming</span></a>
+      <a href="#stationnement"><span data-lang="fr">Le stationnement</span><span data-lang="en">Stationing</span></a>
+      <a href="#dormance"><span data-lang="fr">La dormance</span><span data-lang="en">Dormancy</span></a>
+      <a href="#renforts"><span data-lang="fr">D'o&ugrave; viennent les renforts</span><span data-lang="en">Where reinforcements come from</span></a>
+    </div>
+  </aside>
+
+  <main>
+    <div class="prose pagehead">
+      <p class="eyebrow"><span data-lang="fr">Syst&egrave;mes centraux</span><span data-lang="en">Core systems</span></p>
+      <h1 data-lang="both">Migration</h1>
+      <p class="lead" data-lang="fr">Les groupes traversent la carte sans personne pour les regarder. Ce
+      qu'ils choisissent, comment ils y vont, et pourquoi le chemin ne ressemble jamais
+      &agrave; une ligne droite.</p>
+      <p class="lead" data-lang="en">Groups cross the map with nobody watching them. What they
+      choose, how they get there, and why the path never looks like a straight line.</p>
+    </div>
+
+    <h2 id="destination"><span data-lang="fr">Choisir une destination</span><span data-lang="en">Choosing a destination</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Une horde qui repart tire sa destination parmi les points d'int&eacute;r&ecirc;t
+      &agrave; port&eacute;e, pond&eacute;r&eacute;s par leur densit&eacute;. Les endroits
+      fr&eacute;quent&eacute;s attirent donc plus de trafic, ce qui entretient les foyers
+      denses au lieu de les diluer.</p>
+      <p data-lang="en">A horde setting off draws its destination from the points of interest
+      in range, weighted by their density. Busy places therefore attract more traffic, which
+      sustains the dense centres instead of diluting them.</p>
+      <p data-lang="fr">Une distance minimale emp&ecirc;che de choisir la porte d'&agrave; c&ocirc;t&eacute;
+      et de faire du surplace. Si rien de valable n'est trouv&eacute; dans la port&eacute;e
+      habituelle, elle est &eacute;tendue par paliers successifs, jusqu'&agrave; huit fois
+      la distance de d&eacute;part. Une horde perdue en pleine campagne finit donc toujours
+      par trouver quelque chose, m&ecirc;me si ce quelque chose est loin.</p>
+      <p data-lang="en">A minimum distance prevents picking the door next door and going
+      nowhere. If nothing suitable is found within the usual range, it is extended in
+      successive steps, up to eight times the starting distance. A horde lost deep in the
+      countryside therefore always ends up finding something, even if that something is far
+      away.</p>
+      <p data-lang="fr">Chaque candidat est &eacute;prouv&eacute; avant d'&ecirc;tre retenu : si le trajet
+      traverse une &eacute;tendue d'eau infranchissable, il est &eacute;cart&eacute; et un
+      autre est tir&eacute;. Et une part configurable des d&eacute;placements ignore
+      compl&egrave;tement les points d'int&eacute;r&ecirc;t pour partir en rase campagne,
+      parce que toutes les hordes ne vont pas quelque part.</p>
+      <p data-lang="en">Every candidate is tested before being kept: if the route crosses an
+      impassable body of water, it is discarded and another is drawn. And a configurable share
+      of movements ignores points of interest altogether and heads into open country, because
+      not every horde is going somewhere.</p>
+    </div>
+
+    <h2 id="trajet"><span data-lang="fr">La forme d'un trajet</span><span data-lang="en">The shape of a route</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Le chemin entre deux points n'est pas une ligne. Il est constitu&eacute; d'&eacute;tapes
+      pos&eacute;es par un bruit de Perlin, ce qui produit une courbe irr&eacute;guli&egrave;re
+      mais continue, sans les angles droits d'un d&eacute;placement en grille ni la raideur
+      d'un trac&eacute; direct.</p>
+      <p data-lang="en">The path between two points is not a line. It is made of waypoints laid
+      down by Perlin noise, which produces an irregular but continuous curve, without the right
+      angles of grid movement or the stiffness of a direct line.</p>
+      <p data-lang="fr">En route, la horde &eacute;value r&eacute;guli&egrave;rement sa situation, tous les
+      cinquante pas environ. &Agrave; chacun de ces points elle peut d&eacute;vier de
+      quarante-cinq degr&eacute;s et se recalculer un trajet, ou se scinder. En zone dense
+      ces &eacute;valuations sont deux fois plus rapproch&eacute;es, donc une horde change
+      de cap plus souvent en ville qu'en rase campagne.</p>
+      <p data-lang="en">On the way, the horde reassesses its situation regularly, roughly every
+      fifty steps. At each of those points it can deviate by forty-five degrees and recompute a
+      route, or split. In dense areas those assessments are twice as close together, so a horde
+      changes course more often in town than in open country.</p>
+    </div>
+
+    <figure class="wide-fig">
+      <svg viewBox="0 0 900 230" xmlns="http://www.w3.org/2000/svg" role="img"
+           aria-label="Un m&ecirc;me trajet trac&eacute; en ligne droite puis tel que le mod le produit.">
+        <g font-size="11" font-family="ui-monospace, monospace" fill="var(--text-faint)">
+          <text x="20" y="20" data-lang="fr">CE QUE CE N'EST PAS</text><text x="20" y="20" data-lang="en">WHAT IT IS NOT</text>
+          <text x="480" y="20" data-lang="fr">CE QUE C'EST</text><text x="480" y="20" data-lang="en">WHAT IT IS</text>
+        </g>
+
+        <circle cx="50" cy="170" r="6" fill="var(--l1)"/>
+        <circle cx="410" cy="60" r="6" fill="var(--l3)"/>
+        <line x1="50" y1="170" x2="410" y2="60" stroke="var(--text-faint)" stroke-width="2"
+              stroke-dasharray="6 5"/>
+        <text x="230" y="130" font-size="11" fill="var(--text-faint)" text-anchor="middle" data-lang="fr">une ligne droite</text><text x="230" y="130" font-size="11" fill="var(--text-faint)" text-anchor="middle" data-lang="en">a straight line</text>
+
+        <circle cx="510" cy="170" r="6" fill="var(--l1)"/>
+        <circle cx="870" cy="60" r="6" fill="var(--l3)"/>
+        <path d="M 510 170 C 560 130, 590 178, 636 150 S 706 96, 752 118 S 826 52, 870 60"
+              fill="none" stroke="var(--l2)" stroke-width="2.5"/>
+        <g fill="var(--l2)">
+          <circle cx="636" cy="150" r="4"/><circle cx="752" cy="118" r="4"/>
+        </g>
+        <circle class="walker" cx="510" cy="170" r="6.5" fill="var(--p-migration)"/>
+        <g stroke="var(--l3)" stroke-width="1.5" opacity="0.75">
+          <path d="M 592 150 L 592 168"/><path d="M 700 122 L 700 140"/>
+          <path d="M 808 88 L 808 106"/>
+        </g>
+        <text x="592" y="184" font-size="10" fill="var(--l3)" text-anchor="middle"
+              font-family="ui-monospace, monospace" data-lang="fr">&eacute;valuation</text>
+        <text x="592" y="184" font-size="10" fill="var(--l3)" text-anchor="middle"
+              font-family="ui-monospace, monospace" data-lang="en">assessment</text>
+
+        <text x="690" y="212" font-size="11" fill="var(--text-dim)" text-anchor="middle" data-lang="fr">
+          &eacute;tapes pos&eacute;es par le bruit, &eacute;valuations en chemin</text>
+        <text x="690" y="212" font-size="11" fill="var(--text-dim)" text-anchor="middle" data-lang="en">
+          waypoints laid by noise, assessments on the way</text>
+
+        <line x1="450" y1="30" x2="450" y2="200" stroke="var(--rule)" stroke-width="1"/>
+      </svg>
+      <figcaption data-lang="fr">Les points pleins sont les &eacute;tapes du trajet, les traits verticaux
+      les moments o&ugrave; la horde reconsid&egrave;re sa route. Le trac&eacute; reste
+      continu, mais rien n'y est align&eacute; sur une grille.</figcaption>
+      <figcaption data-lang="en">The solid dots are the waypoints of the route, the vertical
+      strokes the moments where the horde reconsiders its path. The line stays continuous, but
+      nothing in it is aligned to a grid.</figcaption>
+    </figure>
+
+    <h2 id="eau"><span data-lang="fr">L'eau</span><span data-lang="en">Water</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Une horde doit pouvoir patauger dans un ruisseau sans pouvoir traverser l'Ohio.
+      Le mod ne s&eacute;pare donc pas l'eau du reste, il s&eacute;pare <strong>l'eau mince
+      de l'eau large</strong>.</p>
+      <p data-lang="en">A horde must be able to wade through a stream without being able to
+      cross the Ohio. The mod therefore does not separate water from the rest, it separates
+      <strong>thin water from wide water</strong>.</p>
+      <p data-lang="fr">La carte des eaux est livr&eacute;e avec le mod, calcul&eacute;e une fois pour
+      toutes &agrave; partir des images de la carte du jeu. Il n'existe aucun moyen de la
+      relever enti&egrave;rement au chargement : le moteur ne r&eacute;pond que pour le
+      terrain qu'il a d&eacute;j&agrave; charg&eacute;. L'exploration vient donc seulement
+      compl&eacute;ter cette donn&eacute;e, ce qui couvre notamment les cartes
+      modd&eacute;es, pour lesquelles rien n'a &eacute;t&eacute; pr&eacute;par&eacute;.</p>
+      <p data-lang="en">The water map ships with the mod, computed once and for all from the
+      game's map images. There is no way to survey it in full at load time: the engine only
+      answers for terrain it has already loaded. Exploration therefore only completes that
+      data, which covers modded maps in particular, for which nothing has been
+      prepared.</p>
+      <p data-lang="fr">En revanche, rien ne dit &agrave; l'avance quelle &eacute;tendue se franchit. La
+      mesure est g&eacute;om&eacute;trique : une &eacute;tendue est franchissable si elle
+      est &eacute;troite sur au moins un de ses deux axes. Un ruisseau l'est
+      forc&eacute;ment, une rivi&egrave;re large ou un lac ne l'est sur aucun.
+      <strong>Aucun cours d'eau n'a &eacute;t&eacute; class&eacute; &agrave; la main.</strong></p>
+      <p data-lang="en">What nothing states in advance, however, is which body of water can be
+      crossed. The measure is geometric: a body of water is crossable if it is narrow on at
+      least one of its two axes. A stream necessarily is, a wide river or a lake is on neither.
+      <strong>No watercourse has been classified by hand.</strong></p>
+      <p data-lang="fr">Une eau franchissable se traverse &agrave; vitesse r&eacute;duite. Une eau
+      bloquante fait replanifier le trajet, et une horde errante qui la rencontre repart
+      simplement dans une autre direction.</p>
+      <p data-lang="en">Crossable water is crossed at reduced speed. Blocking water forces the
+      route to be replanned, and a roaming horde that meets it simply sets off in another
+      direction.</p>
+    </div>
+
+    <figure>
+      <svg viewBox="0 0 620 230" xmlns="http://www.w3.org/2000/svg" role="img"
+           aria-label="Un ruisseau &eacute;troit sur un axe et une rivi&egrave;re large sur les deux.">
+        <rect x="40" y="30" width="230" height="160" fill="var(--bg-sunken)"/>
+        <path d="M 128 30 L 156 30 L 168 190 L 140 190 Z" fill="var(--l2)" fill-opacity="0.55"/>
+        <g stroke="var(--l1)" stroke-width="1.5">
+          <path d="M 118 110 L 178 110"/>
+          <path d="M 118 104 L 118 116"/><path d="M 178 104 L 178 116"/>
+        </g>
+        <text x="148" y="98" font-size="10.5" fill="var(--l1)" text-anchor="middle"
+              font-family="ui-monospace, monospace" data-lang="fr">&eacute;troit</text>
+        <text x="148" y="98" font-size="10.5" fill="var(--l1)" text-anchor="middle"
+              font-family="ui-monospace, monospace" data-lang="en">narrow</text>
+        <text x="155" y="212" font-size="12" fill="var(--text)" text-anchor="middle" data-lang="fr">franchissable</text><text x="155" y="212" font-size="12" fill="var(--text)" text-anchor="middle" data-lang="en">crossable</text>
+
+        <rect x="350" y="30" width="230" height="160" fill="var(--bg-sunken)"/>
+        <path d="M 350 74 L 580 58 L 580 158 L 350 142 Z" fill="var(--l2)" fill-opacity="0.55"/>
+        <g stroke="var(--l3)" stroke-width="1.5">
+          <path d="M 465 66 L 465 150"/>
+          <path d="M 459 66 L 471 66"/><path d="M 459 150 L 471 150"/>
+          <path d="M 350 108 L 580 108" stroke-dasharray="4 4" opacity="0.6"/>
+        </g>
+        <text x="486" y="112" font-size="10.5" fill="var(--l3)"
+              font-family="ui-monospace, monospace" data-lang="fr">large</text>
+        <text x="486" y="112" font-size="10.5" fill="var(--l3)"
+              font-family="ui-monospace, monospace" data-lang="en">wide</text>
+        <text x="465" y="212" font-size="12" fill="var(--text)" text-anchor="middle" data-lang="fr">bloquante</text><text x="465" y="212" font-size="12" fill="var(--text)" text-anchor="middle" data-lang="en">blocking</text>
+      </svg>
+      <figcaption data-lang="fr">La mesure porte sur les deux axes. &Ecirc;tre &eacute;troit sur un seul
+      suffit &agrave; rendre une &eacute;tendue franchissable, ce qui distingue un
+      affluent d'un fleuve sans avoir &agrave; les nommer.</figcaption>
+      <figcaption data-lang="en">The measure covers both axes. Being narrow on just one is
+      enough to make a body of water crossable, which tells a tributary from a river without
+      having to name either.</figcaption>
+    </figure>
+
+    <h2 id="errance"><span data-lang="fr">L'errance</span><span data-lang="en">Roaming</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Toutes les hordes ne migrent pas. Beaucoup errent, et l'errance ob&eacute;it &agrave;
+      d'autres r&egrave;gles : pas de destination, pas de trajet calcul&eacute;, une
+      direction retir&eacute;e au hasard &agrave; chaque &eacute;valuation, et une ligne
+      droite entre deux.</p>
+      <p data-lang="en">Not every horde migrates. Many roam, and roaming obeys different rules:
+      no destination, no computed route, a direction redrawn at random at each assessment, and a
+      straight line between two of them.</p>
+      <p data-lang="fr">Ce qui la retient, c'est une ancre pos&eacute;e &agrave; l'endroit o&ugrave; elle a
+      commenc&eacute;. Plus la horde s'en &eacute;loigne, plus un rappel la ram&egrave;ne
+      vers elle, ce qui produit une patrouille autour d'un lieu plut&ocirc;t qu'une
+      d&eacute;rive. Ce rappel s'applique apr&egrave;s les attirances ext&eacute;rieures,
+      pr&eacute;cis&eacute;ment pour contrer celles qui tenteraient de la tirer hors de sa
+      zone.</p>
+      <p data-lang="en">What holds it back is an anchor placed where it started. The further the
+      horde strays from it, the more a pull brings it back, which produces a patrol around a
+      place rather than a drift. That pull is applied after the outside attractions, precisely to
+      counter the ones that would try to draw it out of its area.</p>
+      <p data-lang="fr">Quand son temps d'errance est &eacute;puis&eacute;, elle repart vers un nouveau
+      point d'int&eacute;r&ecirc;t ou se pose sur place, sans repasser par une phase
+      d'attente interm&eacute;diaire.</p>
+      <p data-lang="en">When its roaming time runs out, it either sets off for a new point of
+      interest or settles where it is, without passing through an intermediate waiting
+      phase.</p>
+    </div>
+
+    <h2 id="stationnement"><span data-lang="fr">Le stationnement</span><span data-lang="en">Stationing</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Une horde arriv&eacute;e ne repart pas tout de suite. Sa dur&eacute;e de
+      s&eacute;jour d&eacute;pend de la densit&eacute; du lieu : quelques heures dans un
+      champ vide, jusqu'&agrave; deux jours dans un centre-ville. C'est ce qui fait qu'une
+      ville reste peupl&eacute;e alors qu'une route de campagne ne retient personne.</p>
+      <p data-lang="en">A horde that has arrived does not leave straight away. How long it stays
+      depends on the density of the place: a few hours in an empty field, up to two days in a
+      city centre. That is what keeps a town populated while a country road holds nobody.</p>
+      <p data-lang="fr">La graine de personnalit&eacute; module cette dur&eacute;e, donc deux hordes
+      arriv&eacute;es ensemble au m&ecirc;me endroit ne repartent pas ensemble.</p>
+      <p data-lang="en">The personality seed scales that duration, so two hordes that arrived
+      together at the same place do not leave together.</p>
+    </div>
+
+    <h2 id="dormance"><span data-lang="fr">La dormance</span><span data-lang="en">Dormancy</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Sans pr&eacute;caution, une ville que personne ne visite continuerait de tourner
+      &agrave; plein r&eacute;gime : les hordes arrivent, stationnent, repartent, et la
+      ville se viderait en quelques jours pendant que le joueur est ailleurs.</p>
+      <p data-lang="en">Without a safeguard, a town nobody visits would keep running at full
+      tilt: hordes arrive, station, leave, and the town would empty in a few days while the
+      player is elsewhere.</p>
+      <p data-lang="fr">Une cellule qu'aucun joueur n'a approch&eacute;e depuis une dizaine de jours de jeu
+      devient donc dormante, et ses hordes y restent bien plus longtemps. Une ville non
+      visit&eacute;e conserve sa population pendant des semaines.</p>
+      <p data-lang="en">A cell no player has come near for ten days of game time therefore goes
+      dormant, and its hordes stay put far longer. An unvisited town keeps its population for
+      weeks.</p>
+      <p data-lang="fr">Le r&eacute;veil demande une pr&eacute;caution suppl&eacute;mentaire. Sans elle,
+      arriver dans une ville endormie depuis trois semaines ferait expirer d'un coup toutes
+      les horloges de s&eacute;jour, et la ville se viderait sous les yeux du visiteur au
+      moment pr&eacute;cis o&ugrave; il arrive. Les horloges sont donc remises &agrave;
+      l'heure &agrave; l'&eacute;veil.</p>
+      <p data-lang="en">Waking up requires a further safeguard. Without it, arriving in a town
+      asleep for three weeks would expire every stay timer at once, and the town would empty in
+      front of the visitor at the exact moment of arrival. The timers are therefore reset on
+      waking.</p>
+    </div>
+
+    <h2 id="renforts"><span data-lang="fr">D'o&ugrave; viennent les renforts</span><span data-lang="en">Where reinforcements come from</span></h2>
+    <div class="prose">
+      <p data-lang="fr">La carte n'est pas un syst&egrave;me ferm&eacute;. De nouvelles hordes entrent en
+      permanence par ses bords, et celles qui en sortent sont perdues.</p>
+      <p data-lang="en">The map is not a closed system. New hordes enter through its edges
+      continuously, and the ones that leave are lost.</p>
+      <p data-lang="fr">Les points d'entr&eacute;e ne sont pas r&eacute;partis uniform&eacute;ment. Le mod
+      dilate la carte de densit&eacute; pour obtenir une enveloppe autour de tout ce qui est
+      habit&eacute;, en cherche le contour, et pose les entr&eacute;es sur le bord de carte
+      le plus proche de chaque point de ce contour. Une entr&eacute;e situ&eacute;e sur une
+      route re&ccedil;oit un poids plus &eacute;lev&eacute; qu'une entr&eacute;e en plein
+      champ, donc les renforts ont plus de chances d'arriver par une voie de circulation,
+      sans que ce soit une r&egrave;gle absolue.</p>
+      <p data-lang="en">Entry points are not spread uniformly. The mod dilates the density map
+      to obtain an envelope around everything inhabited, finds its outline, and places the
+      entries on the map edge nearest to each point of that outline. An entry sitting on a road
+      receives a higher weight than one in the middle of a field, so reinforcements are more
+      likely to arrive along a route, without that being an absolute rule.</p>
+      <p data-lang="fr">Une cons&eacute;quence n'a &eacute;t&eacute; &eacute;crite nulle part et
+      d&eacute;coule de la g&eacute;om&eacute;trie : toute cellule de contour dont un
+      voisin imm&eacute;diat contient de l'eau est &eacute;cart&eacute;e. Comme une
+      rivi&egrave;re borde tout le nord de la carte, <strong>aucun renfort n'arrive jamais
+      par le nord</strong>. La r&egrave;gle est g&eacute;n&eacute;rale, le r&eacute;sultat
+      est g&eacute;ographiquement juste.</p>
+      <p data-lang="en">One consequence was written nowhere and follows from the geometry: any
+      outline cell with an immediate neighbour containing water is discarded. Since a river runs
+      along the whole north of the map, <strong>no reinforcement ever arrives from the
+      north</strong>. The rule is general, the result is geographically correct.</p>
+      <p data-lang="fr">Le rythme s'ajuste tout seul : plus le monde se vide, plus les arriv&eacute;es
+      s'acc&eacute;l&egrave;rent, et elles se rar&eacute;fient &agrave; mesure qu'il se remplit.</p>
+      <p data-lang="en">The rate adjusts by itself: the emptier the world gets, the faster the
+      arrivals come, and they thin out as it fills up again.</p>
+    </div>
+
+    <figure class="wide-fig">
+      <svg viewBox="0 0 900 340" xmlns="http://www.w3.org/2000/svg" role="img"
+           aria-label="Carte sch&eacute;matique montrant l'enveloppe des zones habit&eacute;es et les points d'entr&eacute;e sur les bords.">
+        <rect x="40" y="30" width="820" height="280" fill="var(--bg-sunken)"
+              stroke="var(--rule)" stroke-width="1.5"/>
+
+        <path d="M 40 30 L 860 30 L 860 78 C 700 62, 480 96, 300 74 C 200 62, 110 82, 40 70 Z"
+              fill="var(--l2)" fill-opacity="0.40"/>
+        <text x="450" y="56" font-size="12" fill="var(--text-dim)" text-anchor="middle" data-lang="fr">la rivi&egrave;re</text><text x="450" y="56" font-size="12" fill="var(--text-dim)" text-anchor="middle" data-lang="en">the river</text>
+
+        <g fill="var(--l3)" fill-opacity="0.5">
+          <ellipse cx="290" cy="170" rx="76" ry="52"/>
+          <ellipse cx="560" cy="222" rx="60" ry="42"/>
+          <ellipse cx="700" cy="140" rx="44" ry="34"/>
+        </g>
+        <g font-size="11.5" fill="var(--text)" text-anchor="middle">
+          <text x="290" y="174" data-lang="fr">ville</text><text x="290" y="174" data-lang="en">town</text><text x="560" y="226" data-lang="fr">ville</text><text x="560" y="226" data-lang="en">town</text>
+          <text x="700" y="144" data-lang="fr">bourg</text><text x="700" y="144" data-lang="en">village</text>
+        </g>
+
+        <path d="M 150 150 C 150 90, 420 92, 560 118 C 700 96, 800 130, 800 180
+                 C 800 250, 640 300, 470 292 C 300 300, 150 250, 150 150 Z"
+              fill="none" stroke="var(--l1)" stroke-width="2" stroke-dasharray="7 5"/>
+        <text x="470" y="318" font-size="11" fill="var(--l1)" text-anchor="middle"
+              font-family="ui-monospace, monospace" data-lang="fr">enveloppe des zones habit&eacute;es</text>
+        <text x="470" y="318" font-size="11" fill="var(--l1)" text-anchor="middle"
+              font-family="ui-monospace, monospace" data-lang="en">envelope of the inhabited areas</text>
+
+        <g stroke="var(--text-faint)" stroke-width="2" opacity="0.55">
+          <path d="M 40 196 L 214 178"/>
+          <path d="M 470 310 L 476 292"/>
+          <path d="M 860 172 L 744 160"/>
+        </g>
+
+        <g fill="var(--l1)">
+          <circle cx="40" cy="196" r="9"/>
+          <circle cx="860" cy="172" r="9"/>
+          <circle cx="470" cy="310" r="7"/>
+          <circle cx="40" cy="252" r="4.5"/>
+          <circle cx="860" cy="244" r="4.5"/>
+          <circle cx="256" cy="310" r="4.5"/>
+          <circle cx="676" cy="310" r="4.5"/>
+        </g>
+
+        <text x="54" y="192" font-size="10.5" fill="var(--l1)"
+              font-family="ui-monospace, monospace" data-lang="fr">route</text>
+        <text x="54" y="192" font-size="10.5" fill="var(--l1)"
+              font-family="ui-monospace, monospace" data-lang="en">road</text>
+        <text x="846" y="168" font-size="10.5" fill="var(--l1)" text-anchor="end"
+              font-family="ui-monospace, monospace" data-lang="fr">route</text>
+        <text x="846" y="168" font-size="10.5" fill="var(--l1)" text-anchor="end"
+              font-family="ui-monospace, monospace" data-lang="en">road</text>
+
+        <text x="450" y="106" font-size="11" fill="var(--l3)" text-anchor="middle"
+              font-family="ui-monospace, monospace" data-lang="fr">AUCUNE ENTR&Eacute;E AU NORD</text>
+        <text x="450" y="106" font-size="11" fill="var(--l3)" text-anchor="middle"
+              font-family="ui-monospace, monospace" data-lang="en">NO ENTRY FROM THE NORTH</text>
+      </svg>
+      <figcaption data-lang="fr">Les gros points sont les entr&eacute;es sur route, les petits les
+      entr&eacute;es de terrain. Le nord n'en porte aucune, non par r&egrave;gle
+      d&eacute;di&eacute;e mais parce que la rivi&egrave;re &eacute;carte toutes les
+      cellules qui la bordent.</figcaption>
+      <figcaption data-lang="en">The large dots are road entries, the small ones terrain
+      entries. The north carries none, not by a dedicated rule but because the river discards
+      every cell that borders it.</figcaption>
+    </figure>
+
+    <div class="note">
+      <p data-lang="fr"><strong>Ce que &ccedil;a change en jeu :</strong> un lieu nettoy&eacute; ne se
+      remplit pas tout seul. Il se remplit parce que quelque chose est arriv&eacute;, et
+      cette chose est venue d'un endroit pr&eacute;cis, par un chemin que rien
+      n'imposait.</p>
+      <p data-lang="en"><strong>What this changes in play:</strong> a cleared place does not
+      refill on its own. It refills because something arrived, and that something came from a
+      specific place, by a path nothing dictated.</p>
+    </div>
+  </main>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span data-lang="fr">Documentation Living Hordes</span><span data-lang="en">Living Hordes documentation</span>
+    <span><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3691686404"><span data-lang="fr">Page Workshop</span><span data-lang="en">Workshop page</span></a></span>
+  </div>
+</footer>
+
+<script src="assets/site.js?v=6"></script>
+</body>
+</html>

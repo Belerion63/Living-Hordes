@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="fr" data-title-fr="Simulation - Living Hordes" data-title-en="Simulation - Living Hordes">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simulation - Living Hordes</title>
+<link rel="stylesheet" href="assets/site.css?v=6">
+<script>
+(function () {
+  var d = document.documentElement, t = null, l = null;
+  try {
+    t = localStorage.getItem("lh-theme");
+    l = localStorage.getItem("lh-lang");
+  } catch (e) {}
+  if (t) d.setAttribute("data-theme", t);
+  if (l !== "fr" && l !== "en") {
+    l = (navigator.language || "en").toLowerCase().indexOf("fr") === 0 ? "fr" : "en";
+  }
+  d.setAttribute("data-sitelang", l);
+  d.setAttribute("lang", l);
+  var tt = d.getAttribute("data-title-" + l);
+  if (tt) document.title = tt;
+})();
+</script>
+</head>
+<body data-page="simulation">
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <a class="brand" href="index.html"><b>Living Hordes</b><span>Documentation</span></a>
+    <nav class="sitenav">
+      <a href="simulation.html" aria-current="page">Simulation</a>
+      <a href="density.html"><span data-lang="fr">Densit&eacute;</span><span data-lang="en">Density</span></a>
+      <a href="migration.html">Migration</a>
+      <a href="hordes.html">Hordes</a>
+      <a href="sealing.html"><span data-lang="fr">Scellement</span><span data-lang="en">Sealing</span></a>
+      <a href="defense.html"><span data-lang="fr">D&eacute;fense</span><span data-lang="en">Defense</span></a>
+      <a href="sound.html"><span data-lang="fr">Son</span><span data-lang="en">Sound</span></a>
+      <a href="sandbox.html">Sandbox</a>
+    </nav>
+    <div class="tools">
+      <div class="langtoggle">
+        <button type="button" data-setlang="fr">FR</button>
+        <button type="button" data-setlang="en">EN</button>
+      </div>
+      <button class="motiontoggle" id="motion-toggle" type="button" aria-pressed="false"
+              title="Animations">Anim.</button>
+      <button class="themetoggle" id="theme-toggle" type="button"
+              title="Th&egrave;me / Theme">&#9680;</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <aside class="toc">
+    <div class="toc-sticky">
+      <h2><span data-lang="fr">Sur cette page</span><span data-lang="en">On this page</span></h2>
+      <a href="#formes"><span data-lang="fr">Trois formes</span><span data-lang="en">Three forms</span></a>
+      <a href="#seuils"><span data-lang="fr">O&ugrave; vit chaque forme</span><span data-lang="en">Where each form lives</span></a>
+      <a href="#rythme"><span data-lang="fr">Le rythme plut&ocirc;t que la distance</span><span data-lang="en">Cadence rather than distance</span></a>
+      <a href="#arrivee"><span data-lang="fr">L'arriv&eacute;e</span><span data-lang="en">Arrival</span></a>
+      <a href="#dissolution"><span data-lang="fr">La dissolution</span><span data-lang="en">Dissolution</span></a>
+      <a href="#formation"><span data-lang="fr">La formation</span><span data-lang="en">Formation</span></a>
+      <a href="#etre-vu"><span data-lang="fr">&Ecirc;tre vu</span><span data-lang="en">Being seen</span></a>
+      <a href="#repartir"><span data-lang="fr">Repartir</span><span data-lang="en">Leaving again</span></a>
+    </div>
+  </aside>
+
+  <main>
+    <div class="prose pagehead">
+      <p class="eyebrow"><span data-lang="fr">Syst&egrave;mes centraux</span><span data-lang="en">Core systems</span></p>
+      <h1 data-lang="both">Simulation</h1>
+      <p class="lead" data-lang="fr">Project Zomboid tient quelques centaines de zombies autour du joueur.
+      Living Hordes en simule des dizaines de milliers sur toute la carte. L'&eacute;cart se
+      comble en n'en rendant presque aucun r&eacute;el.</p>
+      <p class="lead" data-lang="en">Project Zomboid holds a few hundred zombies around the
+      player. Living Hordes simulates tens of thousands across the whole map. The gap is closed
+      by making almost none of them real.</p>
+    </div>
+
+    <h2 id="formes"><span data-lang="fr">Trois formes d'une m&ecirc;me population</span><span data-lang="en">Three forms of one population</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Un zombie de Project Zomboid est un objet de jeu complet : un corps, un
+      calculateur de chemin, un inventaire, une machine &agrave; &eacute;tats. Quelques
+      centaines, c'est ce pour quoi le moteur est fait.</p>
+      <p data-lang="en">A Project Zomboid zombie is a complete game object: a body, a pathfinder,
+      an inventory, a state machine. A few hundred is what the engine is built for.</p>
+      <p data-lang="fr">Le mod garde donc la m&ecirc;me population sous trois formes, et convertit de
+      l'une &agrave; l'autre &agrave; mesure qu'un joueur approche.</p>
+      <p data-lang="en">The mod therefore keeps the same population in three forms, and converts
+      from one to another as a player draws near.</p>
+      <ul>
+        <li data-lang="fr">Un <strong>groupe</strong> est un nombre, pas une liste. Une position, un
+        effectif, une destination et une graine de personnalit&eacute;. Les groupes
+        couvrent la carte enti&egrave;re et continuent de vivre sans personne
+        &agrave; c&ocirc;t&eacute;.</li>
+        <li data-lang="en">A <strong>group</strong> is a number, not a list. A position, a count, a
+        destination and a personality seed. Groups cover the entire map and go on living with
+        nobody nearby.</li>
+        <li data-lang="fr">Un <strong>individu</strong> a sa propre position, sa direction et sa tenue,
+        mais reste une coordonn&eacute;e. Rien n'est affich&eacute;, rien ne calcule de
+        chemin.</li>
+        <li data-lang="en">An <strong>individual</strong> has its own position, direction and
+        outfit, but remains a coordinate. Nothing is drawn, nothing computes a path.</li>
+        <li data-lang="fr">Un <strong>zombie r&eacute;el</strong> est la seule forme qui puisse voir,
+        entendre, cogner &agrave; une porte et se faire tuer.</li>
+        <li data-lang="en">A <strong>real zombie</strong> is the only form that can see, hear, bang
+        on a door and be killed.</li>
+      </ul>
+    </div>
+
+    <ul class="stats">
+      <li><b>30</b><span data-lang="fr">seaux de traitement, un seul par tick</span><span data-lang="en">processing buckets, one per tick</span></li>
+      <li><b>70</b><span data-lang="fr">tuiles au-del&agrave; desquelles plus rien n'est r&eacute;el</span><span data-lang="en">tiles beyond which nothing is real</span></li>
+      <li><b>10</b><span data-lang="fr">tuiles de marge &agrave; chaque sortie de couche</span><span data-lang="en">tiles of margin on every layer exit</span></li>
+    </ul>
+
+    <h2 id="seuils"><span data-lang="fr">O&ugrave; vit chaque forme</span><span data-lang="en">Where each form lives</span></h2>
+
+    <figure class="wide-fig">
+      <svg viewBox="0 0 900 190" xmlns="http://www.w3.org/2000/svg" role="img"
+           aria-label="&Eacute;chelle des distances au joueur indiquant quelle forme existe &agrave; quelle port&eacute;e.">
+        <rect x="60"  y="56" width="215" height="38" fill="var(--l3)" fill-opacity="0.30"/>
+        <rect x="275" y="56" width="200" height="38" fill="var(--l2)" fill-opacity="0.30"/>
+        <rect x="475" y="56" width="354" height="38" fill="var(--l2)" fill-opacity="0.16"/>
+        <rect x="829" y="56" width="59"  height="38" fill="var(--l1)" fill-opacity="0.28"/>
+        <g stroke="var(--bg)" stroke-width="1.5">
+          <path d="M 275 56 L 275 94"/><path d="M 475 56 L 475 94"/><path d="M 829 56 L 829 94"/>
+        </g>
+
+        <circle cx="60" cy="75" r="5" fill="var(--text)"/>
+        <text x="60" y="46" font-size="11" text-anchor="middle" fill="var(--text-dim)"
+              font-family="ui-monospace, monospace" data-lang="fr">joueur</text>
+        <text x="60" y="46" font-size="11" text-anchor="middle" fill="var(--text-dim)"
+              font-family="ui-monospace, monospace" data-lang="en">player</text>
+
+        <line x1="60" y1="102" x2="888" y2="102" stroke="var(--rule)" stroke-width="1.5"/>
+        <g stroke="var(--text-faint)" stroke-width="1.5">
+          <path d="M 128 102 L 128 110"/><path d="M 260 102 L 260 110"/>
+          <path d="M 275 102 L 275 116"/><path d="M 475 102 L 475 110"/>
+          <path d="M 829 102 L 829 110"/>
+        </g>
+        <g font-size="11" font-family="ui-monospace, monospace" fill="var(--text-faint)"
+           text-anchor="middle">
+          <text x="128" y="126" data-lang="both">22</text><text x="252" y="126" data-lang="both">65</text>
+          <text x="288" y="132" data-lang="both">70</text><text x="475" y="126" data-lang="both">135</text>
+          <text x="829" y="126" data-lang="both">250</text>
+        </g>
+        <text x="888" y="126" font-size="10.5" font-family="ui-monospace, monospace"
+              fill="var(--text-faint)" text-anchor="end" data-lang="fr">tuiles</text>
+        <text x="888" y="126" font-size="10.5" font-family="ui-monospace, monospace"
+              fill="var(--text-faint)" text-anchor="end" data-lang="en">tiles</text>
+
+        <g font-size="12" text-anchor="middle" fill="var(--text)">
+          <text x="167" y="80" data-lang="fr">zombies r&eacute;els</text><text x="167" y="80" data-lang="en">real zombies</text>
+          <text x="375" y="80" data-lang="fr">individus</text><text x="375" y="80" data-lang="en">individuals</text>
+          <text x="652" y="80" data-lang="fr">individus</text><text x="652" y="80" data-lang="en">individuals</text>
+          <text x="858" y="80" data-lang="fr">groupes</text><text x="858" y="80" data-lang="en">groups</text>
+        </g>
+        <text x="884" y="80" font-size="14" fill="var(--text-faint)" data-lang="both">&#8594;</text>
+
+        <g font-size="10.5" font-family="ui-monospace, monospace" fill="var(--l3)"
+           text-anchor="middle">
+          <text x="128" y="168" data-lang="fr">toujours r&eacute;el</text><text x="128" y="168" data-lang="en">always real</text>
+          <text x="200" y="168" data-lang="fr">r&eacute;el seulement si visible</text><text x="200" y="168" data-lang="en">real only if visible</text>
+        </g>
+        <g stroke="var(--l3)" stroke-width="1" opacity="0.5">
+          <path d="M 62 158 L 126 158"/><path d="M 130 158 L 258 158"/>
+        </g>
+      </svg>
+      <figcaption data-lang="fr">Distances par d&eacute;faut. L'&eacute;cart entre 65 et 70 est
+      volontaire : plus rien ne devient r&eacute;el au-del&agrave; de 65, mais rien n'est
+      d&eacute;truit avant 70. Un zombie qui oscille autour de la limite n'est donc pas
+      construit et d&eacute;truit deux fois par seconde.</figcaption>
+      <figcaption data-lang="en">Default distances. The gap between 65 and 70 is deliberate:
+      nothing becomes real beyond 65, but nothing is destroyed before 70. A zombie oscillating
+      around the limit is therefore not built and destroyed twice a second.</figcaption>
+    </figure>
+
+    <div class="prose">
+      <p data-lang="fr">La m&ecirc;me marge existe &agrave; chaque limite, et toujours dans le m&ecirc;me
+      sens : on entre dans une couche au seuil annonc&eacute;, on n'en sort que dix tuiles
+      plus loin. Un individu rejoint le d&eacute;tail &agrave; 135 tuiles mais ne le quitte
+      qu'&agrave; 145, et il ne redevient un groupe qu'&agrave; 260.</p>
+      <p data-lang="en">The same margin exists at every limit, and always in the same direction:
+      a layer is entered at the stated threshold and only left ten tiles further out. An
+      individual joins the detailed layer at 135 tiles but only leaves it at 145, and only
+      becomes a group again at 260.</p>
+    </div>
+
+    <h2 id="rythme"><span data-lang="fr">Le rythme plut&ocirc;t que la distance</span><span data-lang="en">Cadence rather than distance</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Le vrai m&eacute;canisme de performance n'est pas dans les distances, il est dans
+      la cadence.</p>
+      <p data-lang="en">The real performance mechanism is not in the distances, it is in the
+      cadence.</p>
+      <p data-lang="fr">Les groupes sont r&eacute;partis dans trente seaux, et un seul seau est trait&eacute;
+      &agrave; chaque tick. Apr&egrave;s traitement, un groupe est replanifi&eacute; dans un
+      seau plus ou moins lointain <strong>selon sa distance au joueur</strong> : un groupe
+      tout proche revient au tick suivant, un groupe &agrave; l'autre bout de la carte
+      revient trente ticks plus tard.</p>
+      <p data-lang="en">Groups are spread across thirty buckets, and a single bucket is processed
+      per tick. After processing, a group is rescheduled into a nearer or further bucket
+      <strong>according to its distance from the player</strong>: a group close by returns on the
+      next tick, a group at the other end of the map returns thirty ticks later.</p>
+      <p data-lang="fr">Sa vitesse est multipli&eacute;e d'autant. Un groupe trait&eacute; une fois sur
+      trente avance trente fois plus loin &agrave; chaque fois. <strong>Le d&eacute;placement
+      est identique, seule la finesse change.</strong> Ce qui se passe loin du joueur est
+      calcul&eacute; par gros pas, ce qui se passe pr&egrave;s de lui est calcul&eacute;
+      case par case, et personne ne peut faire la diff&eacute;rence.</p>
+      <p data-lang="en">Its speed is multiplied to match. A group processed one tick in thirty
+      advances thirty times as far each time. <strong>The movement is identical, only the
+      granularity changes.</strong> What happens far from the player is computed in large steps,
+      what happens close to them is computed tile by tile, and nobody can tell the
+      difference.</p>
+    </div>
+
+    <h2 id="arrivee"><span data-lang="fr">L'arriv&eacute;e</span><span data-lang="en">Arrival</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Un groupe ne se convertit pas d'un bloc. Les individus ne sont cr&eacute;&eacute;s
+      que dans la portion du groupe qui recouvre r&eacute;ellement la zone, et le
+      d&eacute;bit est plafonn&eacute; par groupe. Une horde ne peut c&eacute;der que
+      quelques individus par tick, ce qui &eacute;tale la conversion sur toutes les hordes
+      pr&eacute;sentes au lieu d'en vider une enti&egrave;rement avant de passer &agrave; la
+      suivante.</p>
+      <p data-lang="en">A group is not converted in one piece. Individuals are only created in the
+      portion of the group that actually overlaps the zone, and the rate is capped per group. A
+      horde can only give up a few individuals per tick, which spreads the conversion across every
+      horde present instead of emptying one entirely before moving on to the next.</p>
+      <p data-lang="fr">Une horde peut donc fr&ocirc;ler la limite de perception d'un joueur et poursuivre
+      sa route sans qu'un seul zombie ne devienne r&eacute;el.</p>
+      <p data-lang="en">A horde can therefore graze a player's perception limit and carry on its
+      way without a single zombie becoming real.</p>
+    </div>
+
+    <h2 id="dissolution"><span data-lang="fr">La dissolution</span><span data-lang="en">Dissolution</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Quand un groupe se disperse en individus, il ne les &eacute;parpille pas au
+      hasard. Chaque horde poss&egrave;de un <strong>plan de dissolution</strong>, tir&eacute;
+      de sa graine de personnalit&eacute; et compos&eacute; d'un point d'ancrage et d'une
+      forme.</p>
+      <p data-lang="en">When a group scatters into individuals, it does not strew them at random.
+      Every horde has a <strong>dissolution plan</strong>, drawn from its personality seed and made
+      of an anchor point and a shape.</p>
+      <p data-lang="fr">L'ancrage peut &ecirc;tre le centre du groupe, une poign&eacute;e de points
+      dispers&eacute;s autour de lui, ou <strong>les routes</strong>. Dans ce dernier cas la
+      horde cherche une voie de circulation dans son voisinage et s'y accroche, en suivant
+      son orientation. La forme d&eacute;cide ensuite de la r&eacute;partition : un amas
+      serr&eacute; devant le groupe, une dispersion large, une bande align&eacute;e sur
+      l'axe de l'ancrage, ou un arc dans la direction de marche dont la largeur et
+      l'&eacute;paisseur grandissent avec la taille de la horde.</p>
+      <p data-lang="en">The anchor can be the centre of the group, a handful of points scattered
+      around it, or <strong>the roads</strong>. In that last case the horde looks for a route in its
+      vicinity and latches onto it, following its orientation. The shape then decides the
+      distribution: a tight cluster ahead of the group, a wide scatter, a band aligned on the axis
+      of the anchor, or an arc in the direction of travel whose width and thickness grow with the
+      size of the horde.</p>
+      <p data-lang="fr">Une horde qui se dissout sur une route se retrouve donc &eacute;tir&eacute;e le
+      long de la chauss&eacute;e, comme une colonne en marche. Une autre, avec une autre
+      graine, formera un paquet compact au m&ecirc;me endroit. Rien de tout cela n'est
+      r&eacute;glable : c'est la graine qui d&eacute;cide, et deux hordes ne se
+      d&eacute;posent jamais de la m&ecirc;me fa&ccedil;on.</p>
+      <p data-lang="en">A horde dissolving on a road therefore ends up stretched along the
+      carriageway, like a column on the march. Another, with another seed, will form a compact
+      clump in the same place. None of this is adjustable: the seed decides, and two hordes never
+      settle the same way.</p>
+      <p data-lang="fr">L'ancrage est reconsid&eacute;r&eacute; si la horde s'est &eacute;loign&eacute;e
+      entre-temps, pour qu'elle ne reste pas accroch&eacute;e &agrave; une route
+      qu'elle a quitt&eacute;e.</p>
+      <p data-lang="en">The anchor is reconsidered if the horde has moved away in the meantime, so
+      that it does not stay latched onto a road it has left.</p>
+    </div>
+
+    <figure class="wide-fig">
+      <svg viewBox="0 0 900 250" xmlns="http://www.w3.org/2000/svg" role="img"
+           aria-label="La m&ecirc;me horde d&eacute;pos&eacute;e de trois fa&ccedil;ons : compacte, align&eacute;e sur une route, en arc.">
+        <defs>
+          <marker id="dir" viewBox="0 0 10 10" refX="9" refY="5"
+                  markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--text-faint)"/>
+          </marker>
+        </defs>
+
+        <g font-size="11" font-family="ui-monospace, monospace" fill="var(--text-faint)"
+           text-anchor="middle">
+          <text x="150" y="20" data-lang="fr">COMPACTE</text><text x="150" y="20" data-lang="en">COMPACT</text>
+          <text x="450" y="20" data-lang="fr">ALIGN&Eacute;E SUR UNE ROUTE</text><text x="450" y="20" data-lang="en">ALIGNED ON A ROAD</text>
+          <text x="750" y="20" data-lang="fr">EN ARC</text><text x="750" y="20" data-lang="en">ARC</text>
+        </g>
+
+        <!-- panneau 1 : compacte -->
+        <circle cx="150" cy="130" r="40" fill="none" stroke="var(--l1)" stroke-width="1.5"
+                stroke-dasharray="4 4" opacity="0.7"/>
+        <line x1="150" y1="130" x2="212" y2="130" stroke="var(--text-faint)"
+              stroke-width="1.2" marker-end="url(#dir)"/>
+        <g fill="var(--l2)">
+          <circle cx="186" cy="120" r="3.4"/><circle cx="196" cy="131" r="3.4"/>
+          <circle cx="182" cy="138" r="3.4"/><circle cx="199" cy="118" r="3.4"/>
+          <circle cx="190" cy="143" r="3.4"/><circle cx="176" cy="127" r="3.4"/>
+          <circle cx="204" cy="135" r="3.4"/><circle cx="192" cy="107" r="3.4"/>
+        </g>
+
+        <!-- panneau 2 : lineaire sur route -->
+        <path d="M 318 196 L 582 86 L 590 104 L 326 214 Z" fill="var(--text-faint)"
+              fill-opacity="0.14"/>
+        <circle cx="450" cy="130" r="40" fill="none" stroke="var(--l1)" stroke-width="1.5"
+                stroke-dasharray="4 4" opacity="0.7"/>
+        <g fill="var(--l2)">
+          <circle cx="364" cy="171" r="3.4"/><circle cx="386" cy="158" r="3.4"/>
+          <circle cx="378" cy="166" r="3.4"/><circle cx="409" cy="150" r="3.4"/>
+          <circle cx="401" cy="143" r="3.4"/><circle cx="432" cy="141" r="3.4"/>
+          <circle cx="424" cy="133" r="3.4"/><circle cx="455" cy="131" r="3.4"/>
+          <circle cx="447" cy="123" r="3.4"/><circle cx="478" cy="121" r="3.4"/>
+          <circle cx="470" cy="113" r="3.4"/><circle cx="501" cy="112" r="3.4"/>
+          <circle cx="524" cy="102" r="3.4"/><circle cx="516" cy="95" r="3.4"/>
+        </g>
+        <text x="574" y="76" font-size="10.5" fill="var(--text-faint)" text-anchor="end"
+              font-family="ui-monospace, monospace" data-lang="fr">la route</text>
+        <text x="574" y="76" font-size="10.5" fill="var(--text-faint)" text-anchor="end"
+              font-family="ui-monospace, monospace" data-lang="en">the road</text>
+
+        <!-- panneau 3 : arc -->
+        <circle cx="750" cy="130" r="40" fill="none" stroke="var(--l1)" stroke-width="1.5"
+                stroke-dasharray="4 4" opacity="0.7"/>
+        <line x1="750" y1="130" x2="812" y2="130" stroke="var(--text-faint)"
+              stroke-width="1.2" marker-end="url(#dir)" opacity="0.5"/>
+        <g fill="var(--l2)">
+          <circle cx="786" cy="79" r="3.4"/><circle cx="801" cy="94" r="3.4"/>
+          <circle cx="810" cy="114" r="3.4"/><circle cx="812" cy="135" r="3.4"/>
+          <circle cx="806" cy="156" r="3.4"/><circle cx="794" cy="174" r="3.4"/>
+          <circle cx="786" cy="181" r="3.4"/><circle cx="807" cy="82" r="3.4"/>
+          <circle cx="824" cy="130" r="3.4"/><circle cx="807" cy="178" r="3.4"/>
+          <circle cx="795" cy="109" r="3.4"/><circle cx="797" cy="147" r="3.4"/>
+        </g>
+
+        <g font-size="11" fill="var(--text-dim)" text-anchor="middle">
+          <text x="150" y="230" data-lang="fr">un paquet devant le groupe</text><text x="150" y="230" data-lang="en">a clump ahead of the group</text>
+          <text x="450" y="230" data-lang="fr">&eacute;tir&eacute;e le long de la chauss&eacute;e</text><text x="450" y="230" data-lang="en">stretched along the carriageway</text>
+          <text x="750" y="230" data-lang="fr">une bande dans la direction de marche</text><text x="750" y="230" data-lang="en">a band in the direction of travel</text>
+        </g>
+
+        <g stroke="var(--rule)" stroke-width="1">
+          <path d="M 300 34 L 300 210"/><path d="M 600 34 L 600 210"/>
+        </g>
+      </svg>
+      <figcaption data-lang="fr">La m&ecirc;me horde, au m&ecirc;me endroit, avec trois graines
+      diff&eacute;rentes. Le cercle en pointill&eacute; est le groupe avant sa dispersion.
+      Aucun de ces motifs n'est r&eacute;glable, et une horde donn&eacute;e garde le sien
+      toute sa vie.</figcaption>
+      <figcaption data-lang="en">The same horde, in the same place, with three different seeds.
+      The dashed circle is the group before it scatters. None of these patterns is adjustable, and
+      a given horde keeps its own for life.</figcaption>
+    </figure>
+
+    <h2 id="formation"><span data-lang="fr">La formation</span><span data-lang="en">Formation</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Une fois dispers&eacute;s, les individus ne d&eacute;rivent pas chacun de leur
+      c&ocirc;t&eacute;. Chacun retient sa place par rapport au groupe, exprim&eacute;e dans
+      un rep&egrave;re li&eacute; &agrave; sa direction de marche, et cette place est
+      reconvertie en position r&eacute;elle &agrave; chaque pas.</p>
+      <p data-lang="en">Once scattered, individuals do not each drift off on their own. Each keeps
+      its place relative to the group, expressed in a frame tied to its direction of travel, and
+      that place is converted back into a real position at every step.</p>
+      <p data-lang="fr">La cons&eacute;quence se voit : <strong>la horde avance comme un motif</strong> qui
+      suit le groupe et pivote avec lui. Elle ne se dilue pas en s'&eacute;loignant, elle
+      garde sa forme.</p>
+      <p data-lang="en">The consequence shows: <strong>the horde advances as a pattern</strong>
+      that follows the group and pivots with it. It does not dilute as it moves away, it keeps its
+      shape.</p>
+    </div>
+
+    <h2 id="etre-vu"><span data-lang="fr">&Ecirc;tre vu</span><span data-lang="en">Being seen</span></h2>
+    <div class="prose">
+      <p data-lang="fr">La distance seule serait le mauvais crit&egrave;re. Si elle d&eacute;cidait de
+      tout, un joueur cach&eacute; dans un placard ferait appara&icirc;tre une horde
+      enti&egrave;re de l'autre c&ocirc;t&eacute; du mur, et chacun de ces zombies perdrait
+      la migration qu'il &eacute;tait en train de faire.</p>
+      <p data-lang="en">Distance alone would be the wrong criterion. If it decided everything, a
+      player hidden in a closet would materialise an entire horde on the other side of the wall,
+      and every one of those zombies would lose the migration it was in the middle of.</p>
+      <p data-lang="fr">Entre 22 et 65 tuiles, le mod interroge donc le test de visibilit&eacute; du moteur
+      lui-m&ecirc;me, celui qui d&eacute;cide de ce qu'un joueur peut voir : murs, champ de
+      vision, distance de vue, lumi&egrave;re. Un zombie visible devient r&eacute;el. Un
+      zombie qu'on ne pourrait pas voir reste une coordonn&eacute;e et poursuit sa
+      migration en passant devant.</p>
+      <p data-lang="en">Between 22 and 65 tiles, the mod therefore queries the engine's own
+      visibility test, the one that decides what a player can see: walls, field of view, view
+      distance, light. A visible zombie becomes real. A zombie that could not be seen stays a
+      coordinate and carries on its migration as it passes by.</p>
+      <p data-lang="fr">En de&ccedil;&agrave; de 22 tuiles le test est ignor&eacute;. &Agrave; cette
+      distance il faut entendre des r&acirc;les &agrave; travers la cloison et quelque chose
+      cogner dans les meubles, et cela n'arrive que si le zombie est r&eacute;el.</p>
+      <p data-lang="en">Below 22 tiles the test is ignored. At that distance there have to be groans
+      through the partition and something knocking into the furniture, and that only happens if the
+      zombie is real.</p>
+    </div>
+
+    <figure>
+      <svg viewBox="0 0 620 250" xmlns="http://www.w3.org/2000/svg" role="img"
+           aria-label="Deux zombies &agrave; la m&ecirc;me distance d'un joueur cach&eacute;, un visible et un non.">
+        <defs>
+          <marker id="path" viewBox="0 0 10 10" refX="9" refY="5"
+                  markerWidth="5" markerHeight="5" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--l2)"/>
+          </marker>
+        </defs>
+        <path d="M 150 126 L 470 40 L 470 92 Z" fill="var(--l3)" fill-opacity="0.14"/>
+        <g stroke="var(--text)" stroke-width="6" stroke-linecap="square" opacity="0.85">
+          <path d="M 60 58 L 240 58"/>
+          <path d="M 240 58 L 240 100"/>
+          <path d="M 240 148 L 240 204"/>
+          <path d="M 240 204 L 60 204"/>
+          <path d="M 60 204 L 60 58"/>
+        </g>
+        <circle cx="150" cy="126" r="6" fill="var(--text)"/>
+        <text x="150" y="148" font-size="11" text-anchor="middle" fill="var(--text-dim)"
+              font-family="ui-monospace, monospace" data-lang="fr">joueur cach&eacute;</text>
+        <text x="150" y="148" font-size="11" text-anchor="middle" fill="var(--text-dim)"
+              font-family="ui-monospace, monospace" data-lang="en">hidden player</text>
+
+        <rect x="418" y="58" width="11" height="16" rx="2" fill="var(--l3)"/>
+        <text x="446" y="52" font-size="11" fill="var(--l3)" data-lang="fr">visible, devient r&eacute;el</text><text x="446" y="52" font-size="11" fill="var(--l3)" data-lang="en">visible, becomes real</text>
+
+        <circle cx="424" cy="176" r="4.5" fill="none" stroke="var(--l2)" stroke-width="2"
+                stroke-dasharray="3 2"/>
+        <path d="M 470 192 L 380 162" stroke="var(--l2)" stroke-width="1.5"
+              stroke-dasharray="5 4" marker-end="url(#path)"/>
+        <text x="446" y="210" font-size="11" fill="var(--l2)" data-lang="fr">derri&egrave;re le mur, continue sa route</text><text x="446" y="210" font-size="11" fill="var(--l2)" data-lang="en">behind the wall, carries on</text>
+
+        <path d="M 424 58 A 290 290 0 0 1 424 176" fill="none" stroke="var(--text-faint)"
+              stroke-width="1" stroke-dasharray="3 4" opacity="0.6"/>
+        <text x="472" y="124" font-size="10.5" fill="var(--text-faint)"
+              font-family="ui-monospace, monospace" data-lang="fr">m&ecirc;me distance</text>
+        <text x="472" y="124" font-size="10.5" fill="var(--text-faint)"
+              font-family="ui-monospace, monospace" data-lang="en">same distance</text>
+        <text x="252" y="128" font-size="10.5" fill="var(--text-faint)"
+              font-family="ui-monospace, monospace" data-lang="fr">porte ouverte</text>
+        <text x="252" y="128" font-size="10.5" fill="var(--text-faint)"
+              font-family="ui-monospace, monospace" data-lang="en">open door</text>
+      </svg>
+      <figcaption data-lang="fr">Deux zombies, une seule distance, deux r&eacute;sultats. Celui qu'on ne
+      peut pas voir ne devient jamais un objet de jeu et n'oublie jamais o&ugrave; il
+      allait.</figcaption>
+      <figcaption data-lang="en">Two zombies, a single distance, two outcomes. The one that cannot
+      be seen never becomes a game object and never forgets where it was going.</figcaption>
+    </figure>
+
+    <h2 id="repartir"><span data-lang="fr">Repartir</span><span data-lang="en">Leaving again</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Un zombie qui sort de port&eacute;e n'est pas supprim&eacute;. Il redevient une
+      coordonn&eacute;e qui conserve sa tenue, son &eacute;quipement et la direction qu'il
+      suivait, et il continue de marcher.</p>
+      <p data-lang="en">A zombie that leaves range is not deleted. It becomes a coordinate again,
+      one that keeps its outfit, its equipment and the direction it was following, and it carries on
+      walking.</p>
+      <p data-lang="fr">Ce qui remonte au groupe m&eacute;rite d'&ecirc;tre dit pr&eacute;cis&eacute;ment.
+      Un groupe ne se souvient pas de ses zombies un par un : <strong>il se souvient de sa
+      garde-robe</strong>. Il retient combien de tenues de chaque sorte il a
+      travers&eacute;es, combien de rampants, combien d'objets plant&eacute;s. Une horde
+      crois&eacute;e en ville rendra donc des zombies habill&eacute;s comme ceux qu'on y a
+      vus, dans les m&ecirc;mes proportions, mais ce ne seront pas les m&ecirc;mes
+      individus.</p>
+      <p data-lang="en">What travels back up to the group is worth stating precisely. A group does
+      not remember its zombies one by one: <strong>it remembers its wardrobe</strong>. It keeps how
+      many outfits of each kind it has been through, how many crawlers, how many items stuck in
+      them. A horde met in town will therefore give back zombies dressed like the ones seen there,
+      in the same proportions, but they will not be the same individuals.</p>
+    </div>
+
+    <div class="note">
+      <p data-lang="fr"><strong>Ce que &ccedil;a change en jeu :</strong> une horde qui traverse la ville
+      o&ugrave; l'on se cache ne s'arr&ecirc;te pas dessus. Elle passe, et c'est toujours
+      une horde de l'autre c&ocirc;t&eacute;.</p>
+      <p data-lang="en"><strong>What this changes in play:</strong> a horde crossing the town where
+      someone is hiding does not stop on top of it. It passes through, and it is still a horde on the
+      other side.</p>
+    </div>
+  </main>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span data-lang="fr">Documentation Living Hordes</span><span data-lang="en">Living Hordes documentation</span>
+    <span><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3691686404"><span data-lang="fr">Page Workshop</span><span data-lang="en">Workshop page</span></a></span>
+  </div>
+</footer>
+
+<script src="assets/site.js?v=6"></script>
+</body>
+</html>

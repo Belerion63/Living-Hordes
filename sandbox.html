@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="fr" data-title-fr="Sandbox - Living Hordes" data-title-en="Sandbox - Living Hordes">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sandbox - Living Hordes</title>
+<link rel="stylesheet" href="assets/site.css?v=6">
+<script>
+(function () {
+  var d = document.documentElement, t = null, l = null;
+  try {
+    t = localStorage.getItem("lh-theme");
+    l = localStorage.getItem("lh-lang");
+  } catch (e) {}
+  if (t) d.setAttribute("data-theme", t);
+  if (l !== "fr" && l !== "en") {
+    l = (navigator.language || "en").toLowerCase().indexOf("fr") === 0 ? "fr" : "en";
+  }
+  d.setAttribute("data-sitelang", l);
+  d.setAttribute("lang", l);
+  var tt = d.getAttribute("data-title-" + l);
+  if (tt) document.title = tt;
+})();
+</script>
+</head>
+<body data-page="sandbox">
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <a class="brand" href="index.html"><b>Living Hordes</b><span>Documentation</span></a>
+    <nav class="sitenav">
+      <a href="simulation.html">Simulation</a>
+      <a href="density.html"><span data-lang="fr">Densit&eacute;</span><span data-lang="en">Density</span></a>
+      <a href="migration.html">Migration</a>
+      <a href="hordes.html">Hordes</a>
+      <a href="sealing.html"><span data-lang="fr">Scellement</span><span data-lang="en">Sealing</span></a>
+      <a href="defense.html"><span data-lang="fr">D&eacute;fense</span><span data-lang="en">Defense</span></a>
+      <a href="sound.html"><span data-lang="fr">Son</span><span data-lang="en">Sound</span></a>
+      <a href="sandbox.html" aria-current="page">Sandbox</a>
+    </nav>
+    <div class="tools">
+      <div class="langtoggle">
+        <button type="button" data-setlang="fr">FR</button>
+        <button type="button" data-setlang="en">EN</button>
+      </div>
+      <button class="motiontoggle" id="motion-toggle" type="button" aria-pressed="false"
+              title="Animations">Anim.</button>
+      <button class="themetoggle" id="theme-toggle" type="button"
+              title="Th&egrave;me / Theme">&#9680;</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <aside class="toc">
+    <div class="toc-sticky">
+      <h2><span data-lang="fr">Sur cette page</span><span data-lang="en">On this page</span></h2>
+      <a href="#presets"><span data-lang="fr">Trois presets</span><span data-lang="en">Three presets</span></a>
+      <a href="#axes"><span data-lang="fr">Quatre axes</span><span data-lang="en">Four axes</span></a>
+      <a href="#partie"><span data-lang="fr">Un curseur en cours de partie</span><span data-lang="en">One slider in play</span></a>
+      <a href="#echelle"><span data-lang="fr">La mise &agrave; l'&eacute;chelle</span><span data-lang="en">Scaling</span></a>
+      <a href="#immobilite"><span data-lang="fr">L'immobilit&eacute;</span><span data-lang="en">Immobility</span></a>
+      <a href="#maj"><span data-lang="fr">Survivre &agrave; une mise &agrave; jour</span><span data-lang="en">Surviving an update</span></a>
+    </div>
+  </aside>
+
+  <main>
+    <div class="prose pagehead">
+      <p class="eyebrow" data-lang="both">Configuration</p>
+      <h1 data-lang="both">Sandbox</h1>
+      <p class="lead" data-lang="fr">Un preset suffit pour jouer. Quatre axes r&eacute;organisent le monde
+      sans toucher un seul curseur. Et tout ce qu'il y a dessous reste accessible pour qui
+      le veut.</p>
+      <p class="lead" data-lang="en">One preset is enough to play. Four axes reshape the
+      world without touching a single slider. And everything underneath stays reachable for
+      anyone who wants it.</p>
+    </div>
+
+    <h2 id="presets"><span data-lang="fr">Trois presets</span><span data-lang="en">Three presets</span></h2>
+    <div class="prose">
+      <p data-lang="fr"><strong>Post-Apocalypse</strong> donne des zombies moins nombreux et plus calmes,
+      et n'inflige aucun d&eacute;g&acirc;t aux constructions.</p>
+      <p data-lang="en"><strong>Post-Apocalypse</strong> gives fewer and calmer zombies, and
+      deals no damage to constructions.</p>
+      <p data-lang="fr"><strong>First Week</strong> place la partie au d&eacute;but de
+      l'&eacute;pid&eacute;mie, avec une r&eacute;partition et une migration
+      &eacute;quilibr&eacute;es. C'est la r&eacute;f&eacute;rence sur laquelle le reste est
+      calibr&eacute;, et c'est aussi ce que le mode Outbreak du jeu applique de
+      lui-m&ecirc;me.</p>
+      <p data-lang="en"><strong>First Week</strong> sets the game at the start of the
+      outbreak, with balanced distribution and migration. It is the reference the rest is
+      calibrated against, and it is also what the game's Outbreak mode applies on its
+      own.</p>
+      <p data-lang="fr"><strong>Walking Dead</strong> d&eacute;crit un monde tardif : des troupeaux
+      dispers&eacute;s qui atteignent la campagne, une d&eacute;marche lente, et
+      l'immobilit&eacute; activ&eacute;e pour p&eacute;naliser le campement.</p>
+      <p data-lang="en"><strong>Walking Dead</strong> describes a late world: scattered herds
+      that reach the countryside, a slow gait, and immobility switched on to penalise
+      camping.</p>
+      <p data-lang="fr">Un quatri&egrave;me choix, Custom, laisse la main sur l'ensemble des r&eacute;glages
+      individuels.</p>
+      <p data-lang="en">A fourth choice, Custom, hands over control of every individual
+      setting.</p>
+    </div>
+
+    <h2 id="axes"><span data-lang="fr">Quatre axes</span><span data-lang="en">Four axes</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Entre le preset et les curseurs, une couche interm&eacute;diaire permet de
+      remodeler un aspect du monde sans avoir &agrave; comprendre les autres. Chaque axe
+      est ind&eacute;pendant, et chacun accepte aussi la valeur Custom, qui expose les
+      curseurs qu'il pilotait.</p>
+      <p data-lang="en">Between the preset and the sliders, an intermediate layer allows one
+      aspect of the world to be reshaped without having to understand the others. Each axis
+      is independent, and each also accepts the Custom value, which exposes the sliders it
+      was driving.</p>
+      <ul>
+        <li data-lang="fr"><strong>Comportement des zombies.</strong> Leur fa&ccedil;on de se
+        d&eacute;placer, de s'attarder et de diff&eacute;rer les uns des autres : vitesse,
+        stationnement, errance, diversit&eacute; de temp&eacute;rament.</li>
+        <li data-lang="en"><strong>Zombie behaviour.</strong> How they move, how they linger
+        and how they differ from one another: speed, stationing, roaming, diversity of
+        temperament.</li>
+        <li data-lang="fr"><strong>Dynamique des hordes.</strong> La fa&ccedil;on dont les groupes se
+        forment, se divisent, fusionnent et occupent l'espace : coh&eacute;sion,
+        physique des masses, fragmentation.</li>
+        <li data-lang="en"><strong>Horde dynamics.</strong> How groups form, split, merge and
+        occupy space: cohesion, mass physics, fragmentation.</li>
+        <li data-lang="fr"><strong>&Eacute;tat du monde.</strong> La r&eacute;partition de la population
+        sur la carte, et la vitesse &agrave; laquelle elle se renouvelle.</li>
+        <li data-lang="en"><strong>State of the world.</strong> How the population is spread
+        over the map, and how fast it renews itself.</li>
+        <li data-lang="fr"><strong>R&eacute;activit&eacute; au son.</strong> De l'indiff&eacute;rence
+        presque totale &agrave; la chasse active au bruit &agrave; travers la carte.</li>
+        <li data-lang="en"><strong>Reaction to sound.</strong> From near-total indifference to
+        actively hunting noise across the map.</li>
+      </ul>
+    </div>
+
+    <h2 id="partie"><span data-lang="fr">Un seul curseur en cours de partie</span><span data-lang="en">A single slider in play</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Le menu pause donne acc&egrave;s &agrave; un panneau qui n'expose qu'un contr&ocirc;le :
+      la densit&eacute; de zombies. Tout le reste en d&eacute;coule, recalcul&eacute;
+      automatiquement en fonction de cette cible et de la machine.</p>
+      <p data-lang="en">The pause menu gives access to a panel that exposes a single control:
+      zombie density. Everything else follows from it, recomputed automatically from that
+      target and from the machine.</p>
+      <p data-lang="fr">C'est un choix assum&eacute; : ce r&eacute;glage exprime une intention, et le
+      syst&egrave;me se charge de trouver les valeurs qui la respectent sans faire souffrir
+      la partie.</p>
+      <p data-lang="en">This is a deliberate choice: that setting expresses an intent, and the
+      system takes care of finding the values that honour it without making the game
+      suffer.</p>
+    </div>
+
+    <h2 id="echelle"><span data-lang="fr">La mise &agrave; l'&eacute;chelle</span><span data-lang="en">Scaling</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Le mod ne compare pas ses temps de calcul &agrave; des valeurs &eacute;crites
+      &agrave; l'avance. Il passe sa premi&egrave;re minute &agrave; observer la machine sur
+      laquelle il tourne et en d&eacute;duit ce qu'est une charge normale <em>ici</em>. Il
+      continue ensuite d'ajuster cette r&eacute;f&eacute;rence pendant les p&eacute;riodes
+      calmes, ce qui rattrape une mesure initiale prise dans de mauvaises conditions.</p>
+      <p data-lang="en">The mod does not compare its computation times against values written
+      in advance. It spends its first minute observing the machine it runs on and works out
+      what a normal load is <em>here</em>. It then keeps adjusting that reference during
+      quiet periods, which recovers from an initial measurement taken in poor
+      conditions.</p>
+      <p data-lang="fr">Chaque limite est ensuite jug&eacute;e sur sa propre mesure. Entrer dans une ville
+      dense co&ucirc;te cher au recensement des zombies proches, pas au d&eacute;placement
+      des hordes &agrave; l'autre bout de la carte, et c'est donc la premi&egrave;re limite
+      qui c&egrave;de, pas la seconde.</p>
+      <p data-lang="en">Each limit is then judged on its own measurement. Entering a dense
+      town is expensive for the census of nearby zombies, not for moving hordes at the other
+      end of the map, so it is the first limit that gives, not the second.</p>
+      <p data-lang="fr">Le comportement est volontairement dissym&eacute;trique. La descente est rapide,
+      la remont&eacute;e prudente, et une baisse en interdit d'autres pendant un moment
+      pour &eacute;viter l'effondrement en cascade. La remont&eacute;e, elle, n'est jamais
+      suspendue.</p>
+      <p data-lang="en">The behaviour is deliberately asymmetric. Coming down is quick, going
+      back up is cautious, and one reduction forbids others for a while to avoid a cascading
+      collapse. Going back up, on the other hand, is never suspended.</p>
+    </div>
+
+    <figure>
+      <svg viewBox="0 0 620 210" xmlns="http://www.w3.org/2000/svg" role="img"
+           aria-label="Intervalle dans lequel une limite peut &eacute;voluer, du tiers au double du r&eacute;glage.">
+        <defs>
+          <marker id="lft" viewBox="0 0 10 10" refX="9" refY="5"
+                  markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--l3)"/>
+          </marker>
+          <marker id="rgt" viewBox="0 0 10 10" refX="9" refY="5"
+                  markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--l1)"/>
+          </marker>
+        </defs>
+
+        <rect x="100" y="86" width="181" height="26" rx="3" fill="var(--l3)" fill-opacity="0.25"/>
+        <rect x="281" y="86" width="259" height="26" rx="3" fill="var(--l1)" fill-opacity="0.22"/>
+        <rect x="100" y="86" width="440" height="26" rx="3" fill="none"
+              stroke="var(--rule)" stroke-width="1.5"/>
+
+        <line x1="281" y1="74" x2="281" y2="124" stroke="var(--text)" stroke-width="2.5"/>
+
+        <g font-size="11" font-family="ui-monospace, monospace" text-anchor="middle">
+          <text x="100" y="140" fill="var(--l3)" data-lang="fr">un tiers</text><text x="100" y="140" fill="var(--l3)" data-lang="en">one third</text>
+          <text x="281" y="140" fill="var(--text)" data-lang="fr">le r&eacute;glage</text><text x="281" y="140" fill="var(--text)" data-lang="en">the setting</text>
+          <text x="540" y="140" fill="var(--l1)" data-lang="fr">le double</text><text x="540" y="140" fill="var(--l1)" data-lang="en">double</text>
+        </g>
+        <g stroke="var(--text-faint)" stroke-width="1">
+          <path d="M 100 112 L 100 130"/><path d="M 540 112 L 540 130"/>
+        </g>
+
+        <path d="M 250 60 L 150 60" stroke="var(--l3)" stroke-width="2" marker-end="url(#lft)"/>
+        <text x="200" y="48" font-size="11" fill="var(--l3)" text-anchor="middle" data-lang="fr">la charge fait descendre</text><text x="200" y="48" font-size="11" fill="var(--l3)" text-anchor="middle" data-lang="en">load pushes it down</text>
+
+        <path d="M 312 60 L 440 60" stroke="var(--l1)" stroke-width="2" marker-end="url(#rgt)"/>
+        <text x="376" y="48" font-size="11" fill="var(--l1)" text-anchor="middle" data-lang="fr">la marge fait monter</text><text x="376" y="48" font-size="11" fill="var(--l1)" text-anchor="middle" data-lang="en">headroom pushes it up</text>
+
+        <text x="320" y="180" font-size="11.5" fill="var(--text-dim)" text-anchor="middle" data-lang="fr">
+          Rien de tout cela n'est visible pendant la partie.</text>
+        <text x="320" y="180" font-size="11.5" fill="var(--text-dim)" text-anchor="middle" data-lang="en">
+          None of this is visible during play.</text>
+      </svg>
+      <figcaption data-lang="fr">Chaque limite flotte entre le tiers et le double de ce qui a
+      &eacute;t&eacute; demand&eacute;. Une machine confortable ne se contente donc pas de
+      tenir le r&eacute;glage, elle le d&eacute;passe.</figcaption>
+      <figcaption data-lang="en">Each limit floats between one third and double what was
+      asked for. A comfortable machine therefore does not merely hold the setting, it
+      exceeds it.</figcaption>
+    </figure>
+
+    <div class="prose">
+      <p data-lang="fr">Ce dernier point m&eacute;rite d'&ecirc;tre soulign&eacute; : le syst&egrave;me ne
+      fait pas que prot&eacute;ger. Quand la machine a de la marge et que la limite est
+      r&eacute;ellement le facteur bloquant, elle est pouss&eacute;e au-del&agrave; du
+      r&eacute;glage. Une limite que rien ne remplit n'est jamais augment&eacute;e, ce qui
+      &eacute;vite de gonfler pour rien.</p>
+      <p data-lang="en">That last point is worth stressing: the system does not only protect.
+      When the machine has headroom and the limit really is the binding factor, it is pushed
+      beyond the setting. A limit that nothing fills is never raised, which avoids inflating
+      for nothing.</p>
+    </div>
+
+    <h2 id="immobilite"><span data-lang="fr">L'immobilit&eacute;</span><span data-lang="en">Immobility</span></h2>
+    <div class="prose">
+      <p data-lang="fr">D&eacute;sactiv&eacute;e par d&eacute;faut. Une fois active, rester longtemps au
+      m&ecirc;me endroit finit par attirer l'attention.</p>
+      <p data-lang="en">Off by default. Once active, staying in the same place for a long
+      time eventually draws attention.</p>
+      <p data-lang="fr">Il ne se passe rien pendant les premi&egrave;res heures. Ensuite l'attirance
+      grandit, de plus en plus vite, jusqu'&agrave; un maximum atteint apr&egrave;s environ
+      deux jours sur place. &Agrave; ce stade elle porte &agrave; l'&eacute;chelle de
+      plusieurs cellules de carte. Repartir efface cette dette, et l'efface deux fois plus
+      vite qu'elle ne s'est accumul&eacute;e.</p>
+      <p data-lang="en">Nothing happens during the first few hours. The pull then grows, faster
+      and faster, up to a maximum reached after about two days in place. At that stage it
+      carries across several map cells. Moving again clears the debt, and clears it twice as
+      fast as it built up.</p>
+      <p data-lang="fr">Un indicateur appara&icirc;t dans la colonne des moodles &agrave; mesure que
+      l'attirance monte, avec trois paliers, pour que la situation ne soit jamais une
+      surprise.</p>
+      <p data-lang="en">An indicator appears in the moodle column as the pull rises, with
+      three steps, so the situation is never a surprise.</p>
+    </div>
+
+    <h2 id="maj"><span data-lang="fr">Survivre &agrave; une mise &agrave; jour</span><span data-lang="en">Surviving an update</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Une partie en cours n'est pas perdue quand le mod &eacute;volue. Le format de
+      sauvegarde porte un num&eacute;ro, et les conversions n&eacute;cessaires sont
+      appliqu&eacute;es une seule fois au chargement.</p>
+      <p data-lang="en">A game in progress is not lost when the mod changes. The save format
+      carries a number, and the conversions needed are applied once, at load time.</p>
+      <p data-lang="fr">Deux garanties m&eacute;ritent d'&ecirc;tre &eacute;nonc&eacute;es. Revenir
+      &agrave; une version ant&eacute;rieure du mod <strong>n'ab&icirc;me pas la
+      sauvegarde</strong>. Et quand une nouveaut&eacute; ne peut pas s'appliquer
+      r&eacute;troactivement sans cons&eacute;quence, le mod ne d&eacute;cide pas &agrave;
+      la place du joueur : il pose la question.</p>
+      <p data-lang="en">Two guarantees are worth stating. Going back to an earlier version of
+      the mod <strong>does not damage the save</strong>. And when something new cannot be
+      applied retroactively without consequence, the mod does not decide on the player's
+      behalf: it asks.</p>
+      <p data-lang="fr">C'est le r&ocirc;le des deux fen&ecirc;tres qui peuvent appara&icirc;tre. L'une
+      propose de calibrer la population apr&egrave;s le premier scan, ou apr&egrave;s un
+      changement qui a modifi&eacute; les cibles. L'autre, sur une sauvegarde plus ancienne,
+      propose de refaire le scan complet pour que la r&eacute;partition initiale soit
+      rejou&eacute;e avec l'&eacute;quilibrage courant.</p>
+      <p data-lang="en">That is the role of the two windows that may appear. One offers to
+      calibrate the population after the first scan, or after a change that altered the
+      targets. The other, on an older save, offers to redo the full scan so that the initial
+      distribution is replayed with the current balance.</p>
+      <p data-lang="fr">Cette derni&egrave;re r&eacute;pond aussi &agrave; une question fr&eacute;quente :
+      la carte de densit&eacute; est construite une seule fois, au d&eacute;but de la
+      partie. Certains r&eacute;glages se reprennent donc en cours de route, et d'autres
+      demandent ce rescan explicite.</p>
+      <p data-lang="en">That second one also answers a frequent question: the density map is
+      built once, at the start of the game. Some settings can therefore be changed along the
+      way, and others require that explicit rescan.</p>
+    </div>
+
+    <div class="note">
+      <p data-lang="fr"><strong>Ce que &ccedil;a change en jeu :</strong> le r&eacute;glage exprime une
+      intention, pas un budget. Ce qui est demand&eacute; est tenu si la machine le permet,
+      d&eacute;pass&eacute; si elle en a les moyens, et r&eacute;duit sans rien casser si
+      elle ne suit pas.</p>
+      <p data-lang="en"><strong>What this changes in play:</strong> the setting expresses an
+      intent, not a budget. What is asked for is held if the machine allows it, exceeded if
+      it has the means, and reduced without breaking anything if it cannot keep up.</p>
+    </div>
+  </main>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span data-lang="fr">Documentation Living Hordes</span><span data-lang="en">Living Hordes documentation</span>
+    <span><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3691686404"><span data-lang="fr">Page Workshop</span><span data-lang="en">Workshop page</span></a></span>
+  </div>
+</footer>
+
+<script src="assets/site.js?v=6"></script>
+</body>
+</html>
