@@ -18,7 +18,12 @@
   --l1: #6b8f5e;
   --l2: #c08a2e;
   --l3: #b04a3a;
-  --measure: 68ch;
+  --measure: 76ch;
+  /* Largeur du cadre de page. Distinct de --page, qui est la couleur d accent.
+     La mesure de lecture ci-dessus reste independante : elargir le cadre
+     n allonge pas les lignes de texte, ca rend de la place aux schemas et
+     reduit le vide lateral. */
+  --shell: 1360px;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
@@ -135,7 +140,7 @@ body {
   position: sticky; top: 0; z-index: 20;
 }
 .masthead-inner {
-  max-width: 1100px; margin: 0 auto; padding: 0 24px;
+  max-width: var(--shell); margin: 0 auto; padding: 0 24px;
   display: flex; align-items: center; gap: 28px; flex-wrap: wrap;
 }
 .brand {
@@ -161,7 +166,7 @@ body {
 .themetoggle:hover { color: var(--text); }
 
 /* ---------------------------------------------------------------- layout */
-.wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; display: flex; gap: 48px; }
+.wrap { max-width: var(--shell); margin: 0 auto; padding: 0 24px; display: flex; gap: 48px; }
 .toc { width: 200px; flex: none; padding-top: 56px; }
 .toc-sticky { position: sticky; top: 84px; }
 .toc h2 {
@@ -292,7 +297,7 @@ details.hood > summary:hover { color: var(--text); }
 }
 .heroband-inner {
   position: relative; z-index: 1;
-  max-width: 1100px; margin: 0 auto; padding: 0 24px; width: 100%;
+  max-width: var(--shell); margin: 0 auto; padding: 0 24px; width: 100%;
 }
 .herotitle {
   margin: 0; font-size: clamp(44px, 7.2vw, 96px); line-height: 0.98;
@@ -361,7 +366,7 @@ details.hood > summary:hover { color: var(--text); }
 
 /* ---------------------------------------------------------------- figure */
 figure {
-  margin: 34px 0; max-width: var(--measure);
+  margin: 34px 0; max-width: 860px;
   background: var(--bg-raised); border: 1px solid var(--rule);
   border-radius: 10px; padding: 20px 20px 16px;
 }
@@ -423,6 +428,9 @@ figure.wide-fig { max-width: none; }
 .cards {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 14px; margin: 34px 0 20px; padding: 0; list-style: none;
+  /* La regle generique ul/ol plafonne a la mesure de lecture. Une grille de
+     vignettes n est pas du texte : elle doit occuper toute la largeur. */
+  max-width: none;
 }
 .cards li { margin: 0; }
 .cards a {
@@ -434,12 +442,12 @@ figure.wide-fig { max-width: none; }
   font-size: 15.5px; margin: 0 0 6px; padding: 0; border: 0; color: var(--text);
 }
 .cards p { font-size: 13.5px; color: var(--text-dim); margin: 0; }
-.wide { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+.wide { max-width: var(--shell); margin: 0 auto; padding: 0 24px; }
 
 /* ---------------------------------------------------------------- footer */
 footer { border-top: 1px solid var(--rule); margin-top: 40px; background: var(--bg-raised); }
 .footer-inner {
-  max-width: 1100px; margin: 0 auto; padding: 26px 24px 40px;
+  max-width: var(--shell); margin: 0 auto; padding: 26px 24px 40px;
   font-size: 13.5px; color: var(--text-faint);
   display: flex; gap: 20px; flex-wrap: wrap; justify-content: space-between;
 }
