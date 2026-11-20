@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="fr" data-title-fr="Immobilit&eacute; - Living Hordes" data-title-en="Immobility - Living Hordes">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Immobilit&eacute; - Living Hordes</title>
+<link rel="stylesheet" href="assets/site.css?v=11">
+<script>
+(function () {
+  var d = document.documentElement, t = null, l = null;
+  try {
+    t = localStorage.getItem("lh-theme");
+    l = localStorage.getItem("lh-lang");
+  } catch (e) {}
+  if (t) d.setAttribute("data-theme", t);
+  if (l !== "fr" && l !== "en") {
+    l = (navigator.language || "en").toLowerCase().indexOf("fr") === 0 ? "fr" : "en";
+  }
+  d.setAttribute("data-sitelang", l);
+  d.setAttribute("lang", l);
+  var tt = d.getAttribute("data-title-" + l);
+  if (tt) document.title = tt;
+})();
+</script>
+</head>
+<body data-page="immobility">
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <a class="brand" href="index.html"><b>Living Hordes</b><span>Documentation</span></a>
+    <nav class="sitenav">
+      <a href="simulation.html">Simulation</a>
+      <a href="density.html"><span data-lang="fr">Densit&eacute;</span><span data-lang="en">Density</span></a>
+      <a href="migration.html">Migration</a>
+      <a href="hordes.html">Hordes</a>
+      <a href="sealing.html"><span data-lang="fr">Scellement</span><span data-lang="en">Sealing</span></a>
+      <a href="defense.html"><span data-lang="fr">D&eacute;fense</span><span data-lang="en">Defense</span></a>
+      <a href="sound.html"><span data-lang="fr">Son</span><span data-lang="en">Sound</span></a>
+      <a href="immobility.html" aria-current="page"><span data-lang="fr">Immobilit&eacute;</span><span data-lang="en">Immobility</span></a>
+      <a href="sandbox.html">Sandbox</a>
+      <a href="performance.html">Performance</a>
+    </nav>
+    <div class="tools">
+      <div class="langtoggle">
+        <button type="button" data-setlang="fr">FR</button>
+        <button type="button" data-setlang="en">EN</button>
+      </div>
+      <button class="motiontoggle" id="motion-toggle" type="button" aria-pressed="false"
+              title="Animations">Anim.</button>
+      <button class="themetoggle" id="theme-toggle" type="button"
+              title="Th&egrave;me / Theme">&#9680;</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <aside class="toc">
+    <div class="toc-sticky">
+      <h2><span data-lang="fr">Sur cette page</span><span data-lang="en">On this page</span></h2>
+      <a href="#principe"><span data-lang="fr">Le principe</span><span data-lang="en">The principle</span></a>
+      <a href="#ancre"><span data-lang="fr">L'arr&ecirc;t et l'ancre</span><span data-lang="en">Stopping and the anchor</span></a>
+      <a href="#zone"><span data-lang="fr">La zone</span><span data-lang="en">The zone</span></a>
+      <a href="#pression"><span data-lang="fr">La pression</span><span data-lang="en">Pressure</span></a>
+      <a href="#moodle"><span data-lang="fr">Le moodle</span><span data-lang="en">The moodle</span></a>
+      <a href="#hordes"><span data-lang="fr">Les hordes attir&eacute;es</span><span data-lang="en">Drawn hordes</span></a>
+      <a href="#defendre"><span data-lang="fr">Se d&eacute;fendre</span><span data-lang="en">Fighting back</span></a>
+      <a href="#reglages"><span data-lang="fr">R&eacute;glages</span><span data-lang="en">Settings</span></a>
+    </div>
+  </aside>
+
+  <main>
+    <div class="prose pagehead">
+      <p class="eyebrow"><span data-lang="fr">Syst&egrave;mes centraux</span><span data-lang="en">Core systems</span></p>
+      <h1><span data-lang="fr">Immobilit&eacute;</span><span data-lang="en">Immobility</span></h1>
+      <p class="lead" data-lang="fr">Rester trop longtemps au m&ecirc;me endroit finit par attirer les
+      hordes. Un d&eacute;fi pour qui tient une base, une pression constante pour qui voyage.
+      C'est une option, d&eacute;sactiv&eacute;e par d&eacute;faut, sauf dans le preset Walking
+      Dead.</p>
+      <p class="lead" data-lang="en">Staying too long in the same place ends up drawing the
+      hordes. A challenge for whoever holds a base, constant pressure for whoever travels. It is
+      an option, off by default, except in the Walking Dead preset.</p>
+    </div>
+
+    <h2 id="principe"><span data-lang="fr">Le principe</span><span data-lang="en">The principle</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Sans cette option, les hordes ignorent o&ugrave; se trouve le joueur. Elles le
+      croisent parce qu'elles sont nombreuses et qu'elles bougent, ou parce qu'un bruit les
+      attire (voir <a href="sound.html">Son</a>), jamais parce qu'elles le cherchent.</p>
+      <p data-lang="en">Without this option, hordes do not know where the player is. They cross
+      the player's path because they are many and they move, or because a sound draws them (see
+      <a href="sound.html">Sound</a>), never because they are looking for the player.</p>
+      <p data-lang="fr">Avec le suivi d'immobilit&eacute;, un joueur qui s'arr&ecirc;te pose une
+      <strong>ancre</strong>. Tant qu'il reste pr&egrave;s d'elle, une <strong>pression</strong>
+      monte, et au-del&agrave; d'un seuil, les hordes des environs prennent la route. Elles ne
+      vont pas vers le joueur : elles vont vers l'ancre. Un joueur qui repart ne les tra&icirc;ne
+      pas derri&egrave;re lui.</p>
+      <p data-lang="en">With immobility tracking, a player who stops sets down an
+      <strong>anchor</strong>. As long as the player stays near it, a <strong>pressure</strong>
+      builds, and past a threshold the hordes in the surroundings take to the road. They do not
+      head for the player: they head for the anchor. A player who moves on does not drag them
+      along behind.</p>
+    </div>
+
+    <h2 id="ancre"><span data-lang="fr">L'arr&ecirc;t et l'ancre</span><span data-lang="en">Stopping and the anchor</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Un joueur est &agrave; l'arr&ecirc;t quand il reste dans un rayon de 10 tuiles
+      autour du point o&ugrave; il s'est arr&ecirc;t&eacute;. Au bout de <strong>2 min 30 en temps
+      r&eacute;el</strong> par d&eacute;faut, l'ancre se pose &agrave; cet endroit. S'il sort de ce
+      petit rayon avant, le d&eacute;compte repart de l&agrave; o&ugrave; il se trouve.</p>
+      <p data-lang="en">A player counts as stopped while remaining within 10 tiles of the point
+      where the stop began. After <strong>2 min 30 of real time</strong> by default, the anchor is
+      set at that spot. If the player leaves that small radius sooner, the countdown starts over
+      from wherever the player now is.</p>
+      <ul data-lang="fr">
+        <li><strong>Accroupi</strong>, le d&eacute;compte avance plus lentement : il faut environ
+        4 min 30.</li>
+        <li><strong>Endormi</strong>, l'ancre se pose tout de suite. Une nuit de sommeil ne dure que
+        quelques secondes r&eacute;elles, et compte comme du temps pass&eacute; sur place.</li>
+        <li><strong>S'arr&ecirc;ter ailleurs</strong>, hors de la zone de l'ancre, d&eacute;place
+        l'ancre &agrave; ce nouvel endroit.</li>
+      </ul>
+      <ul data-lang="en">
+        <li><strong>Crouching</strong>, the countdown runs more slowly: it takes about
+        4 min 30.</li>
+        <li><strong>Asleep</strong>, the anchor is set at once. A night's sleep lasts only a few
+        real seconds, and counts as time spent on the spot.</li>
+        <li><strong>Stopping elsewhere</strong>, outside the anchor's zone, moves the anchor to
+        that new spot.</li>
+      </ul>
+    </div>
+
+    <h2 id="zone"><span data-lang="fr">La zone</span><span data-lang="en">The zone</span></h2>
+    <div class="prose">
+      <p data-lang="fr">La zone d'immobilit&eacute; s'&eacute;tend &agrave; <strong>64 tuiles</strong>
+      autour de l'ancre.</p>
+      <p data-lang="en">The immobility zone extends <strong>64 tiles</strong> around the
+      anchor.</p>
+      <p data-lang="fr">Quand l'ancre se trouve dans un espace scell&eacute; (voir
+      <a href="sealing.html">Scellement</a>), la zone couvre aussi tout cet espace, et les espaces
+      scell&eacute;s qui le touchent, portes ouvertes ou ferm&eacute;es. Dans une prison, la zone
+      est la prison enti&egrave;re : passer d'une cour &agrave; une autre, ou d'un b&acirc;timent
+      &agrave; une cour, ne fait pas sortir de la zone.</p>
+      <p data-lang="en">When the anchor lies in a sealed space (see
+      <a href="sealing.html">Sealing</a>), the zone also covers that whole space, and the sealed
+      spaces touching it, doors open or closed. In a prison, the zone is the whole prison: moving
+      from one yard to another, or from a building to a yard, does not leave the zone.</p>
+    </div>
+
+    <figure class="wide-fig">
+      <svg viewBox="0 0 900 335" xmlns="http://www.w3.org/2000/svg" role="img"
+           aria-label="&Agrave; gauche, une ancre et son cercle de 64 tuiles. &Agrave; droite, une ancre dans une prison : la zone couvre la prison enti&egrave;re.">
+        <g font-size="13" font-family="ui-monospace, monospace" fill="var(--text-faint)">
+          <text x="40" y="22" data-lang="fr">&Agrave; D&Eacute;COUVERT</text>
+          <text x="40" y="22" data-lang="en">IN THE OPEN</text>
+          <text x="470" y="22" data-lang="fr">DANS UN COMPLEXE SCELL&Eacute;</text>
+          <text x="470" y="22" data-lang="en">INSIDE A SEALED COMPLEX</text>
+        </g>
+
+        <!-- gauche : le cercle seul -->
+        <circle cx="215" cy="180" r="90" fill="var(--l2)" fill-opacity="0.20"
+                stroke="var(--l2)" stroke-width="1.5" stroke-dasharray="6 5"/>
+        <line x1="215" y1="180" x2="305" y2="180" stroke="var(--l2)" stroke-width="1.5"/>
+        <text x="262" y="172" font-size="13" fill="var(--l2)" text-anchor="middle"
+              font-family="ui-monospace, monospace" data-lang="fr">64 tuiles</text>
+        <text x="262" y="172" font-size="13" fill="var(--l2)" text-anchor="middle"
+              font-family="ui-monospace, monospace" data-lang="en">64 tiles</text>
+        <circle cx="215" cy="180" r="10" fill="none" stroke="var(--text)" stroke-width="1.5"/>
+        <circle cx="215" cy="180" r="4" fill="var(--text)"/>
+        <text x="215" y="206" font-size="13" fill="var(--text-dim)" text-anchor="middle" data-lang="fr">ancre</text>
+        <text x="215" y="206" font-size="13" fill="var(--text-dim)" text-anchor="middle" data-lang="en">anchor</text>
+
+        <line x1="440" y1="34" x2="440" y2="300" stroke="var(--rule)" stroke-width="1"/>
+
+        <!-- droite : la zone = le cercle plus tout le complexe -->
+        <g fill="var(--l2)" opacity="0.20">
+          <circle cx="600" cy="215" r="90"/>
+          <rect x="520" y="44" width="350" height="232"/>
+        </g>
+        <circle cx="600" cy="215" r="90" fill="none" stroke="var(--l2)" stroke-width="1.5"
+                stroke-dasharray="6 5"/>
+        <g stroke="var(--text)" stroke-width="3" stroke-linecap="square" opacity="0.7">
+          <path d="M 520 130 L 586 130"/><path d="M 614 130 L 680 130"/>
+          <path d="M 680 44 L 680 216"/><path d="M 680 244 L 680 276"/>
+          <path d="M 760 44 L 760 88"/><path d="M 760 116 L 760 226"/><path d="M 760 254 L 760 276"/>
+          <path d="M 760 170 L 798 170"/><path d="M 826 170 L 870 170"/>
+        </g>
+        <g stroke="var(--text-faint)" stroke-width="2">
+          <path d="M 680 216 L 680 244"/>
+          <path d="M 760 226 L 760 254"/>
+        </g>
+        <rect x="520" y="44" width="350" height="232" fill="none" stroke="var(--text)"
+              stroke-width="5" opacity="0.85"/>
+        <g font-size="13" font-family="ui-monospace, monospace" fill="var(--text-dim)"
+           text-anchor="middle">
+          <text x="600" y="92" data-lang="fr">b&acirc;timent</text><text x="600" y="92" data-lang="en">building</text>
+          <text x="720" y="150" data-lang="fr">b&acirc;timent</text><text x="720" y="150" data-lang="en">building</text>
+          <text x="815" y="228" data-lang="fr">b&acirc;timent</text><text x="815" y="228" data-lang="en">building</text>
+          <text x="600" y="156" data-lang="fr">cour</text><text x="600" y="156" data-lang="en">yard</text>
+          <text x="815" y="112" data-lang="fr">cour</text><text x="815" y="112" data-lang="en">yard</text>
+        </g>
+        <circle cx="600" cy="215" r="10" fill="none" stroke="var(--text)" stroke-width="1.5"/>
+        <circle cx="600" cy="215" r="4" fill="var(--text)"/>
+        <text x="600" y="241" font-size="13" fill="var(--text-dim)" text-anchor="middle" data-lang="fr">ancre</text>
+        <text x="600" y="241" font-size="13" fill="var(--text-dim)" text-anchor="middle" data-lang="en">anchor</text>
+
+        <g font-size="13.5" fill="var(--l2)" text-anchor="middle">
+          <text x="215" y="324" data-lang="fr">la zone : le cercle</text>
+          <text x="215" y="324" data-lang="en">the zone: the circle</text>
+          <text x="695" y="324" data-lang="fr">la zone : le cercle et toute la prison</text>
+          <text x="695" y="324" data-lang="en">the zone: the circle and the whole prison</text>
+        </g>
+      </svg>
+      <figcaption data-lang="fr">&Agrave; d&eacute;couvert, la zone est un cercle de 64 tuiles autour de
+      l'ancre. Dans un espace scell&eacute;, elle s'&eacute;tend &agrave; tout cet espace et aux
+      espaces scell&eacute;s qui le touchent, portes ouvertes ou ferm&eacute;es : dans une prison,
+      cours et b&acirc;timents forment une seule zone.</figcaption>
+      <figcaption data-lang="en">In the open, the zone is a 64-tile circle around the anchor. In a
+      sealed space, it extends to that whole space and to the sealed spaces touching it, doors open
+      or closed: in a prison, yards and buildings form a single zone.</figcaption>
+    </figure>
+
+    <h2 id="pression"><span data-lang="fr">La pression</span><span data-lang="en">Pressure</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Tant que le joueur est dans la zone, la pression monte. Elle passe de 0
+      &agrave; 100&nbsp;% en <strong>72 heures de jeu</strong> par d&eacute;faut.</p>
+      <p data-lang="en">While the player is in the zone, the pressure rises. It goes from 0 to
+      100% in <strong>72 in-game hours</strong> by default.</p>
+      <p data-lang="fr">Trois choses la font monter moins vite, et se cumulent :</p>
+      <p data-lang="en">Three things slow its rise, and they stack:</p>
+    </div>
+
+    <div class="tablescroll">
+    <table>
+      <thead><tr>
+        <th><span data-lang="fr">&Eacute;tat du joueur</span><span data-lang="en">Player state</span></th>
+        <th><span data-lang="fr">Vitesse de mont&eacute;e</span><span data-lang="en">Rate of rise</span></th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td><span data-lang="fr">Accroupi</span><span data-lang="en">Crouching</span></td>
+          <td class="v"><span data-lang="fr">&times; 0,8</span><span data-lang="en">&times; 0.8</span></td>
+        </tr>
+        <tr>
+          <td><span data-lang="fr">Silencieux (aucun bruit d'au moins 20 tuiles de port&eacute;e depuis
+          une demi-heure de jeu)</span><span data-lang="en">Silent (no sound with a range of at least
+          20 tiles for half an in-game hour)</span></td>
+          <td class="v"><span data-lang="fr">&times; 0,8</span><span data-lang="en">&times; 0.8</span></td>
+        </tr>
+        <tr>
+          <td><span data-lang="fr">Endormi</span><span data-lang="en">Asleep</span></td>
+          <td class="v"><span data-lang="fr">&times; 0,48 (accroupi, silencieux, et &times; 0,75 en
+          plus)</span><span data-lang="en">&times; 0.48 (crouching, silent, and &times; 0.75 on
+          top)</span></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="prose">
+      <p data-lang="fr">Hors de la zone, la pression redescend <strong>six fois plus vite</strong>
+      qu'elle ne monte, quel que soit l'&eacute;tat du joueur. &Agrave; z&eacute;ro, l'ancre
+      dispara&icirc;t.</p>
+      <p data-lang="en">Outside the zone, the pressure falls <strong>six times faster</strong>
+      than it rises, whatever the player's state. At zero, the anchor disappears.</p>
+    </div>
+
+    <h2 id="moodle"><span data-lang="fr">Le moodle</span><span data-lang="en">The moodle</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Un moodle en forme de sablier affiche la pression d&egrave;s qu'elle
+      d&eacute;passe 1&nbsp;%. Il se remplit avec elle, et sa couleur passe progressivement du vert
+      au jaune &agrave; mi-chemin, puis au rouge &agrave; 100&nbsp;%. Le survoler affiche la valeur
+      exacte. Il peut &ecirc;tre masqu&eacute; dans le bac &agrave; sable, sans que le suivi
+      s'arr&ecirc;te.</p>
+      <p data-lang="en">An hourglass moodle shows the pressure as soon as it exceeds 1%. It fills
+      with it, and its colour shifts gradually from green to yellow halfway, then to red at 100%.
+      Hovering over it shows the exact value. It can be hidden in the sandbox settings without the
+      tracking stopping.</p>
+    </div>
+
+    <h2 id="hordes"><span data-lang="fr">Les hordes attir&eacute;es</span><span data-lang="en">Drawn hordes</span></h2>
+    <div class="prose">
+      <p data-lang="fr"><strong>Au-del&agrave; de 5&nbsp;%</strong>, les hordes des environs commencent
+      &agrave; converger vers l'ancre. Le nombre de zombies attir&eacute;s grandit avec la
+      pression, jusqu'&agrave; <strong>400 zombies &agrave; 100&nbsp;%</strong> par
+      d&eacute;faut.</p>
+      <p data-lang="en"><strong>Above 5%</strong>, the hordes in the surroundings begin to converge
+      on the anchor. The number of zombies drawn grows with the pressure, up to <strong>400 zombies
+      at 100%</strong> by default.</p>
+      <ul data-lang="fr">
+        <li><strong>Les plus proches d'abord.</strong> Le mod cherche dans un rayon de 512 tuiles
+        autour de l'ancre, sur la m&ecirc;me rive : une horde que l'eau s&eacute;pare de l'ancre
+        n'est pas choisie.</li>
+        <li><strong>Un morceau si besoin.</strong> Une horde plus grosse que la place restante
+        n'envoie qu'une partie de ses zombies.</li>
+        <li><strong>Un compl&eacute;ment au loin.</strong> S'il n'y a plus assez de zombies dans le
+        rayon, une horde est cr&eacute;&eacute;e &agrave; son bord, hors de vue du joueur.</li>
+        <li><strong>Elles suivent l'ancre, pas le joueur.</strong> Une fois arriv&eacute;es, elles
+        attendent &agrave; l'ancre, que le joueur soit l&agrave; ou non.</li>
+        <li><strong>Elles restent enti&egrave;res.</strong> En route comme &agrave; l'arriv&eacute;e,
+        elles ne fusionnent avec aucune autre horde et n'en entra&icirc;nent aucune. Un bruit peut
+        les d&eacute;tourner en chemin, puis elles reprennent la route de l'ancre.</li>
+      </ul>
+      <ul data-lang="en">
+        <li><strong>Nearest first.</strong> The mod searches within 512 tiles of the anchor, on the
+        same bank: a horde that water separates from the anchor is not chosen.</li>
+        <li><strong>A piece if needed.</strong> A horde larger than the room left sends only part
+        of its zombies.</li>
+        <li><strong>A top-up from afar.</strong> If there are no longer enough zombies within the
+        radius, a horde is created at its edge, out of the player's sight.</li>
+        <li><strong>They follow the anchor, not the player.</strong> Once arrived, they wait at the
+        anchor, whether the player is there or not.</li>
+        <li><strong>They stay whole.</strong> On the way as on arrival, they merge with no other
+        horde and pull none along. A sound can divert them along the way, after which they resume
+        the road to the anchor.</li>
+      </ul>
+      <p data-lang="fr">Quand l'ancre se d&eacute;place ou dispara&icirc;t, toutes les hordes
+      attir&eacute;es sont rel&acirc;ch&eacute;es : celles qui &eacute;taient en route
+      re&ccedil;oivent une destination ordinaire, celles qui &eacute;taient arriv&eacute;es
+      commencent un s&eacute;jour sur place.</p>
+      <p data-lang="en">When the anchor moves or disappears, all drawn hordes are released: those
+      still on the way receive an ordinary destination, those that had arrived begin a stay on the
+      spot.</p>
+    </div>
+
+    <figure class="wide-fig" id="immo-fig">
+      <svg viewBox="0 0 900 440" xmlns="http://www.w3.org/2000/svg" role="img"
+           aria-label="L'ancre et sa zone, le rayon de recherche de 512 tuiles, les hordes qui convergent vers l'ancre, et le moodle en trois &eacute;tats.">
+        <defs>
+          <marker id="iarr" viewBox="0 0 10 10" refX="9" refY="5"
+                  markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--l3)"/>
+          </marker>
+        </defs>
+
+        <!-- rayon de recherche -->
+        <circle cx="290" cy="225" r="190" fill="none" stroke="var(--text-faint)"
+                stroke-width="1.5" stroke-dasharray="6 5"/>
+        <text x="290" y="24" font-size="10.5" fill="var(--text-faint)" text-anchor="middle"
+              font-family="ui-monospace, monospace" data-lang="fr">rayon de recherche : 512 tuiles</text>
+        <text x="290" y="24" font-size="10.5" fill="var(--text-faint)" text-anchor="middle"
+              font-family="ui-monospace, monospace" data-lang="en">search radius: 512 tiles</text>
+
+        <!-- l'ancre et sa zone -->
+        <circle cx="290" cy="225" r="30" fill="var(--l2)" fill-opacity="0.30"
+                stroke="var(--l2)" stroke-width="2"/>
+        <circle cx="290" cy="228" r="4" fill="var(--text)"/>
+        <text x="290" y="216" font-size="10" fill="var(--text)" text-anchor="middle" data-lang="fr">ancre</text>
+        <text x="290" y="216" font-size="10" fill="var(--text)" text-anchor="middle" data-lang="en">anchor</text>
+        <text x="328" y="230" font-size="10.5" fill="var(--l2)"
+              font-family="ui-monospace, monospace" data-lang="fr">zone : 64 tuiles</text>
+        <text x="328" y="230" font-size="10.5" fill="var(--l2)"
+              font-family="ui-monospace, monospace" data-lang="en">zone: 64 tiles</text>
+
+        <!-- hordes des environs -->
+        <g stroke="var(--l1)" stroke-width="2" fill="var(--l1)" fill-opacity="0.28">
+          <circle cx="140" cy="215" r="12"/>
+          <circle cx="175" cy="320" r="14"/>
+          <circle cx="410" cy="150" r="10"/>
+          <circle cx="430" cy="335" r="24"/>
+        </g>
+        <!-- morceau detache de la grosse horde -->
+        <circle cx="395" cy="308" r="8" fill="var(--l1)" fill-opacity="0.28"
+                stroke="var(--l1)" stroke-width="2"/>
+        <!-- horde creee au bord -->
+        <circle cx="156" cy="91" r="17" fill="none" stroke="var(--l1)" stroke-width="1.2"
+                stroke-dasharray="3 3"/>
+        <circle cx="156" cy="91" r="11" fill="var(--l1)" fill-opacity="0.28"
+                stroke="var(--l1)" stroke-width="2"/>
+        <!-- horde hors du rayon -->
+        <circle cx="62" cy="398" r="11" fill="var(--l1)" fill-opacity="0.12"
+                stroke="var(--l1)" stroke-width="1.5" opacity="0.6"/>
+
+        <g stroke="var(--l3)" stroke-width="2" fill="none" marker-end="url(#iarr)">
+          <path d="M 155 216 L 255 223"/>
+          <path d="M 188 309 L 263 247"/>
+          <path d="M 399 157 L 318 208"/>
+          <path d="M 387 302 L 316 246"/>
+          <path d="M 166 101 L 266 200"/>
+        </g>
+
+        <g font-size="10.5" font-family="ui-monospace, monospace" fill="var(--text-dim)"
+           stroke="var(--bg-raised)" stroke-width="4" stroke-linejoin="round" paint-order="stroke">
+          <text x="156" y="64" text-anchor="middle" data-lang="fr">cr&eacute;&eacute;e au bord, hors de vue</text>
+          <text x="156" y="64" text-anchor="middle" data-lang="en">created at the edge, out of sight</text>
+          <text x="430" y="378" text-anchor="middle" data-lang="fr">trop grosse : une partie seulement</text>
+          <text x="430" y="378" text-anchor="middle" data-lang="en">too big: only a piece</text>
+          <text x="40" y="428" fill="var(--text-faint)" data-lang="fr">hors du rayon : ignor&eacute;e</text>
+          <text x="40" y="428" fill="var(--text-faint)" data-lang="en">outside the radius: ignored</text>
+        </g>
+
+        <line x1="530" y1="34" x2="530" y2="420" stroke="var(--rule)" stroke-width="1"/>
+
+        <!-- le moodle -->
+        <text x="560" y="40" font-size="11" fill="var(--text-faint)"
+              font-family="ui-monospace, monospace" data-lang="fr">LE MOODLE</text>
+        <text x="560" y="40" font-size="11" fill="var(--text-faint)"
+              font-family="ui-monospace, monospace" data-lang="en">THE MOODLE</text>
+
+        <g transform="translate(590 110) scale(1.5)">
+          <rect x="-14" y="-22" width="28" height="4" rx="1" fill="var(--l1)"/>
+          <rect x="-14" y="18" width="28" height="4" rx="1" fill="var(--l1)"/>
+          <path d="M -11.7 17.5 L 11.7 17.5 L 12 18 L -12 18 Z" fill="var(--l1)"/>
+          <path d="M -12 -18 L 12 -18 L 2 0 L 12 18 L -12 18 L -2 0 Z" fill="none"
+                stroke="var(--l1)" stroke-width="1.6" stroke-linejoin="round"/>
+        </g>
+        <text x="625" y="104" font-size="14" font-weight="600" fill="var(--l1)" data-lang="fr">3&nbsp;%</text>
+        <text x="625" y="104" font-size="14" font-weight="600" fill="var(--l1)" data-lang="en">3%</text>
+        <text x="625" y="124" font-size="11.5" fill="var(--text-dim)" data-lang="fr">sous 5&nbsp;% : simple avertissement</text>
+        <text x="625" y="124" font-size="11.5" fill="var(--text-dim)" data-lang="en">below 5%: a warning only</text>
+
+        <g transform="translate(590 220) scale(1.5)">
+          <rect x="-14" y="-22" width="28" height="4" rx="1" fill="var(--l2)"/>
+          <rect x="-14" y="18" width="28" height="4" rx="1" fill="var(--l2)"/>
+          <path d="M -7 9 L 7 9 L 12 18 L -12 18 Z" fill="var(--l2)"/>
+          <path d="M -12 -18 L 12 -18 L 2 0 L 12 18 L -12 18 L -2 0 Z" fill="none"
+                stroke="var(--l2)" stroke-width="1.6" stroke-linejoin="round"/>
+        </g>
+        <text x="625" y="214" font-size="14" font-weight="600" fill="var(--l2)" data-lang="fr">50&nbsp;%</text>
+        <text x="625" y="214" font-size="14" font-weight="600" fill="var(--l2)" data-lang="en">50%</text>
+        <text x="625" y="234" font-size="11.5" fill="var(--text-dim)" data-lang="fr">jaune : les hordes sont en route</text>
+        <text x="625" y="234" font-size="11.5" fill="var(--text-dim)" data-lang="en">yellow: hordes are on their way</text>
+
+        <g transform="translate(590 330) scale(1.5)">
+          <rect x="-14" y="-22" width="28" height="4" rx="1" fill="var(--l3)"/>
+          <rect x="-14" y="18" width="28" height="4" rx="1" fill="var(--l3)"/>
+          <path d="M -2 0 L 2 0 L 12 18 L -12 18 Z" fill="var(--l3)"/>
+          <path d="M -12 -18 L 12 -18 L 2 0 L 12 18 L -12 18 L -2 0 Z" fill="none"
+                stroke="var(--l3)" stroke-width="1.6" stroke-linejoin="round"/>
+        </g>
+        <text x="625" y="324" font-size="14" font-weight="600" fill="var(--l3)" data-lang="fr">100&nbsp;%</text>
+        <text x="625" y="324" font-size="14" font-weight="600" fill="var(--l3)" data-lang="en">100%</text>
+        <text x="625" y="344" font-size="11.5" fill="var(--text-dim)" data-lang="fr">rouge : jusqu'&agrave; 400 zombies attir&eacute;s</text>
+        <text x="625" y="344" font-size="11.5" fill="var(--text-dim)" data-lang="en">red: up to 400 zombies drawn</text>
+      </svg>
+      <figcaption data-lang="fr">Le joueur suit la souris. Immobile un moment, il pose l'ancre ; dans sa zone la
+      pression monte, dehors elle redescend six fois plus vite. Au-del&agrave; de 5 %, les hordes les plus proches
+      convergent vers l'ancre, pas vers le joueur ; une grosse horde n'envoie qu'un morceau, et s'il manque du
+      monde une horde na&icirc;t au bord, hors de vue. S'arr&ecirc;ter ailleurs d&eacute;place l'ancre et rel&acirc;che
+      tout. Valeurs par d&eacute;faut du mod, temps acc&eacute;l&eacute;r&eacute;.</figcaption>
+      <figcaption data-lang="en">The player follows the mouse. Standing still for a moment sets the
+      anchor; inside its zone the pressure rises, outside it falls six times faster. Above 5%, the nearest
+      hordes head for the anchor, not the player; a large horde only sends a piece, and if there are not
+      enough zombies a horde is created at the edge, out of sight. Stopping somewhere else moves the anchor
+      and releases everything. The mod's default values, sped up.</figcaption>
+    </figure>
+
+    <h2 id="defendre"><span data-lang="fr">Se d&eacute;fendre</span><span data-lang="en">Fighting back</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Chaque zombie attir&eacute; compte jusqu'&agrave; sa mort, m&ecirc;me une fois
+      arriv&eacute;. Le nombre de zombies attir&eacute;s est donc un plafond sur ce qui vit encore,
+      pas un total : quand un zombie attir&eacute; meurt, sa place se lib&egrave;re et la suite
+      arrive.</p>
+      <p data-lang="en">Each drawn zombie counts until it dies, even once it has arrived. The number
+      of zombies drawn is therefore a cap on what is still alive, not a total: when a drawn zombie
+      dies, its place frees up and the next ones come.</p>
+      <p data-lang="fr">Chaque mort fait aussi baisser la pression, de <strong>0,25&nbsp;%</strong> par
+      d&eacute;faut. Un joueur qui tient le rythme garde la pression stable, et la pression suit la
+      d&eacute;fense au lieu de s'accumuler sans fin.</p>
+      <p data-lang="en">Each death also lowers the pressure, by <strong>0.25%</strong> by default. A
+      player who keeps up the pace holds the pressure steady, and the pressure follows the defence
+      instead of piling up endlessly.</p>
+      <p data-lang="fr">Il y a donc trois fa&ccedil;ons de faire baisser la pression : partir, se faire
+      discret, ou tuer ce qui arrive.</p>
+      <p data-lang="en">There are therefore three ways to bring the pressure down: leave, keep a low
+      profile, or kill what comes.</p>
+    </div>
+
+    <h2 id="reglages"><span data-lang="fr">R&eacute;glages</span><span data-lang="en">Settings</span></h2>
+    <div class="tablescroll">
+    <table>
+      <thead><tr>
+        <th><span data-lang="fr">R&eacute;glage</span><span data-lang="en">Setting</span></th>
+        <th><span data-lang="fr">Par d&eacute;faut</span><span data-lang="en">Default</span></th>
+        <th><span data-lang="fr">Plage</span><span data-lang="en">Range</span></th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td class="k"><span data-lang="fr">Suivi d'immobilit&eacute;</span><span data-lang="en">Immobility Tracking</span></td>
+          <td class="v"><span data-lang="fr">d&eacute;sactiv&eacute;, activ&eacute; en Walking Dead</span><span data-lang="en">off, on in Walking Dead</span></td>
+          <td class="v"><span data-lang="fr">oui / non</span><span data-lang="en">yes / no</span></td>
+        </tr>
+        <tr>
+          <td class="k"><span data-lang="fr">Afficher la moodle d'immobilit&eacute;</span><span data-lang="en">Show Immobility Moodle</span></td>
+          <td class="v"><span data-lang="fr">oui</span><span data-lang="en">yes</span></td>
+          <td class="v"><span data-lang="fr">oui / non</span><span data-lang="en">yes / no</span></td>
+        </tr>
+        <tr>
+          <td class="k"><span data-lang="fr">Temps pour la pression maximale</span><span data-lang="en">Time to Full Pressure</span></td>
+          <td class="v"><span data-lang="fr">72 h de jeu</span><span data-lang="en">72 in-game h</span></td>
+          <td class="v"><span data-lang="fr">12 &agrave; 240 h</span><span data-lang="en">12 to 240 h</span></td>
+        </tr>
+        <tr>
+          <td class="k"><span data-lang="fr">D&eacute;lai d'arr&ecirc;t</span><span data-lang="en">Stop Delay</span></td>
+          <td class="v"><span data-lang="fr">150 s r&eacute;elles</span><span data-lang="en">150 real s</span></td>
+          <td class="v"><span data-lang="fr">30 &agrave; 600 s</span><span data-lang="en">30 to 600 s</span></td>
+        </tr>
+        <tr>
+          <td class="k"><span data-lang="fr">Zombies attir&eacute;s &agrave; 100&nbsp;%</span><span data-lang="en">Zombies Drawn at 100%</span></td>
+          <td class="v" data-lang="both">400</td>
+          <td class="v"><span data-lang="fr">50 &agrave; 1&nbsp;000</span><span data-lang="en">50 to 1,000</span></td>
+        </tr>
+        <tr>
+          <td class="k"><span data-lang="fr">Pression perdue par mort</span><span data-lang="en">Pressure Lost per Kill (%)</span></td>
+          <td class="v"><span data-lang="fr">0,25&nbsp;%</span><span data-lang="en">0.25%</span></td>
+          <td class="v"><span data-lang="fr">0 &agrave; 2&nbsp;%</span><span data-lang="en">0 to 2%</span></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </main>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span data-lang="fr">Documentation Living Hordes</span>
+    <span data-lang="en">Living Hordes documentation</span>
+    <span><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3691686404"><span data-lang="fr">Page Workshop</span><span data-lang="en">Workshop page</span></a></span>
+  </div>
+</footer>
+
+<script src="assets/immo.js?v=4"></script>
+<script src="assets/site.js?v=6"></script>
+</body>
+</html>

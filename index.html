@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Living Hordes - Undead are finally alive!</title>
 <meta name="description" content="Une simulation des zombies &agrave; l'&eacute;chelle de la carte. Comment fonctionne Living Hordes, syst&egrave;me par syst&egrave;me.">
-<link rel="stylesheet" href="assets/site.css?v=7">
+<link rel="stylesheet" href="assets/site.css?v=11">
 <script>
 (function () {
   var d = document.documentElement, t = null, l = null;
@@ -37,7 +37,9 @@
       <a href="sealing.html"><span data-lang="fr">Scellement</span><span data-lang="en">Sealing</span></a>
       <a href="defense.html"><span data-lang="fr">D&eacute;fense</span><span data-lang="en">Defense</span></a>
       <a href="sound.html"><span data-lang="fr">Son</span><span data-lang="en">Sound</span></a>
+      <a href="immobility.html"><span data-lang="fr">Immobilit&eacute;</span><span data-lang="en">Immobility</span></a>
       <a href="sandbox.html">Sandbox</a>
+      <a href="performance.html">Performance</a>
     </nav>
     <div class="tools">
       <div class="langtoggle">
@@ -2350,80 +2352,100 @@
   <div class="prose">
     <p data-lang="fr">Living Hordes remplace enti&egrave;rement le syst&egrave;me d'apparition et de
     d&eacute;placement des zombies. Le peuplement d'origine est neutralis&eacute;, et la
-    population est r&eacute;partie en groupes qui se d&eacute;placent, se rencontrent, se
+    population est r&eacute;partie en hordes qui se d&eacute;placent, se rencontrent, se
     divisent et s'installent, que quelqu'un soit l&agrave; ou non.</p>
     <p data-lang="en">Living Hordes replaces the zombie spawning and movement system
     entirely. The original population is neutralised, and the population is distributed
-    into groups that move, meet, split and settle, whether or not anyone is present.</p>
+    into hordes that move, meet, split and settle, whether or not anyone is present.</p>
     <p data-lang="fr">Chaque syst&egrave;me est d&eacute;crit s&eacute;par&eacute;ment ci-dessous. La
     simulation en couches est celle dont d&eacute;pendent toutes les autres, et c'est par
     l&agrave; qu'il vaut mieux commencer.</p>
     <p data-lang="en">Each system is described separately below. The layered simulation is
     the one all the others depend on, and it is the better place to start.</p>
+    <p data-lang="fr"><em>Documentation &agrave; jour pour Living Hordes 0.9.</em></p>
+    <p data-lang="en"><em>Documentation up to date for Living Hordes 0.9.</em></p>
   </div>
 
   <ul class="cards">
     <li><a href="simulation.html">
       <span class="cardglyph"><svg viewBox="0 0 46 46"><circle cx="10" cy="23" r="3" fill="var(--p-simulation)"/><circle cx="10" cy="23" r="12" fill="none" stroke="var(--p-simulation)" stroke-width="1.6" opacity=".8"/><circle cx="10" cy="23" r="21" fill="none" stroke="var(--p-simulation)" stroke-width="1.6" opacity=".45"/><circle cx="10" cy="23" r="30" fill="none" stroke="var(--p-simulation)" stroke-width="1.6" opacity=".22"/></svg></span>
       <h2 data-lang="both">Simulation</h2>
-      <p data-lang="fr">Groupes, individus et zombies r&eacute;els. Comment des dizaines de milliers de
-      zombies ne co&ucirc;tent presque rien jusqu'&agrave; ce qu'on les croise.</p>
-      <p data-lang="en">Groups, individuals and real zombies. How tens of thousands of
-      zombies cost almost nothing right up to the moment of contact.</p>
+      <p data-lang="fr">Hordes, individus et zombies r&eacute;els : comment des dizaines de milliers de
+      zombies ne co&ucirc;tent presque rien jusqu'&agrave; ce qu'on les croise, et reviennent tels
+      qu'on les a laiss&eacute;s.</p>
+      <p data-lang="en">Hordes, individuals and real zombies: how tens of thousands of zombies
+      cost almost nothing until someone runs into them, and come back exactly as they were
+      left.</p>
     </a></li>
     <li><a href="density.html">
       <span class="cardglyph"><svg viewBox="0 0 46 46"><rect x="4" y="7" width="38" height="6" rx="2" fill="var(--p-density)"/><rect x="4" y="17" width="27" height="6" rx="2" fill="var(--p-density)" opacity=".72"/><rect x="4" y="27" width="16" height="6" rx="2" fill="var(--p-density)" opacity=".48"/><rect x="4" y="37" width="7" height="6" rx="2" fill="var(--p-density)" opacity=".28"/></svg></span>
       <h2><span data-lang="fr">Densit&eacute; de population</span><span data-lang="en">Population density</span></h2>
-      <p data-lang="fr">O&ugrave; sont les zombies et pourquoi l&agrave;. La carte est lue, pas
+      <p data-lang="fr">O&ugrave; sont les zombies, et pourquoi l&agrave;. La carte est lue, pas
       &eacute;crite &agrave; la main.</p>
-      <p data-lang="en">Where the zombies are and why there. The map is read, not written
-      by hand.</p>
+      <p data-lang="en">Where the zombies are, and why there. The map is read, not filled in by
+      hand.</p>
     </a></li>
     <li><a href="migration.html">
       <span class="cardglyph"><svg viewBox="0 0 46 46"><path d="M 5 37 C 14 24, 18 38, 26 26 S 36 12, 41 15" fill="none" stroke="var(--p-migration)" stroke-width="2.2"/><circle cx="5" cy="37" r="3.4" fill="var(--p-migration)"/><circle cx="41" cy="15" r="3.4" fill="var(--p-migration)" opacity=".55"/></svg></span>
       <h2 data-lang="both">Migration</h2>
-      <p data-lang="fr">Le choix des destinations, la forme des trajets, l'eau, le stationnement, et
-      d'o&ugrave; arrivent les renforts.</p>
-      <p data-lang="en">How destinations are chosen, the shape of the routes, water,
-      stationing, and where reinforcements come from.</p>
+      <p data-lang="fr">Le cycle d'une horde, le remplissage des lieux, le chemin calcul&eacute;
+      sur le terrain, les ponts, et d'o&ugrave; arrivent les renforts.</p>
+      <p data-lang="en">A horde's cycle, how full places are, routes planned over the terrain,
+      bridges, and where reinforcements come from.</p>
     </a></li>
     <li><a href="hordes.html">
       <span class="cardglyph"><svg viewBox="0 0 46 46"><circle cx="17" cy="23" r="13" fill="var(--p-hordes)" fill-opacity=".35" stroke="var(--p-hordes)" stroke-width="1.8"/><circle cx="33" cy="23" r="8" fill="var(--p-hordes)" fill-opacity=".35" stroke="var(--p-hordes)" stroke-width="1.8"/></svg></span>
       <h2><span data-lang="fr">Dynamique des hordes</span><span data-lang="en">Horde dynamics</span></h2>
-      <p data-lang="fr">La graine de personnalit&eacute;, l'absorption, la scission, et pourquoi les
-      villes se densifient toutes seules.</p>
-      <p data-lang="en">The personality seed, absorption, splitting, and why cities grow
-      denser on their own.</p>
+      <p data-lang="fr">La graine, la taille limite, les rencontres entre hordes, la scission et
+      les m&eacute;ga-hordes.</p>
+      <p data-lang="en">The seed, the size limit, encounters between hordes, splitting and mega
+      hordes.</p>
     </a></li>
     <li><a href="sealing.html">
       <span class="cardglyph"><svg viewBox="0 0 46 46"><rect x="6" y="8" width="34" height="30" fill="var(--p-sealing)" fill-opacity=".18"/><path d="M 6 8 L 40 8 L 40 38 L 6 38 L 6 30 M 6 18 L 6 8" fill="none" stroke="var(--p-sealing)" stroke-width="2.6" stroke-linecap="square"/><path d="M 25 8 L 25 20 M 25 28 L 25 38" stroke="var(--p-sealing)" stroke-width="2.6"/><path d="M 25 20 L 25 28" stroke="var(--p-sealing)" stroke-width="2.6" opacity=".35"/></svg></span>
       <h2><span data-lang="fr">Scellement</span><span data-lang="en">Sealing</span></h2>
       <p data-lang="fr">Ce qui est ferm&eacute;, pour qui, et pourquoi &ccedil;a ferme dans les deux
       sens.</p>
-      <p data-lang="en">What counts as closed, for whom, and why it closes both ways.</p>
+      <p data-lang="en">What is closed, to whom, and why it closes both ways.</p>
     </a></li>
     <li><a href="defense.html">
       <span class="cardglyph"><svg viewBox="0 0 46 46"><rect x="6" y="14" width="12" height="8" rx="1" fill="var(--p-defense)" opacity=".55"/><rect x="6" y="25" width="12" height="8" rx="1" fill="var(--p-defense)" opacity=".55"/><rect x="21" y="14" width="12" height="8" rx="1" fill="var(--p-defense)" opacity=".3"/><rect x="21" y="25" width="12" height="8" rx="1" fill="var(--p-defense)" opacity=".3"/><path d="M 38 8 L 38 40" stroke="var(--p-defense)" stroke-width="3.4" stroke-linecap="round"/></svg></span>
       <h2><span data-lang="fr">D&eacute;fense</span><span data-lang="en">Defense</span></h2>
       <p data-lang="fr">Le p&eacute;rim&egrave;tre suivi, la durabilit&eacute; r&eacute;elle des
       constructions, la pression et la br&egrave;che.</p>
-      <p data-lang="en">The tracked perimeter, the real durability of player constructions,
-      pressure, and the breach.</p>
+      <p data-lang="en">The tracked perimeter, the real durability of constructions, pressure
+      and the breach.</p>
     </a></li>
     <li><a href="sound.html">
       <span class="cardglyph"><svg viewBox="0 0 46 46"><circle cx="11" cy="23" r="4" fill="var(--p-sound)"/><path d="M 19 13 A 13 13 0 0 1 19 33" fill="none" stroke="var(--p-sound)" stroke-width="2.2" opacity=".8"/><path d="M 26 7 A 21 21 0 0 1 26 39" fill="none" stroke="var(--p-sound)" stroke-width="2.2" opacity=".45"/><path d="M 33 2 A 29 29 0 0 1 33 44" fill="none" stroke="var(--p-sound)" stroke-width="2.2" opacity=".22"/></svg></span>
       <h2><span data-lang="fr">Son</span><span data-lang="en">Sound</span></h2>
-      <p data-lang="fr">Ce qui est entendu, jusqu'o&ugrave;, et les trois fa&ccedil;ons dont une horde y
-      r&eacute;agit.</p>
-      <p data-lang="en">What gets heard, how far, and the three ways a horde reacts to it.</p>
+      <p data-lang="fr">Ce qui est entendu, jusqu'o&ugrave;, et ce qu'une horde fait quand elle
+      l'entend.</p>
+      <p data-lang="en">What gets heard, how far, and what a horde does when it hears it.</p>
+    </a></li>
+    <li><a href="immobility.html">
+      <span class="cardglyph"><svg viewBox="0 0 46 46"><path d="M 13 6 L 33 6 M 13 40 L 33 40" stroke="var(--p-immobility)" stroke-width="2.6" stroke-linecap="round"/><path d="M 15 7 C 15 18, 23 19, 23 23 C 23 27, 15 28, 15 39 L 31 39 C 31 28, 23 27, 23 23 C 23 19, 31 18, 31 7 Z" fill="none" stroke="var(--p-immobility)" stroke-width="1.8" stroke-linejoin="round"/><path d="M 17.5 37 C 18 31, 23 29, 23 27 C 23 29, 28 31, 28.5 37 Z" fill="var(--p-immobility)" opacity=".55"/><path d="M 19 12 L 27 12 C 26 16, 23 18, 23 19 C 23 18, 20 16, 19 12 Z" fill="var(--p-immobility)" opacity=".25"/></svg></span>
+      <h2><span data-lang="fr">Immobilit&eacute;</span><span data-lang="en">Immobility</span></h2>
+      <p data-lang="fr">L'ancre, la pression, et les hordes qui convergent vers qui reste trop
+      longtemps au m&ecirc;me endroit.</p>
+      <p data-lang="en">The anchor, the pressure, and the hordes that close in on whoever stays
+      too long in one place.</p>
     </a></li>
     <li><a href="sandbox.html">
       <span class="cardglyph"><svg viewBox="0 0 46 46"><rect x="4" y="19" width="38" height="9" rx="4" fill="none" stroke="var(--p-sandbox)" stroke-width="1.8"/><rect x="4" y="19" width="14" height="9" rx="4" fill="var(--p-sandbox)" fill-opacity=".22"/><circle cx="27" cy="23.5" r="6" fill="var(--bg-raised)" stroke="var(--p-sandbox)" stroke-width="2.2"/></svg></span>
       <h2 data-lang="both">Sandbox</h2>
-      <p data-lang="fr">Presets, axes de r&eacute;glage, mise &agrave; l'&eacute;chelle automatique, et ce
-      qui survit &agrave; une mise &agrave; jour.</p>
-      <p data-lang="en">Presets, tuning axes, automatic scaling, and what survives an
-      update.</p>
+      <p data-lang="fr">Presets, axes de r&eacute;glage, r&eacute;glages fins, et le menu Living
+      Hordes en cours de partie.</p>
+      <p data-lang="en">Presets, tuning axes, fine settings, and the Living Hordes menu during a
+      game.</p>
+    </a></li>
+    <li><a href="performance.html">
+      <span class="cardglyph"><svg viewBox="0 0 46 46"><path d="M 7 33 A 16 16 0 0 1 39 33" fill="none" stroke="var(--p-performance)" stroke-width="2.2" opacity=".35"/><path d="M 7 33 A 16 16 0 0 1 28 18" fill="none" stroke="var(--p-performance)" stroke-width="2.6"/><path d="M 23 33 L 32 21" stroke="var(--p-performance)" stroke-width="2.4" stroke-linecap="round"/><circle cx="23" cy="33" r="3.2" fill="var(--p-performance)"/></svg></span>
+      <h2 data-lang="both">Performance</h2>
+      <p data-lang="fr">Ce que le mod ralentit quand la machine peine, dans quel ordre, et ce qu'il
+      ne fait jamais.</p>
+      <p data-lang="en">What the mod slows down when the machine struggles, in what order, and
+      what it never does.</p>
     </a></li>
   </ul>
 </div>
@@ -2432,18 +2454,17 @@
   <h2 id="simulateur"><span data-lang="fr">Les bancs d'essai</span><span data-lang="en">The test benches</span></h2>
   <div class="prose">
     <p data-lang="fr">Une bonne partie de ce qui est d&eacute;crit ici se produit hors de vue. Certaines
-    choses sur des semaines de jeu qu'aucune session de test ne couvre, d'autres sur des
+    choses sur des semaines de jeu qu'aucune session de test ne couvre, d'autres dans des
     configurations pr&eacute;cises qu'on ne rencontre pas &agrave; volont&eacute; en jouant.
     Deux outils r&eacute;pondent &agrave; ces deux questions, et tous deux partagent le
     m&ecirc;me principe : <strong>ils ex&eacute;cutent le code du mod lui-m&ecirc;me</strong>,
-    charg&eacute; sans modification, avec les fonctions du jeu remplac&eacute;es par un
-    substitut minimal.</p>
+    sans modification, avec les fonctions du jeu remplac&eacute;es par un substitut
+    minimal.</p>
     <p data-lang="en">A good part of what is described here happens out of sight. Some of it
-    over weeks of game time that no test session covers, some of it on precise
+    over weeks of game time that no test session covers, some of it in precise
     configurations that cannot be produced on demand while playing. Two tools answer those
     two questions, and both rest on the same principle: <strong>they run the mod's own
-    code</strong>, loaded unmodified, with the game's functions replaced by a minimal
-    stand-in.</p>
+    code</strong>, unmodified, with the game's functions replaced by a minimal stand-in.</p>
   </div>
 
   <div class="prose">
@@ -2451,61 +2472,62 @@
     <p data-lang="fr">Le premier fait tourner la migration sur la carte r&eacute;elle, avec la
     densit&eacute; r&eacute;elle export&eacute;e depuis une sauvegarde. Le
     d&eacute;placement, les rencontres, les scissions, le choix des destinations, les
-    contournements d'eau et les points d'entr&eacute;e y sont exactement ceux de la partie.
-    Plusieurs sc&eacute;narios avancent en parall&egrave;le, chacun sur plusieurs jours de
-    jeu, et chaque s&eacute;rie est enregistr&eacute;e pour &ecirc;tre repass&eacute;e
-    ensuite.</p>
+    chemins calcul&eacute;s sur le terrain et les points d'entr&eacute;e y sont exactement
+    ceux de la partie. Plusieurs sc&eacute;narios avancent en parall&egrave;le, chacun sur
+    des semaines de jeu, et chaque s&eacute;rie est enregistr&eacute;e pour &ecirc;tre
+    repass&eacute;e ensuite.</p>
     <p data-lang="en">The first runs migration on the real map, with the real density
-    exported from a save. Movement, encounters, splits, destination choice, water detours
-    and entry points are exactly those of the game. Several scenarios advance in parallel,
-    each over several days of game time, and every run is recorded so it can be replayed
-    afterwards.</p>
-    <p data-lang="fr">Ce qu'il v&eacute;rifie surtout, c'est la conservation : qu'aucun zombie
+    exported from a save. Movement, encounters, splits, destination choice, routes planned
+    over the terrain and entry points are exactly those of the game. Several scenarios
+    advance in parallel, each over weeks of game time, and every run is recorded so it can be
+    replayed afterwards.</p>
+    <p data-lang="fr">Ce qu'il v&eacute;rifie surtout, c'est l'&eacute;quilibre et la conservation :
+    que la population reste r&eacute;partie au lieu de s'agglom&eacute;rer, et qu'aucun zombie
     n'appara&icirc;t ni ne dispara&icirc;t au fil des fusions, des scissions et des sorties
     de carte. Une d&eacute;rive de quelques unit&eacute;s par heure de jeu ne se voit pas en
-    jouant, et se voit imm&eacute;diatement sur une s&eacute;rie de sept jours.</p>
-    <p data-lang="en">What it checks above all is conservation: that no zombie appears or
+    jouant, et se voit imm&eacute;diatement sur une s&eacute;rie de plusieurs semaines. Les
+    images avant et apr&egrave;s de la page <a href="hordes.html">Dynamique des hordes</a>
+    en sortent.</p>
+    <p data-lang="en">What it checks above all is balance and conservation: that the
+    population stays spread out instead of clumping together, and that no zombie appears or
     vanishes through merges, splits and departures off the map edge. A drift of a few units
-    per game hour is invisible while playing, and obvious over a seven-day run.</p>
-    <p data-lang="fr">Il travaille en revanche &agrave; l'&eacute;chelle des groupes. Tout ce qui
+    per game hour is invisible while playing, and obvious over a run of several weeks. The
+    before and after images on the <a href="hordes.html">Horde dynamics</a> page come from
+    it.</p>
+    <p data-lang="fr">Il travaille en revanche &agrave; l'&eacute;chelle des hordes. Tout ce qui
     rel&egrave;ve du contact avec un joueur n'y figure pas : il r&eacute;pond aux questions
     de carte, pas aux questions de terrain.</p>
-    <p data-lang="en">It works at group scale, however. Anything that involves contact with
-    a player is absent from it: it answers map questions, not ground questions.</p>
+    <p data-lang="en">It works at horde scale, however. Anything that involves contact with a
+    player is absent from it: it answers map questions, not ground questions.</p>
   </div>
 
   <div class="prose">
     <h3><span data-lang="fr">&Agrave; l'&eacute;chelle d'une cour</span><span data-lang="en">At the scale of a single yard</span></h3>
-    <p data-lang="fr">Le second s'occupe du scellement, et le monde y est dessin&eacute; &agrave; la main.
-    Sa repr&eacute;sentation est celle du jeu, en <strong>ar&ecirc;tes</strong> : un mur,
-    une porte ou une fen&ecirc;tre tient sur le bord d'une case et non sur la case
-    elle-m&ecirc;me, ce qui permet de repr&eacute;senter une cl&ocirc;ture entre deux
-    terrains voisins. Pi&egrave;ces, &eacute;tages, escaliers, v&eacute;hicules, terrain
-    non charg&eacute; et position du joueur y sont reproduits.</p>
-    <p data-lang="en">The second deals with sealing, and its world is drawn by hand. Its
-    representation is the game's own, in <strong>edges</strong>: a wall, a door or a window
-    sits on the border of a tile rather than on the tile itself, which is what allows a
-    fence between two neighbouring plots to be represented. Rooms, floors, stairs,
-    vehicles, unloaded terrain and the player's position are all reproduced.</p>
-    <p data-lang="fr">Un d&eacute;tail dit bien l'esprit de l'outil : le joueur y entre dans chaque
-    b&acirc;timent au chargement du sc&eacute;nario, parce que c'est la seule fa&ccedil;on
-    dont le mod d&eacute;couvre une pi&egrave;ce. Le contourner serait tricher sur un
-    comportement voulu.</p>
-    <p data-lang="en">One detail captures the spirit of the tool: the player enters every
-    building when the scenario loads, because that is the only way the mod ever discovers a
-    room. Bypassing it would be cheating on deliberate behaviour.</p>
-    <p data-lang="fr">Chaque sc&eacute;nario porte ses attentes : une sonde doit lire <em>scell&eacute;</em>
-    &agrave; telle &eacute;tape, puis <em>ouvert</em> une fois la voiture conduite ailleurs.
-    Et chacun correspond &agrave; un cas qui s'est r&eacute;ellement mal pass&eacute; :
-    une voiture qui bouchait un portail et qui repart, un garage donnant sur une cour close,
-    une fuite apparente hors de port&eacute;e. Corriger le syst&egrave;me et v&eacute;rifier
-    les huit cas prend quelques secondes, contre autant de red&eacute;marrages du jeu.</p>
-    <p data-lang="en">Each scenario carries its own expectations: a probe must read
-    <em>sealed</em> at a given step, then <em>open</em> once the car has been driven away.
-    And each one corresponds to a case that genuinely went wrong: a car that was blocking a
-    gate and then leaves, a garage opening onto an enclosed yard, an apparent leak out of
-    reach. Fixing the system and checking all eight cases takes a few seconds, against as
-    many restarts of the game.</p>
+    <p data-lang="fr">Le second s'occupe du scellement, et plus pr&eacute;cis&eacute;ment des groupes
+    de sol (voir <a href="sealing.html">Scellement</a>). Il fait tourner le module du mod dans
+    l'interpr&eacute;teur Lua du jeu lui-m&ecirc;me, celui que Project Zomboid embarque, pour
+    que rien ne diff&egrave;re de ce qui tourne en partie.</p>
+    <p data-lang="en">The second deals with sealing, and more precisely with ground groups
+    (see <a href="sealing.html">Sealing</a>). It runs the mod's module inside the game's own
+    Lua interpreter, the one Project Zomboid ships with, so that nothing differs from what
+    runs in a game.</p>
+    <p data-lang="fr">Il porte deux sortes d'essais. Des sc&eacute;narios cibl&eacute;s, chacun avec
+    ses attentes : une cour qui doit se fermer quand son portail se ferme, une voiture
+    gar&eacute;e en travers d'un trou de cl&ocirc;ture, un mur qui change sur un seul morceau
+    de carte, un morceau relu sans changement qui ne doit rien changer. Et une validation au
+    hasard, qui construit des terrains tir&eacute;s au sort, les modifie, et compare chaque
+    groupe trouv&eacute; par le mod &agrave; un calcul brut fait case par case. C'est elle qui
+    a rendu s&ucirc;res les optimisations du d&eacute;coupage.</p>
+    <p data-lang="en">It carries two kinds of tests. Targeted scenarios, each with its own
+    expectations: a yard that must close when its gate closes, a car parked across a gap in
+    a fence, a wall that changes on a single piece of map, a piece re-read without any change
+    that must change nothing. And a random validation, which builds terrain drawn at random,
+    modifies it, and compares every group the mod finds against a brute-force, tile-by-tile
+    calculation. That is what made the optimisations of the cutting safe.</p>
+    <p data-lang="fr">Corriger le syst&egrave;me et repasser tous les cas prend quelques secondes,
+    contre autant de red&eacute;marrages du jeu.</p>
+    <p data-lang="en">Fixing the system and running every case again takes a few seconds,
+    against as many restarts of the game.</p>
   </div>
 </div>
 

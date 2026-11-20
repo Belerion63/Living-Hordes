@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="fr" data-title-fr="D&eacute;fense de base - Living Hordes" data-title-en="Base defense - Living Hordes">
+<html lang="fr" data-title-fr="D&eacute;fense de base - Living Hordes" data-title-en="Base defense - Living Hordes">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>D&eacute;fense de base - Living Hordes</title>
-<link rel="stylesheet" href="assets/site.css?v=7">
+<link rel="stylesheet" href="assets/site.css?v=11">
 <script>
 (function () {
   var d = document.documentElement, t = null, l = null;
@@ -36,7 +36,9 @@
       <a href="sealing.html"><span data-lang="fr">Scellement</span><span data-lang="en">Sealing</span></a>
       <a href="defense.html" aria-current="page"><span data-lang="fr">D&eacute;fense</span><span data-lang="en">Defense</span></a>
       <a href="sound.html"><span data-lang="fr">Son</span><span data-lang="en">Sound</span></a>
+      <a href="immobility.html"><span data-lang="fr">Immobilit&eacute;</span><span data-lang="en">Immobility</span></a>
       <a href="sandbox.html">Sandbox</a>
+      <a href="performance.html">Performance</a>
     </nav>
     <div class="tools">
       <div class="langtoggle">
@@ -59,8 +61,10 @@
       <a href="#durabilite"><span data-lang="fr">La durabilit&eacute;</span><span data-lang="en">Durability</span></a>
       <a href="#pression"><span data-lang="fr">La pression</span><span data-lang="en">Pressure</span></a>
       <a href="#breche"><span data-lang="fr">La br&egrave;che</span><span data-lang="en">The breach</span></a>
+      <a href="#eau"><span data-lang="fr">L'eau</span><span data-lang="en">Water</span></a>
       <a href="#grandit"><span data-lang="fr">Un p&eacute;rim&egrave;tre qui grandit</span><span data-lang="en">A growing perimeter</span></a>
       <a href="#panneau"><span data-lang="fr">Le panneau</span><span data-lang="en">The panel</span></a>
+      <a href="#reglage"><span data-lang="fr">D&eacute;g&acirc;ts aux constructions</span><span data-lang="en">Construction Damage</span></a>
     </div>
   </aside>
 
@@ -69,10 +73,11 @@
       <p class="eyebrow"><span data-lang="fr">Syst&egrave;mes centraux</span><span data-lang="en">Core systems</span></p>
       <h1><span data-lang="fr">D&eacute;fense</span><span data-lang="en">Defense</span></h1>
       <p class="lead" data-lang="fr">Un mur construit n'est pas un d&eacute;cor. Il entre dans la carte des
-      obstacles avec sa r&eacute;sistance, et une horde peut passer des heures &agrave; le
-      d&eacute;monter.</p>
+      obstacles avec sa r&eacute;sistance, et les zombies qui le pressent l'usent, m&ecirc;me quand
+      personne ne les regarde.</p>
       <p class="lead" data-lang="en">A wall that has been built is not scenery. It enters the
-      obstacle map with its own resistance, and a horde can spend hours taking it apart.</p>
+      obstacle map with its own resistance, and the zombies pressing on it wear it down, even when
+      nobody is watching them.</p>
     </div>
 
     <h2 id="perimetre"><span data-lang="fr">Le p&eacute;rim&egrave;tre n'est pas ce qui a &eacute;t&eacute; construit</span><span data-lang="en">The perimeter is not what was built</span></h2>
@@ -88,20 +93,20 @@
       there.</p>
       <p data-lang="fr">Le mod suit donc les deux. &Agrave; partir de chaque &eacute;l&eacute;ment
       construit, il remonte de proche en proche le long des murs de la carte qui y sont
-      raccord&eacute;s, et les <strong>absorbe dans le p&eacute;rim&egrave;tre suivi</strong>.
-      Un mur de maison qui ferme un c&ocirc;t&eacute; de la cour compte donc autant qu'une
-      palissade pos&eacute;e &agrave; la main.</p>
+      raccord&eacute;s, et les ajoute au p&eacute;rim&egrave;tre suivi. Un mur de maison qui
+      ferme un c&ocirc;t&eacute; de la cour compte donc autant qu'une palissade pos&eacute;e
+      &agrave; la main.</p>
       <p data-lang="en">The mod therefore tracks both. Starting from every built element, it
-      works its way outwards along the map walls connected to it and <strong>absorbs them
-      into the tracked perimeter</strong>. A house wall that closes one side of the yard
-      therefore counts just as much as a hand-placed palisade.</p>
+      works its way outwards along the map walls connected to it and adds them to the tracked
+      perimeter. A house wall that closes one side of the yard therefore counts just as much as a
+      hand-placed palisade.</p>
       <p data-lang="fr">L'inverse est vrai aussi : quand une portion construite est retir&eacute;e, les
-      murs de carte qui ne tiennent plus &agrave; rien sont rel&acirc;ch&eacute;s.</p>
+      murs de la carte qui ne tiennent plus &agrave; rien sont rel&acirc;ch&eacute;s.</p>
       <p data-lang="en">The reverse holds too: when a built section is removed, the map walls
       that no longer connect to anything are released.</p>
     </div>
 
-    <figure class="wide-fig">
+    <figure class="wide-fig" id="perim-fig">
       <svg viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg" role="img"
            aria-label="Une cl&ocirc;ture construite entre deux b&acirc;timents, et le p&eacute;rim&egrave;tre complet que le mod en d&eacute;duit.">
         <g font-size="11" font-family="ui-monospace, monospace" fill="var(--text-faint)">
@@ -146,93 +151,119 @@
         <text x="670" y="290" font-size="11" fill="var(--text-dim)" text-anchor="middle" data-lang="en">
           one continuous perimeter</text>
       </svg>
-      <figcaption data-lang="fr">Les traits &eacute;pais sont les segments r&eacute;ellement construits.
-      Les contours fins sont les murs de la carte que le mod y raccorde et suit
-      d&eacute;sormais comme les siens.</figcaption>
-      <figcaption data-lang="en">The thick strokes are the segments actually built. The thin
-      outlines are the map walls the mod connects to them and now tracks as its own.</figcaption>
+      <figcaption data-lang="fr">En orange, les cl&ocirc;tures r&eacute;ellement construites. En vert, les murs de la
+      carte que le mod y raccorde de proche en proche et suit d&eacute;sormais comme les siens. Un clic pose
+      ou retire une cl&ocirc;ture : le raccordement progresse, et les murs qui ne tiennent plus &agrave; rien
+      sont rel&acirc;ch&eacute;s.</figcaption>
+      <figcaption data-lang="en">In orange, the fences actually built. In green, the map walls the mod
+      connects to them step by step and now tracks as its own. A click builds or removes a fence: the
+      connection spreads, and walls no longer attached to anything are released.</figcaption>
     </figure>
 
     <h2 id="durabilite"><span data-lang="fr">La durabilit&eacute; est celle du jeu</span><span data-lang="en">Durability comes from the game</span></h2>
     <div class="prose">
       <p data-lang="fr">Une construction n'a pas de r&eacute;sistance invent&eacute;e. Le mod lit
-      directement les points de vie de l'objet tel que le jeu le conna&icirc;t, ce qui veut
-      dire que <strong>les mat&eacute;riaux et le niveau de menuiserie comptent
-      exactement comme d'habitude</strong>. Un mur de bois mal fini c&egrave;de plus vite
-      qu'un mur de brique, sans que le mod ait &agrave; en d&eacute;cider.</p>
+      directement les points de vie de l'objet tel que le jeu le conna&icirc;t : les
+      mat&eacute;riaux et le niveau de menuiserie comptent exactement comme d'habitude. Un mur
+      de bois mal fini c&egrave;de plus vite qu'un mur de brique, sans que le mod ait &agrave; en
+      d&eacute;cider.</p>
       <p data-lang="en">A construction has no invented resistance. The mod reads the object's
-      hit points directly as the game knows them, which means <strong>materials and
-      carpentry level count exactly as they normally do</strong>. A poorly finished wooden
-      wall gives way sooner than a brick one, without the mod having any say in it.</p>
+      hit points directly as the game knows them: materials and carpentry level count exactly as
+      they normally do. A poorly finished wooden wall gives way sooner than a brick one, without
+      the mod having any say in it.</p>
       <p data-lang="fr">Une valeur de repli par mat&eacute;riau existe pour les rares structures qui ne
       r&eacute;pondent pas, et elle suit le m&ecirc;me ordre : le bois en bas, la brique au
-      double, le m&eacute;tal au triple.</p>
+      double, le m&eacute;tal au triple. C'est elle, et elle seule, que r&egrave;gle <strong>PV de
+      base des constructions</strong> dans le bac &agrave; sable.</p>
       <p data-lang="en">A per-material fallback value exists for the rare structures that do
       not answer, and it follows the same order: wood at the bottom, brick at double, metal
-      at triple.</p>
+      at triple. It is that value, and that value alone, that <strong>Construction Base
+      HP</strong> sets in the sandbox.</p>
     </div>
 
     <h2 id="pression"><span data-lang="fr">La pression</span><span data-lang="en">Pressure</span></h2>
     <div class="prose">
       <p data-lang="fr">Un zombie qui bute contre une structure suivie lui inflige des d&eacute;g&acirc;ts.
-      Tant qu'il pousse, la structure s'use. &Agrave; z&eacute;ro elle est
+      Tant qu'il pousse, la structure s'use. &Agrave; z&eacute;ro, elle est
       d&eacute;truite.</p>
       <p data-lang="en">A zombie pressing against a tracked structure deals damage to it. As
-      long as it pushes, the structure wears down. At zero it is destroyed.</p>
+      long as it pushes, the structure wears down. At zero, it is destroyed.</p>
       <p data-lang="fr">Le rythme est volontairement lent. Un zombie isol&eacute; contre un mur ne
-      repr&eacute;sente presque rien, et le mur tiendra bien plus longtemps que sa
-      patience. C'est le nombre qui fait la diff&eacute;rence : une horde
-      appuy&eacute;e sur la m&ecirc;me paroi additionne ses efforts, et le temps
-      n&eacute;cessaire se compte alors en heures de jeu plut&ocirc;t qu'en jours.</p>
+      repr&eacute;sente presque rien. C'est le nombre qui fait la diff&eacute;rence : une horde
+      appuy&eacute;e sur la m&ecirc;me paroi additionne ses efforts, et un mur que quelques
+      zombies n'entameraient pas en une journ&eacute;e tombe alors bien plus vite.</p>
       <p data-lang="en">The rate is deliberately slow. A single zombie against a wall amounts
-      to almost nothing, and the wall will outlast its patience by a wide margin. Numbers
-      are what make the difference: a horde leaning on the same panel adds its efforts
-      together, and the time required is then counted in game hours rather than days.</p>
-      <p data-lang="fr">Une pr&eacute;cision utile pour comprendre ce qui se joue : cette usure
-      s'applique aux zombies de la couche th&eacute;orique, donc <strong>elle continue
-      pendant l'absence</strong>. Une base laiss&eacute;e seule n'est pas une base en
-      pause.</p>
-      <p data-lang="en">One detail worth knowing: this wear applies to the zombies of the
-      theoretical layer, so <strong>it carries on during an absence</strong>. A base left
-      alone is not a base on pause.</p>
+      to almost nothing. Numbers are what make the difference: a horde leaning on the same panel
+      adds its efforts together, and a wall that a few zombies would not dent in a day then falls
+      much faster.</p>
+      <p data-lang="fr"><strong>Cette usure ne demande pas que le joueur regarde.</strong> Elle vient
+      des zombies qui vivent autour de lui sans &ecirc;tre affich&eacute;s, jusqu'&agrave; 250
+      tuiles (voir <a href="simulation.html">Simulation</a>). Un joueur qui dort, ou qui fouille
+      le b&acirc;timent d'&agrave; c&ocirc;t&eacute;, peut donc trouver sa palissade
+      entam&eacute;e.</p>
+      <p data-lang="en"><strong>This wear does not need the player to be watching.</strong> It comes
+      from the zombies living around the player without being displayed, up to 250 tiles away (see
+      <a href="simulation.html">Simulation</a>). A player who is asleep, or searching the building
+      next door, can therefore find the palisade worn down.</p>
+      <p data-lang="fr"><strong>Mais elle s'arr&ecirc;te quand le joueur s'&eacute;loigne.</strong>
+      Au-del&agrave; de 250 tuiles, les zombies ne sont plus que des hordes, et une horde
+      n'ab&icirc;me rien. Une base laiss&eacute;e pour une longue exp&eacute;dition ne s'use pas
+      en l'absence du joueur. Elle peut en revanche avoir une horde pos&eacute;e devant elle
+      &agrave; son retour, qui se remettra &agrave; pousser d&egrave;s qu'il sera assez
+      pr&egrave;s.</p>
+      <p data-lang="en"><strong>But it stops when the player moves away.</strong> Beyond 250 tiles,
+      zombies are nothing more than hordes, and a horde damages nothing. A base left behind for a
+      long expedition does not wear down while the player is away. It may, on the other hand, have
+      a horde sitting in front of it on the player's return, which will start pushing again as soon
+      as the player is close enough.</p>
+      <p data-lang="fr">Un zombie r&eacute;el, celui que le joueur voit cogner, n'est pas
+      concern&eacute; par tout ceci : il frappe les murs par le syst&egrave;me du jeu de base,
+      que le mod ne touche pas.</p>
+      <p data-lang="en">A real zombie, the one the player sees hammering, is not concerned by any of
+      this: it hits walls through the base game's own system, which the mod does not touch.</p>
     </div>
 
     <h2 id="breche"><span data-lang="fr">La br&egrave;che</span><span data-lang="en">The breach</span></h2>
     <div class="prose">
       <p data-lang="fr">Quand une structure atteint z&eacute;ro, elle ne dispara&icirc;t pas
       silencieusement. Les zombies qui se trouvaient contre elle sont d'abord
-      <strong>&eacute;cart&eacute;s</strong>, ce qui &eacute;vite qu'ils se retrouvent
-      &agrave; l'int&eacute;rieur au moment m&ecirc;me o&ugrave; le mur c&egrave;de. Puis la
-      structure tombe, et l'endroit reste marqu&eacute; comme une br&egrave;che.</p>
+      &eacute;cart&eacute;s, ce qui &eacute;vite qu'ils se retrouvent &agrave;
+      l'int&eacute;rieur au moment m&ecirc;me o&ugrave; le mur c&egrave;de. Puis la structure
+      tombe, et l'endroit reste marqu&eacute; comme une br&egrave;che.</p>
       <p data-lang="en">When a structure reaches zero it does not vanish quietly. The zombies
-      that were pressed against it are first <strong>pushed aside</strong>, which prevents
-      them from ending up inside at the very moment the wall gives way. Then the structure
-      falls, and the spot stays marked as a breach.</p>
+      that were pressed against it are first pushed aside, which prevents them from ending up
+      inside at the very moment the wall gives way. Then the structure falls, and the spot stays
+      marked as a breach.</p>
       <p data-lang="fr">Le scellement est alors recalcul&eacute;. Si cette structure fermait l'enceinte,
-      celle-ci n'est plus close, et tout ce qu'elle retenait redevient libre de circuler.
-      Le d&eacute;tail de ce m&eacute;canisme est sur la
-      <a href="sealing.html">page espaces scell&eacute;s</a>.</p>
+      celle-ci n'est plus close, et tout ce qu'elle retenait redevient libre de circuler (voir
+      <a href="sealing.html">Scellement</a>).</p>
       <p data-lang="en">Sealing is then recomputed. If that structure was what closed the
       enclosure, the enclosure is no longer closed, and everything it held back is free to
-      move again. The detail of that mechanism is on the
-      <a href="sealing.html">sealed spaces page</a>.</p>
+      move again (see <a href="sealing.html">Sealing</a>).</p>
     </div>
 
-    <h2 id="grandit"><span data-lang="fr">Un p&eacute;rim&egrave;tre qui grandit avec l'exploration</span><span data-lang="en">A perimeter that grows with exploration</span></h2>
+    <h2 id="eau"><span data-lang="fr">L'eau</span><span data-lang="en">Water</span></h2>
     <div class="prose">
-      <p data-lang="fr">Le raccordement ne se fait pas d'un coup. Il progresse un peu &agrave; chaque
-      instant, et les portions de mur situ&eacute;es sur du terrain que le jeu n'a pas
-      encore charg&eacute; sont mises de c&ocirc;t&eacute; puis retent&eacute;es plus tard.</p>
-      <p data-lang="en">The connecting does not happen all at once. It advances a little at
-      every moment, and the wall sections sitting on terrain the game has not loaded yet are
-      set aside and retried later.</p>
-      <p data-lang="fr">C'est ce qui permet &agrave; une enceinte de la taille d'un p&eacute;nitencier
-      d'entrer dans le suivi au fur et &agrave; mesure qu'elle est parcourue, au lieu
-      d'&ecirc;tre abandonn&eacute;e parce qu'elle d&eacute;passait une distance
-      arbitraire.</p>
-      <p data-lang="en">That is what lets an enclosure the size of a penitentiary enter the
-      tracking as it gets walked, instead of being abandoned for exceeding some arbitrary
-      distance.</p>
+      <p data-lang="fr">L'eau compte comme un bord. Une base adoss&eacute;e &agrave; une rivi&egrave;re
+      ou &agrave; un lac est ferm&eacute;e de ce c&ocirc;t&eacute; sans qu'il faille y construire
+      quoi que ce soit. Et un pont construit pour regagner la terre ferme est reconnu comme une
+      ouverture : il relie la base au reste du monde, comme le ferait une porte ouverte.</p>
+      <p data-lang="en">Water counts as an edge. A base backing onto a river or a lake is closed on
+      that side without anything having to be built there. And a bridge built to get back to dry
+      land is recognised as an opening: it links the base to the rest of the world, as an open door
+      would.</p>
+    </div>
+
+    <h2 id="grandit"><span data-lang="fr">Un p&eacute;rim&egrave;tre qui grandit</span><span data-lang="en">A growing perimeter</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Le raccordement aux murs de la carte ne se fait pas d'un coup. Il progresse un
+      peu &agrave; chaque instant, et les portions situ&eacute;es sur du terrain que le jeu n'a pas
+      encore charg&eacute; sont reprises plus tard. C'est ce qui permet &agrave; une grande
+      enceinte d'entrer dans le suivi &agrave; mesure qu'elle est approch&eacute;e.</p>
+      <p data-lang="en">Connecting to the map walls does not happen all at once. It advances a
+      little at every moment, and the sections sitting on terrain the game has not loaded yet are
+      picked up again later. That is what lets a large enclosure enter the tracking as it is
+      approached.</p>
       <p data-lang="fr">Une limite existe malgr&eacute; tout, et elle porte sur la quantit&eacute; de mur
       suivi plut&ocirc;t que sur son &eacute;loignement. Une cl&ocirc;ture raccord&eacute;e
       &agrave; la base et qui traverserait la carte enti&egrave;re finirait par
@@ -245,17 +276,34 @@
 
     <h2 id="panneau"><span data-lang="fr">Le panneau</span><span data-lang="en">The panel</span></h2>
     <div class="prose">
-      <p data-lang="fr">Une interface d&eacute;di&eacute;e, accessible depuis le jeu, montre le
-      p&eacute;rim&egrave;tre suivi tel que le mod le voit : les structures et leur
-      &eacute;tat, les ouvertures, et les br&egrave;ches ouvertes.</p>
-      <p data-lang="en">A dedicated interface, reachable from the game, shows the tracked
-      perimeter as the mod sees it: the structures and their state, the openings, and the
-      open breaches.</p>
-      <p data-lang="fr">C'est la seule interface du mod, et elle sert &agrave; r&eacute;pondre &agrave; une
-      question que rien d'autre ne permet de poser : <em>ce que je crois avoir ferm&eacute;
-      est-il r&eacute;ellement ferm&eacute;</em>.</p>
-      <p data-lang="en">It is the mod's only interface, and it exists to answer a question
-      nothing else allows: <em>is what looks closed actually closed</em>.</p>
+      <p data-lang="fr">Le panneau de d&eacute;fense montre le p&eacute;rim&egrave;tre tel que le mod le
+      voit : le sol prot&eacute;g&eacute;, les espaces ferm&eacute;s, l'&eacute;tat de chaque
+      structure et les d&eacute;g&acirc;ts subis. Son bouton n'appara&icirc;t que lorsque le menu
+      de construction est ouvert, pour ne pas encombrer l'&eacute;cran le reste du temps.</p>
+      <p data-lang="en">The defense panel shows the perimeter as the mod sees it: the protected
+      ground, the closed spaces, the state of each structure and the damage taken. Its button only
+      appears when the building menu is open, so as not to clutter the screen the rest of the
+      time.</p>
+      <p data-lang="fr">Il r&eacute;pond &agrave; une question que rien d'autre ne permet de poser : ce
+      que je crois avoir ferm&eacute; l'est-il vraiment ?</p>
+      <p data-lang="en">It answers a question that nothing else makes it possible to ask: is what I
+      believe I have closed really closed?</p>
+    </div>
+
+    <h2 id="reglage"><span data-lang="fr">Le r&eacute;glage D&eacute;g&acirc;ts aux constructions</span><span data-lang="en">The Construction Damage setting</span></h2>
+    <div class="prose">
+      <p data-lang="fr">D&eacute;sactiver <strong>D&eacute;g&acirc;ts aux constructions</strong> dans le
+      bac &agrave; sable coupe l'usure d&eacute;crite plus haut : celle des zombies que le joueur
+      ne voit pas. Une base ne peut plus &ecirc;tre perc&eacute;e pendant que personne ne
+      regarde.</p>
+      <p data-lang="en">Turning off <strong>Construction Damage</strong> in the sandbox cuts the wear
+      described above: the wear from the zombies the player does not see. A base can no longer be
+      breached while nobody is watching.</p>
+      <p data-lang="fr">Cela ne la rend pas indestructible. Un zombie r&eacute;el, devant le joueur,
+      continue de frapper les murs par le syst&egrave;me du jeu, que ce r&eacute;glage ne touche
+      pas.</p>
+      <p data-lang="en">That does not make it indestructible. A real zombie, in front of the player,
+      keeps hitting walls through the game's own system, which this setting does not touch.</p>
     </div>
 
     <div class="note">
@@ -275,6 +323,7 @@
   </div>
 </footer>
 
+<script src="assets/perimeter.js?v=1"></script>
 <script src="assets/site.js?v=6"></script>
 </body>
 </html>

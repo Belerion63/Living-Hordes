@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="fr" data-title-fr="Performance - Living Hordes" data-title-en="Performance - Living Hordes">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Performance - Living Hordes</title>
+<link rel="stylesheet" href="assets/site.css?v=11">
+<script>
+(function () {
+  var d = document.documentElement, t = null, l = null;
+  try {
+    t = localStorage.getItem("lh-theme");
+    l = localStorage.getItem("lh-lang");
+  } catch (e) {}
+  if (t) d.setAttribute("data-theme", t);
+  if (l !== "fr" && l !== "en") {
+    l = (navigator.language || "en").toLowerCase().indexOf("fr") === 0 ? "fr" : "en";
+  }
+  d.setAttribute("data-sitelang", l);
+  d.setAttribute("lang", l);
+  var tt = d.getAttribute("data-title-" + l);
+  if (tt) document.title = tt;
+})();
+</script>
+</head>
+<body data-page="performance">
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <a class="brand" href="index.html"><b>Living Hordes</b><span>Documentation</span></a>
+    <nav class="sitenav">
+      <a href="simulation.html">Simulation</a>
+      <a href="density.html"><span data-lang="fr">Densit&eacute;</span><span data-lang="en">Density</span></a>
+      <a href="migration.html">Migration</a>
+      <a href="hordes.html">Hordes</a>
+      <a href="sealing.html"><span data-lang="fr">Scellement</span><span data-lang="en">Sealing</span></a>
+      <a href="defense.html"><span data-lang="fr">D&eacute;fense</span><span data-lang="en">Defense</span></a>
+      <a href="sound.html"><span data-lang="fr">Son</span><span data-lang="en">Sound</span></a>
+      <a href="immobility.html"><span data-lang="fr">Immobilit&eacute;</span><span data-lang="en">Immobility</span></a>
+      <a href="sandbox.html">Sandbox</a>
+      <a href="performance.html" aria-current="page">Performance</a>
+    </nav>
+    <div class="tools">
+      <div class="langtoggle">
+        <button type="button" data-setlang="fr">FR</button>
+        <button type="button" data-setlang="en">EN</button>
+      </div>
+      <button class="motiontoggle" id="motion-toggle" type="button" aria-pressed="false"
+              title="Animations">Anim.</button>
+      <button class="themetoggle" id="theme-toggle" type="button"
+              title="Th&egrave;me / Theme">&#9680;</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <aside class="toc">
+    <div class="toc-sticky">
+      <h2><span data-lang="fr">Sur cette page</span><span data-lang="en">On this page</span></h2>
+      <a href="#temps"><span data-lang="fr">Compt&eacute; en temps, pas en images</span><span data-lang="en">Counted in time, not frames</span></a>
+      <a href="#rythme"><span data-lang="fr">Le rythme plut&ocirc;t que la distance</span><span data-lang="en">Pace rather than distance</span></a>
+      <a href="#regulateur"><span data-lang="fr">Le r&eacute;gulateur</span><span data-lang="en">The regulator</span></a>
+      <a href="#jamais"><span data-lang="fr">Ce qu'il ne fait jamais</span><span data-lang="en">What it never does</span></a>
+      <a href="#etale"><span data-lang="fr">Le travail &eacute;tal&eacute;</span><span data-lang="en">Spread-out work</span></a>
+      <a href="#chargement"><span data-lang="fr">Chargement et sauvegarde</span><span data-lang="en">Loading and saving</span></a>
+    </div>
+  </aside>
+
+  <main>
+    <div class="prose pagehead">
+      <p class="eyebrow"><span data-lang="fr">Syst&egrave;mes centraux</span><span data-lang="en">Core systems</span></p>
+      <h1 data-lang="both">Performance</h1>
+      <p class="lead" data-lang="fr">Simuler des dizaines de milliers de zombies a un co&ucirc;t. Quand
+      la machine peine, le mod ralentit d'abord la vitesse &agrave; laquelle il apprend le monde
+      autour du joueur. Ce que ce monde contient n'est touch&eacute; qu'en dernier.</p>
+      <p class="lead" data-lang="en">Simulating tens of thousands of zombies has a cost. When
+      the machine struggles, the mod first slows down the rate at which it learns the world
+      around the player. What that world contains is touched only last.</p>
+    </div>
+
+    <h2 id="temps"><span data-lang="fr">Compt&eacute; en temps, pas en images</span><span data-lang="en">Counted in time, not frames</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Tout le travail p&eacute;riodique du mod est r&eacute;gl&eacute; en secondes
+      r&eacute;elles, pas en nombre d'images. Une machine qui affiche 120 images par seconde ne
+      fait donc pas quatre fois plus de travail qu'une machine &agrave; 30 : le mod p&egrave;se
+      le m&ecirc;me poids sur les deux.</p>
+      <p data-lang="en">All of the mod's periodic work is set in real seconds, not in a number
+      of frames. A machine showing 120 frames per second therefore does not do four times as
+      much work as a machine at 30: the mod weighs the same on both.</p>
+      <p data-lang="fr">C'est aussi ce qui rend une partie identique d'une machine &agrave; l'autre.
+      Les hordes migrent &agrave; la m&ecirc;me vitesse, les si&egrave;ges durent le m&ecirc;me
+      temps, et une m&ecirc;me sauvegarde se comporte de la m&ecirc;me fa&ccedil;on
+      partout.</p>
+      <p data-lang="en">It is also what makes a game identical from one machine to another.
+      Hordes migrate at the same speed, sieges last the same time, and the same save behaves
+      the same way everywhere.</p>
+    </div>
+
+    <h2 id="rythme"><span data-lang="fr">Le rythme plut&ocirc;t que la distance</span><span data-lang="en">Pace rather than distance</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Les hordes ne sont pas toutes calcul&eacute;es &agrave; chaque instant. Elles
+      sont r&eacute;parties en seaux, et un seul seau est trait&eacute; &agrave; chaque tick.
+      Apr&egrave;s traitement, une horde est replac&eacute;e dans un seau plus ou moins lointain
+      selon sa distance au joueur : une horde toute proche revient au tick suivant, une horde
+      &agrave; l'autre bout de la carte revient bien plus tard.</p>
+      <p data-lang="en">Hordes are not all computed at every moment. They are spread across
+      buckets, and only one bucket is processed per tick. After processing, a horde is put back
+      into a nearer or more distant bucket depending on its distance from the player: a horde
+      close by comes back on the next tick, a horde at the other end of the map comes back
+      much later.</p>
+      <p data-lang="fr">Sa vitesse est multipli&eacute;e d'autant. Une horde trait&eacute;e une fois sur
+      trente avance trente fois plus loin &agrave; chaque fois. Le d&eacute;placement est
+      identique, seule la finesse change : ce qui se passe loin du joueur est calcul&eacute; par
+      grands pas, ce qui se passe pr&egrave;s de lui pas &agrave; pas, et personne ne peut faire
+      la diff&eacute;rence.</p>
+      <p data-lang="en">Its speed is multiplied accordingly. A horde processed once in thirty
+      moves thirty times as far each time. The movement is identical, only the granularity
+      changes: what happens far from the player is computed in large steps, what happens close
+      to the player step by step, and nobody can tell the difference.</p>
+    </div>
+
+    <h2 id="regulateur"><span data-lang="fr">Le r&eacute;gulateur</span><span data-lang="en">The regulator</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Le mod mesure en permanence le temps de chaque image. Quand il en prend trop,
+      un r&eacute;gulateur intervient. Il ne suit pas une &eacute;chelle fixe : il calcule
+      combien de millisecondes il manque, puis choisit les leviers qui en lib&egrave;rent le plus
+      pour le moins de g&ecirc;ne visible, jusqu'&agrave; combler l'&eacute;cart.</p>
+      <p data-lang="en">The mod constantly measures the time each frame takes. When it takes
+      too much, a regulator steps in. It does not follow a fixed ladder: it works out how many
+      milliseconds are missing, then picks the levers that free the most for the least visible
+      disruption, until the gap is closed.</p>
+      <p data-lang="fr">Chaque levier a un co&ucirc;t pour le joueur, fix&eacute; &agrave; la
+      conception, et un gain mesur&eacute; en jeu. Un levier dont la t&acirc;che ne co&ucirc;te
+      rien en ce moment ne lib&egrave;re rien, et n'est donc jamais choisi. Dans l'ordre, du
+      moins visible au plus visible :</p>
+      <p data-lang="en">Each lever has a cost for the player, set at design time, and a gain
+      measured in play. A lever whose task costs nothing at the moment frees nothing, and so is
+      never chosen. In order, from least visible to most visible:</p>
+    </div>
+
+    <div class="tablescroll" data-lang="fr">
+    <table>
+      <thead><tr><th>Ce qui est ralenti</th><th>Ce que le joueur en per&ccedil;oit</th></tr></thead>
+      <tbody>
+        <tr><td>Le d&eacute;placement des hordes lointaines, par pas plus grands</td><td>Rien : elles vont &agrave; la m&ecirc;me vitesse</td></tr>
+        <tr><td>La d&eacute;couverte des b&acirc;timents et des espaces clos</td><td>Un espace ferm&eacute; est reconnu un peu plus tard ; rien de ce qui est connu ne bouge</td></tr>
+        <tr><td>La v&eacute;rification p&eacute;riodique des espaces clos</td><td>Une porte ou une voiture d&eacute;plac&eacute;e est prise en compte un peu plus tard</td></tr>
+        <tr><td>Le d&eacute;placement des individus &eacute;loign&eacute;s du joueur</td><td>Rien de visible : ils sont loin de l'&eacute;cran</td></tr>
+        <tr><td>Les d&eacute;cisions des hordes et le recensement autour du joueur</td><td>Les hordes r&eacute;fl&eacute;chissent un peu moins souvent</td></tr>
+        <tr><td>Le d&eacute;bit des hordes qui se d&eacute;font pr&egrave;s du joueur</td><td>Les zombies arrivent un peu plus progressivement</td></tr>
+        <tr><td>Le nombre de zombies pr&eacute;sents autour du joueur</td><td>Moins de zombies, en tout dernier recours</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="tablescroll" data-lang="en">
+    <table>
+      <thead><tr><th>What is slowed down</th><th>What the player notices</th></tr></thead>
+      <tbody>
+        <tr><td>The movement of distant hordes, in larger steps</td><td>Nothing: they travel at the same speed</td></tr>
+        <tr><td>The discovery of buildings and enclosed spaces</td><td>An enclosed space is recognised a little later; nothing already known moves</td></tr>
+        <tr><td>The periodic check of enclosed spaces</td><td>A door or a car that has been moved is taken into account a little later</td></tr>
+        <tr><td>The movement of individuals far from the player</td><td>Nothing visible: they are far from the screen</td></tr>
+        <tr><td>Horde decisions and the census around the player</td><td>Hordes think a little less often</td></tr>
+        <tr><td>The flow of hordes breaking up near the player</td><td>Zombies arrive a little more gradually</td></tr>
+        <tr><td>The number of zombies present around the player</td><td>Fewer zombies, as a very last resort</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="prose">
+      <p data-lang="fr">Trois sortes de d&eacute;tresse sont trait&eacute;es s&eacute;par&eacute;ment,
+      parce qu'elles ne se soignent pas l'une avec l'autre. Une <strong>saccade</strong>
+      ponctuelle ne se corrige qu'en ralentissant la t&acirc;che qui l'a provoqu&eacute;e. Une
+      <strong>charge</strong> continue se corrige avec n'importe quel levier, puisqu'une
+      milliseconde en vaut une autre. Et une <strong>saturation</strong>, quand trop de zombies
+      attendent d'entrer dans une couche, ne se corrige qu'en ralentissant ce qui y entre.</p>
+      <p data-lang="en">Three kinds of distress are handled separately, because the cure for
+      one does not treat the others. A one-off <strong>stutter</strong> can only be corrected by
+      slowing down the task that caused it. A continuous <strong>load</strong> can be corrected
+      with any lever, since one millisecond is as good as another. And a
+      <strong>saturation</strong>, when too many zombies are waiting to enter a layer, can only
+      be corrected by slowing down what enters it.</p>
+      <p data-lang="fr">Le r&eacute;gulateur ne r&eacute;agit pas seulement apr&egrave;s coup. Il observe
+      la position du joueur, sa vitesse, sa direction et la quantit&eacute; de hordes devant lui,
+      et ralentit la d&eacute;couverte des b&acirc;timents avant que le co&ucirc;t n'arrive, par
+      exemple &agrave; l'approche d'une grande ville en voiture.</p>
+      <p data-lang="en">The regulator does not only react after the fact. It watches the
+      player's position, speed, direction and the number of hordes ahead, and slows the
+      discovery of buildings before the cost arrives, for example when approaching a large
+      town by car.</p>
+      <p data-lang="fr">Pour &eacute;viter de s'emballer, il ne rel&acirc;che pas au m&ecirc;me seuil que
+      celui o&ugrave; il serre : il faut que la machine ait vraiment repris de l'air pour que les
+      leviers reviennent &agrave; la normale.</p>
+      <p data-lang="en">To avoid running away with itself, it does not release at the same
+      threshold at which it tightens: the machine has to have really caught its breath before
+      the levers return to normal.</p>
+    </div>
+
+    <h2 id="jamais"><span data-lang="fr">Ce qu'il ne fait jamais</span><span data-lang="en">What it never does</span></h2>
+    <div class="prose">
+      <p data-lang="fr"><strong>Il ne vide pas le monde pour gagner des images.</strong> La population
+      autour du joueur est le dernier levier, tir&eacute; seulement quand tout le reste est
+      &eacute;puis&eacute;, et il ne peut jamais descendre sous la moiti&eacute; de ce que le
+      joueur a demand&eacute;.</p>
+      <p data-lang="en"><strong>It does not empty the world to gain frames.</strong> The
+      population around the player is the last lever, pulled only when everything else is
+      exhausted, and it can never go below half of what the player asked for.</p>
+      <p data-lang="fr"><strong>Il ne d&eacute;passe jamais le r&eacute;glage du joueur.</strong>
+      <strong>Taux de zombies en simultan&eacute;</strong> fixe combien de zombies peuvent
+      &ecirc;tre actifs autour du joueur &agrave; la fois. Le r&eacute;gulateur prot&egrave;ge
+      l'image : il peut rester en dessous quand la machine peine, mais ne d&eacute;cide jamais
+      d'aller au-del&agrave;. C'est le joueur qui r&egrave;gle la densit&eacute; de son
+      monde.</p>
+      <p data-lang="en"><strong>It never exceeds the player's setting.</strong>
+      <strong>Simultaneous zombies</strong> sets how many zombies can be active around the
+      player at once. The regulator protects the frame rate: it can stay below that setting
+      when the machine struggles, but never decides to go beyond it. It is the player who sets
+      the density of their world.</p>
+      <p data-lang="fr">Ce r&eacute;glage se change en cours de partie, dans le menu Living Hordes
+      (voir <a href="sandbox.html">Sandbox</a>). Une machine qui peine dans les grandes villes
+      gagnera plus &agrave; le baisser un peu qu'&agrave; laisser le r&eacute;gulateur
+      compenser.</p>
+      <p data-lang="en">This setting can be changed mid-game, in the Living Hordes menu (see
+      <a href="sandbox.html">Sandbox</a>). A machine that struggles in large towns will gain
+      more from lowering it a little than from leaving the regulator to compensate.</p>
+    </div>
+
+    <h2 id="etale"><span data-lang="fr">Le travail &eacute;tal&eacute;</span><span data-lang="en">Spread-out work</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Tout ce qui pourrait geler le jeu un instant est d&eacute;coup&eacute; sur
+      plusieurs images : la lecture de la carte des obstacles, le d&eacute;coupage des groupes
+      de sol, le calcul des chemins des hordes, l'enregistrement des espaces clos, la
+      restitution des zombies d'une zone ferm&eacute;e. Une t&acirc;che qui d&eacute;passe sa
+      part de temps reprend &agrave; l'image suivante, l&agrave; o&ugrave; elle s'&eacute;tait
+      arr&ecirc;t&eacute;e.</p>
+      <p data-lang="en">Anything that could freeze the game for a moment is split across
+      several frames: reading the obstacle map, dividing up the ground groups, computing horde
+      paths, recording enclosed spaces, restoring the zombies of a closed zone. A task that
+      exceeds its share of time resumes on the next frame, where it left off.</p>
+    </div>
+
+    <h2 id="chargement"><span data-lang="fr">Chargement et sauvegarde</span><span data-lang="en">Loading and saving</span></h2>
+    <div class="prose">
+      <p data-lang="fr"><strong>Le mod ne sauvegarde pas ce qu'il sait recalculer.</strong> Une
+      pi&egrave;ce ne garde que son contour et ses ouvertures, la carte de l'eau que ce que le
+      jeu a confirm&eacute;. Sur une grosse partie, l'&eacute;criture &agrave; la sortie comme
+      la part du mod dans le chargement restent de l'ordre d'une demi-seconde.</p>
+      <p data-lang="en"><strong>The mod does not save what it can recompute.</strong> A room
+      keeps only its outline and its openings, the water map only what the game has confirmed.
+      On a large game, both the write on exit and the mod's share of loading stay in the order
+      of half a second.</p>
+      <p data-lang="fr"><strong>La carte du terrain est construite une fois.</strong> Au d&eacute;but
+      d'une partie, le mod lit les fichiers de chaque carte active pour construire le terrain
+      des hordes, jeu en pause, avec une fen&ecirc;tre de progression : environ une minute avec
+      plusieurs cartes modd&eacute;es. Le r&eacute;sultat est gard&eacute; sur l'ordinateur,
+      donc une nouvelle partie sur les m&ecirc;mes cartes d&eacute;marre en quelques secondes,
+      et seul l'ajout ou le retrait d'un mod de carte la fait refaire. La carte de base est
+      livr&eacute;e d&eacute;j&agrave; construite avec le mod.</p>
+      <p data-lang="en"><strong>The terrain map is built once.</strong> At the start of a game,
+      the mod reads the files of each active map to build the hordes' terrain, with the game
+      paused and a progress window: about a minute with several modded maps. The result is
+      kept on the computer, so a new game on the same maps starts in a few seconds, and only
+      adding or removing a map mod makes it rebuild. The base map ships with the mod already
+      built.</p>
+      <p data-lang="fr"><strong>Les outils de diagnostic ne p&egrave;sent presque rien en jeu
+      normal.</strong> La plupart ne tournent qu'en mode debug. Le rapport de diagnostic, lui,
+      reste disponible pour les rapports de bug.</p>
+      <p data-lang="en"><strong>The diagnostic tools weigh almost nothing in normal
+      play.</strong> Most of them only run in debug mode. The diagnostic report, for its part,
+      remains available for bug reports.</p>
+    </div>
+  </main>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span data-lang="fr">Documentation Living Hordes</span><span data-lang="en">Living Hordes documentation</span>
+    <span><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3691686404"><span data-lang="fr">Page Workshop</span><span data-lang="en">Workshop page</span></a></span>
+  </div>
+</footer>
+
+<script src="assets/site.js?v=6"></script>
+</body>
+</html>

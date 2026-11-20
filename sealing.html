@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="fr" data-title-fr="Espaces scell&eacute;s - Living Hordes" data-title-en="Sealed spaces - Living Hordes">
+<html lang="fr" data-title-fr="Espaces scell&eacute;s - Living Hordes" data-title-en="Sealed spaces - Living Hordes">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Espaces scell&eacute;s - Living Hordes</title>
-<link rel="stylesheet" href="assets/site.css?v=7">
+<link rel="stylesheet" href="assets/site.css?v=11">
 <script>
 (function () {
   var d = document.documentElement, t = null, l = null;
@@ -36,7 +36,9 @@
       <a href="sealing.html" aria-current="page"><span data-lang="fr">Scellement</span><span data-lang="en">Sealing</span></a>
       <a href="defense.html"><span data-lang="fr">D&eacute;fense</span><span data-lang="en">Defense</span></a>
       <a href="sound.html"><span data-lang="fr">Son</span><span data-lang="en">Sound</span></a>
+      <a href="immobility.html"><span data-lang="fr">Immobilit&eacute;</span><span data-lang="en">Immobility</span></a>
       <a href="sandbox.html">Sandbox</a>
+      <a href="performance.html">Performance</a>
     </nav>
     <div class="tools">
       <div class="langtoggle">
@@ -56,9 +58,11 @@
     <div class="toc-sticky">
       <h2><span data-lang="fr">Sur cette page</span><span data-lang="en">On this page</span></h2>
       <a href="#deux-sens"><span data-lang="fr">Ferm&eacute; dans les deux sens</span><span data-lang="en">Closed both ways</span></a>
-      <a href="#detecteurs"><span data-lang="fr">Trois d&eacute;tecteurs</span><span data-lang="en">Three detectors</span></a>
+      <a href="#espaces"><span data-lang="fr">Deux sortes d'espaces</span><span data-lang="en">Two kinds of space</span></a>
       <a href="#pieces"><span data-lang="fr">&Agrave; l'int&eacute;rieur</span><span data-lang="en">Indoors</span></a>
+      <a href="#etages"><span data-lang="fr">Un &eacute;tage se juge seul</span><span data-lang="en">Each floor on its own</span></a>
       <a href="#dehors"><span data-lang="fr">Dehors</span><span data-lang="en">Outdoors</span></a>
+      <a href="#groupes"><span data-lang="fr">Les groupes de sol</span><span data-lang="en">Ground groups</span></a>
       <a href="#ferme"><span data-lang="fr">Ce qui ferme un espace</span><span data-lang="en">What closes a space</span></a>
       <a href="#retient"><span data-lang="fr">Ce que la zone retient</span><span data-lang="en">What the zone holds</span></a>
       <a href="#rompre"><span data-lang="fr">Rompre le scellement</span><span data-lang="en">Breaking the seal</span></a>
@@ -87,12 +91,12 @@
       boundary they cannot cross, in either direction. The test compares the space a zombie stands
       in with the one it is trying to enter, and it fails the same way whichever way the step
       goes.</p>
-      <p data-lang="fr">Une horde qui entre dans une cour par un portail ouvert y est donc coinc&eacute;e
-      d&egrave;s que le portail se referme. Et les zombies enferm&eacute;s dans une maison
-      depuis le d&eacute;but de l'&eacute;pid&eacute;mie y sont toujours.</p>
-      <p data-lang="en">A horde that enters a yard through an open gate is therefore trapped there
-      the moment the gate closes again. And the zombies shut in a house since the start of the
-      outbreak are still in it.</p>
+      <p data-lang="fr">Les zombies enferm&eacute;s dans une maison depuis le d&eacute;but de
+      l'&eacute;pid&eacute;mie y sont donc toujours. Et un zombie entr&eacute; dans une cour par
+      un portail ouvert y reste coinc&eacute; d&egrave;s que le portail se referme.</p>
+      <p data-lang="en">The zombies shut in a house since the start of the outbreak are therefore
+      still in it. And a zombie that entered a yard through an open gate stays trapped there as soon
+      as the gate closes again.</p>
     </div>
 
     <div class="rule-strip">
@@ -103,50 +107,58 @@
       inside it can get out.</p>
     </div>
 
-    <h2 id="detecteurs"><span data-lang="fr">Trois d&eacute;tecteurs, un seul verdict</span><span data-lang="en">Three detectors, one verdict</span></h2>
+    <h2 id="espaces"><span data-lang="fr">Deux sortes d'espaces, un seul verdict</span><span data-lang="en">Two kinds of space, one verdict</span></h2>
     <div class="prose">
-      <p data-lang="fr">Le monde contient trois sortes d'espaces clos, et aucun syst&egrave;me unique ne
-      sait les voir tous. Le mod en fait donc travailler trois, qui publient leurs
-      r&eacute;sultats au m&ecirc;me endroit.</p>
-      <p data-lang="en">The world contains three kinds of enclosed space, and no single system can
-      see them all. The mod therefore runs three, which publish their results in the same
-      place.</p>
-      <p data-lang="fr">Le moteur du jeu conna&icirc;t d&eacute;j&agrave; <strong>les pi&egrave;ces</strong>
-      des b&acirc;timents, et il suffit de d&eacute;terminer lesquelles communiquent.
-      <strong>Les constructions du joueur</strong> sont d&eacute;tect&eacute;es par
-      &eacute;v&eacute;nement, d&egrave;s la pose. Le reste, cours cl&ocirc;tur&eacute;es,
-      parkings mur&eacute;s, chantiers ferm&eacute;s, n'est visible par aucun des deux :
-      une cour n'est pas une pi&egrave;ce, et personne ne l'a construite. C'est le
-      troisi&egrave;me d&eacute;tecteur qui va la chercher.</p>
-      <p data-lang="en">The game engine already knows the <strong>rooms</strong> of buildings, and
-      all that remains is working out which ones connect. <strong>Player constructions</strong> are
-      detected by event, as soon as they are placed. The rest, fenced yards, walled car parks,
-      closed building sites, is visible to neither: a yard is not a room, and nobody built it. It
-      is the third detector that goes looking for it.</p>
+      <p data-lang="fr">Le monde contient deux sortes d'espaces clos, et le mod les lit de deux
+      fa&ccedil;ons diff&eacute;rentes, qui publient leurs r&eacute;sultats au m&ecirc;me
+      endroit.</p>
+      <p data-lang="en">The world contains two kinds of enclosed space, and the mod reads them in
+      two different ways, which publish their results in the same place.</p>
+      <p data-lang="fr"><strong>Les pi&egrave;ces des b&acirc;timents.</strong> Le moteur du jeu les
+      conna&icirc;t d&eacute;j&agrave; : il suffit de d&eacute;terminer lesquelles
+      communiquent.</p>
+      <p data-lang="en"><strong>The rooms of buildings.</strong> The game engine already knows them:
+      all that remains is working out which ones connect.</p>
+      <p data-lang="fr"><strong>Le sol du dehors.</strong> Une cour cl&ocirc;tur&eacute;e, un parking
+      mur&eacute;, un chantier ferm&eacute;, une base construite par le joueur : pour le moteur,
+      ce n'est que du terrain. Le mod tient donc sa propre carte des obstacles, et en
+      d&eacute;duit lui-m&ecirc;me les espaces clos.</p>
+      <p data-lang="en"><strong>Outdoor ground.</strong> A fenced yard, a walled car park, a closed
+      building site, a base built by the player: to the engine, it is only terrain. The mod therefore
+      keeps its own map of obstacles, and works out the enclosed spaces from it by itself.</p>
+      <p data-lang="fr">Les deux lectures d&eacute;crivent des terrains diff&eacute;rents et ne se
+      recouvrent jamais : l'int&eacute;rieur d'un b&acirc;timent n'est pas du sol du dehors.</p>
+      <p data-lang="en">The two readings describe different ground and never overlap: the inside of a
+      building is not outdoor ground.</p>
     </div>
 
     <figure class="wide-fig">
       <svg viewBox="0 0 900 340" xmlns="http://www.w3.org/2000/svg" role="img"
-           aria-label="Plan d'une cour cl&ocirc;tur&eacute;e contenant une maison, avec le terrain color&eacute; selon le d&eacute;tecteur qui le revendique.">
+           aria-label="Plan d'une cour cl&ocirc;tur&eacute;e contenant une maison, avec le terrain color&eacute; selon la lecture qui le d&eacute;crit.">
         <path d="M 40 46 L 860 46 L 860 300 L 40 300 Z" fill="var(--l2)" fill-opacity="0.13"/>
 
         <g stroke="var(--text-dim)" stroke-width="4" opacity="0.9">
           <path d="M 40 46 L 620 46"/>
           <path d="M 700 46 L 860 46"/>
-          <path d="M 860 46 L 860 300"/>
           <path d="M 860 300 L 40 300"/>
           <path d="M 40 300 L 40 216"/>
           <path d="M 40 162 L 40 46"/>
         </g>
+        <path d="M 860 46 L 860 300" stroke="var(--text-dim)" stroke-width="8"
+              stroke-dasharray="10 3" opacity="0.9"/>
         <g fill="var(--text-dim)" opacity="0.9">
           <circle cx="40" cy="46" r="4"/><circle cx="860" cy="46" r="4"/>
           <circle cx="860" cy="300" r="4"/><circle cx="40" cy="300" r="4"/>
         </g>
+        <text x="846" y="232" font-size="13" fill="var(--text)" text-anchor="end"
+              font-family="ui-monospace, monospace" data-lang="fr">construction du joueur</text>
+        <text x="846" y="232" font-size="13" fill="var(--text)" text-anchor="end"
+              font-family="ui-monospace, monospace" data-lang="en">player construction</text>
 
-        <line x1="40" y1="162" x2="40" y2="216" stroke="var(--l1)" stroke-width="7"/>
-        <text x="54" y="194" font-size="11" fill="var(--l1)"
+        <line x1="40" y1="162" x2="40" y2="216" stroke="var(--text)" stroke-width="7"/>
+        <text x="54" y="194" font-size="13" fill="var(--text)"
               font-family="ui-monospace, monospace" data-lang="fr">portail ferm&eacute;</text>
-        <text x="54" y="194" font-size="11" fill="var(--l1)"
+        <text x="54" y="194" font-size="13" fill="var(--text)"
               font-family="ui-monospace, monospace" data-lang="en">closed gate</text>
 
         <g>
@@ -155,12 +167,14 @@
           <circle cx="638" cy="30" r="4" fill="var(--l3)"/><circle cx="682" cy="30" r="4" fill="var(--l3)"/>
           <circle cx="638" cy="64" r="4" fill="var(--l3)"/><circle cx="682" cy="64" r="4" fill="var(--l3)"/>
         </g>
-        <text x="660" y="84" font-size="11" fill="var(--l3)" text-anchor="middle"
-              font-family="ui-monospace, monospace" data-lang="fr">voiture</text>
-        <text x="660" y="84" font-size="11" fill="var(--l3)" text-anchor="middle"
-              font-family="ui-monospace, monospace" data-lang="en">car</text>
+        <text x="660" y="84" font-size="13" font-weight="600" fill="var(--l3)" text-anchor="middle"
+              font-family="ui-monospace, monospace" data-lang="fr">voiture gar&eacute;e</text>
+        <text x="660" y="84" font-size="13" font-weight="600" fill="var(--l3)" text-anchor="middle"
+              font-family="ui-monospace, monospace" data-lang="en">parked car</text>
 
-        <rect x="303" y="129" width="150" height="126" fill="var(--l2)" fill-opacity="0.24"/>
+        <rect x="303" y="129" width="150" height="126" fill="var(--bg-raised)"/>
+        <rect x="459" y="129" width="128" height="126" fill="var(--bg-raised)"/>
+        <rect x="303" y="129" width="150" height="126" fill="var(--l1)" fill-opacity="0.26"/>
         <rect x="459" y="129" width="128" height="126" fill="var(--l1)" fill-opacity="0.26"/>
         <g stroke="var(--text)" stroke-width="6" stroke-linecap="square" opacity="0.85">
           <path d="M 300 126 L 590 126"/>
@@ -171,39 +185,38 @@
           <path d="M 456 126 L 456 168"/>
           <path d="M 456 214 L 456 258"/>
         </g>
-        <line x1="300" y1="178" x2="344" y2="178" stroke="var(--l2)" stroke-width="4"/>
-        <path d="M 344 178 A 44 44 0 0 1 300 222" fill="none" stroke="var(--l2)"
+        <line x1="300" y1="178" x2="344" y2="178" stroke="var(--text-dim)" stroke-width="4"/>
+        <path d="M 344 178 A 44 44 0 0 1 300 222" fill="none" stroke="var(--text-dim)"
               stroke-width="1.5" stroke-dasharray="4 3"/>
-        <line x1="456" y1="168" x2="456" y2="214" stroke="var(--l1)" stroke-width="6"/>
+        <line x1="456" y1="168" x2="456" y2="214" stroke="var(--text-dim)" stroke-width="4"/>
 
-        <g font-size="12.5" text-anchor="middle" fill="var(--text)">
-          <text x="378" y="188" data-lang="fr">pi&egrave;ce ouverte</text><text x="378" y="188" data-lang="en">open room</text>
-          <text x="523" y="188" data-lang="fr">pi&egrave;ce ferm&eacute;e</text><text x="523" y="188" data-lang="en">closed room</text>
+        <g font-size="14" font-weight="600" text-anchor="middle" fill="var(--text)">
+          <text x="378" y="188" data-lang="fr">pi&egrave;ce</text><text x="378" y="188" data-lang="en">room</text>
+          <text x="523" y="188" data-lang="fr">pi&egrave;ce</text><text x="523" y="188" data-lang="en">room</text>
         </g>
-        <g font-size="10.5" font-family="ui-monospace, monospace" text-anchor="middle">
-          <text x="378" y="206" fill="var(--l2)" data-lang="fr">m&ecirc;me espace que la cour</text><text x="378" y="206" fill="var(--l2)" data-lang="en">same space as the yard</text>
-          <text x="523" y="206" fill="var(--l1)" data-lang="fr">syst&egrave;me de pi&egrave;ces</text><text x="523" y="206" fill="var(--l1)" data-lang="en">room system</text>
+        <g font-size="12" text-anchor="middle" fill="var(--l1)">
+          <text x="378" y="206" data-lang="fr">moteur du jeu</text><text x="378" y="206" data-lang="en">game engine</text>
+          <text x="523" y="206" data-lang="fr">moteur du jeu</text><text x="523" y="206" data-lang="en">game engine</text>
         </g>
 
-        <text x="110" y="104" font-size="13" fill="var(--l2)" data-lang="fr">la cour</text><text x="110" y="104" font-size="13" fill="var(--l2)" data-lang="en">the yard</text>
-        <text x="110" y="122" font-size="10.5" fill="var(--text-faint)"
-              font-family="ui-monospace, monospace" data-lang="fr">TROUV&Eacute;E PAR REMPLISSAGE</text>
-        <text x="110" y="122" font-size="10.5" fill="var(--text-faint)"
-              font-family="ui-monospace, monospace" data-lang="en">FOUND BY FLOOD FILL</text>
+        <text x="110" y="104" font-size="15" font-weight="600" fill="var(--l2)" data-lang="fr">le sol du dehors</text><text x="110" y="104" font-size="15" font-weight="600" fill="var(--l2)" data-lang="en">outdoor ground</text>
+        <text x="110" y="126" font-size="14" fill="var(--text-dim)" data-lang="fr">lu sur la carte des obstacles</text>
+        <text x="110" y="126" font-size="14" fill="var(--text-dim)" data-lang="en">read from the obstacle map</text>
       </svg>
-      <figcaption data-lang="fr">La cour est trouv&eacute;e par remplissage, la pi&egrave;ce ferm&eacute;e
-      appartient au syst&egrave;me de pi&egrave;ces, et la cl&ocirc;ture est ferm&eacute;e
-      d'un c&ocirc;t&eacute; par un portail et de l'autre par une voiture gar&eacute;e. Les
-      trois d&eacute;tecteurs d&eacute;crivent des terrains diff&eacute;rents et ne se
-      recouvrent jamais.</figcaption>
-      <figcaption data-lang="en">The yard is found by flood fill, the closed room belongs to the
-      room system, and the fence is closed on one side by a gate and on the other by a parked car.
-      The three detectors describe different ground and never overlap.</figcaption>
+      <figcaption data-lang="fr">Une cour ferm&eacute;e d'un c&ocirc;t&eacute; par un portail et de
+      l'autre par une voiture gar&eacute;e, avec une maison au milieu. Le sol de la cour est lu sur
+      la carte des obstacles du mod, o&ugrave; la construction du joueur compte comme n'importe
+      quelle cl&ocirc;ture. Les pi&egrave;ces de la maison sont lues dans le moteur du jeu. Les
+      deux lectures ne se recouvrent jamais.</figcaption>
+      <figcaption data-lang="en">A yard closed on one side by a gate and on the other by a parked car,
+      with a house in the middle. The yard's ground is read from the mod's obstacle map, where the
+      player construction counts like any other fence. The rooms of the house are read from the game
+      engine. The two readings never overlap.</figcaption>
       <ul class="legend">
-        <li data-lang="fr"><i style="background:var(--l2);opacity:.55"></i>un seul espace ouvert</li>
-        <li data-lang="en"><i style="background:var(--l2);opacity:.55"></i>one single open space</li>
-        <li data-lang="fr"><i style="background:var(--l1);opacity:.6"></i>scell&eacute;</li>
-        <li data-lang="en"><i style="background:var(--l1);opacity:.6"></i>sealed</li>
+        <li data-lang="fr"><i style="background:var(--l2);opacity:.55"></i>sol du dehors, carte des obstacles</li>
+        <li data-lang="en"><i style="background:var(--l2);opacity:.55"></i>outdoor ground, obstacle map</li>
+        <li data-lang="fr"><i style="background:var(--l1);opacity:.6"></i>pi&egrave;ces, moteur du jeu</li>
+        <li data-lang="en"><i style="background:var(--l1);opacity:.6"></i>rooms, game engine</li>
       </ul>
     </figure>
 
@@ -221,19 +234,19 @@
       pi&egrave;ce non atteinte est scell&eacute;e.</p>
       <p data-lang="en">The answer then falls out by itself: starting from the outside, every open
       edge is followed. Any room reached is open, any room not reached is sealed.</p>
-      <p data-lang="fr">Une pr&eacute;cision change tout le r&eacute;sultat. <strong>Une ouverture ne
-      compte que si ce qu'il y a derri&egrave;re est ouvert.</strong> Une porte de garage
-      donnant sur une cour ferm&eacute;e par une voiture gar&eacute;e est bien une
-      ouverture, et pourtant rien n'entre par l&agrave;. Le garage est donc scell&eacute;,
-      porte grande ouverte, parce que la cour l'est.</p>
-      <p data-lang="en">One detail changes the whole result. <strong>An opening only counts if what
-      lies beyond it is open.</strong> A garage door giving onto a yard closed off by a parked car is
-      indeed an opening, and yet nothing comes in that way. The garage is therefore sealed, door wide
-      open, because the yard is.</p>
+      <p data-lang="fr">Une pr&eacute;cision change tout le r&eacute;sultat. Une ouverture ne compte que
+      si ce qu'il y a derri&egrave;re est ouvert. Une porte de garage donnant sur une cour
+      ferm&eacute;e par une voiture gar&eacute;e est bien une ouverture, et pourtant rien n'entre
+      par l&agrave;. Le garage est donc scell&eacute;, porte grande ouverte, parce que la cour
+      l'est.</p>
+      <p data-lang="en">One detail changes the whole result. An opening only counts if what lies
+      beyond it is open. A garage door giving onto a yard closed off by a parked car is indeed an
+      opening, and yet nothing comes in that way. The garage is therefore sealed, door wide open,
+      because the yard is.</p>
     </div>
 
-    <figure class="wide-fig">
-      <svg viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg" role="img"
+    <figure class="wide-fig" id="rooms-fig">
+      <svg class="rooms-static" viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg" role="img"
            aria-label="Plan d'une maison &agrave; c&ocirc;t&eacute; du m&ecirc;me plan repr&eacute;sent&eacute; en graphe.">
         <text x="24" y="20" font-size="11" fill="var(--text-faint)"
               font-family="ui-monospace, monospace" data-lang="fr">LE PLAN</text>
@@ -316,58 +329,238 @@
           <text x="792" y="138" fill="var(--l1)" data-lang="fr">porte ferm&eacute;e</text><text x="792" y="138" fill="var(--l1)" data-lang="en">closed door</text>
         </g>
       </svg>
-      <figcaption data-lang="fr">Le mod ne retient ni les murs ni la g&eacute;om&eacute;trie, seulement
-      qui communique avec qui. La fen&ecirc;tre intacte n'appara&icirc;t pas dans le graphe
-      parce qu'elle ne relie rien.</figcaption>
-      <figcaption data-lang="en">The mod keeps neither the walls nor the geometry, only who connects
-      to whom. The intact window does not appear in the graph because it links nothing.</figcaption>
+      <figcaption data-lang="fr">Le mod ne retient ni les murs ni la g&eacute;om&eacute;trie, seulement qui
+      communique avec qui. Une fen&ecirc;tre intacte n'appara&icirc;t pas dans le graphe, puisqu'elle ne relie
+      rien. La porte du garage a beau &ecirc;tre ouverte, le garage reste scell&eacute; tant que la voiture ferme
+      la cour. Un clic sur une porte, la fen&ecirc;tre ou la voiture refait le parcours.</figcaption>
+      <figcaption data-lang="en">The mod keeps neither the walls nor the geometry, only what connects
+      to what. An intact window does not appear in the graph, since it links nothing. The garage door
+      may be wide open, the garage stays sealed as long as the car closes off the yard. A click on a
+      door, the window or the car runs the walk again.</figcaption>
     </figure>
 
-    <h2 id="dehors"><span data-lang="fr">Dehors : trouver la forme avant de la tester</span><span data-lang="en">Outdoors: finding the shape before testing it</span></h2>
     <div class="prose">
-      <p data-lang="fr">Le moteur fournit les pi&egrave;ces d'un b&acirc;timent. Il ne fournit rien pour
-      une cour, qui n'existe pour lui que comme du terrain. Le mod doit donc
-      <strong>trouver la forme lui-m&ecirc;me</strong> avant de pouvoir se demander si elle
-      est close.</p>
-      <p data-lang="en">The engine supplies the rooms of a building. It supplies nothing for a yard,
-      which exists for it only as terrain. The mod must therefore <strong>find the shape
-      itself</strong> before it can ask whether that shape is closed.</p>
-      <p data-lang="fr">Il proc&egrave;de par remplissage : &agrave; partir d'un point, il s'&eacute;tend
-      case par case dans tout ce qu'un zombie pourrait parcourir. Si le remplissage se
-      referme sur lui-m&ecirc;me, c'est une enceinte. S'il s'&eacute;chappe et continue
-      au-del&agrave; de toute taille qu'une cl&ocirc;ture pourrait atteindre, c'est du
-      terrain ouvert.</p>
-      <p data-lang="en">It proceeds by flood fill: from a point, it spreads tile by tile through
-      everything a zombie could walk. If the fill closes back on itself, it is an enclosure. If it
-      escapes and carries on beyond any size a fence could reach, it is open ground.</p>
-      <p data-lang="fr">Le remplissage entre volontairement dans les b&acirc;timents ouverts. Si la porte
-      est ouverte, la cour et la maison sont r&eacute;ellement le m&ecirc;me espace, et il
-      faut les traiter ensemble. Une porte ferm&eacute;e l'arr&ecirc;te net et rend ce
-      terrain au syst&egrave;me de pi&egrave;ces. C'est ce qui emp&ecirc;che les deux
-      d&eacute;tecteurs de d&eacute;crire une seule fois le m&ecirc;me sol.</p>
-      <p data-lang="en">The fill deliberately enters open buildings. If the door is open, the yard
-      and the house really are the same space, and they have to be treated together. A closed door
-      stops it dead and hands that ground back to the room system. That is what keeps the two
-      detectors from ever describing the same floor twice.</p>
+      <p data-lang="fr">Le mod ne conna&icirc;t pas les b&acirc;timents seulement de l'int&eacute;rieur :
+      il les d&eacute;crit d&egrave;s que le jeu charge le terrain o&ugrave; ils se trouvent, sans
+      attendre que quelqu'un y entre. Une horde qui traverse une ville passe donc autour des
+      maisons ferm&eacute;es, pas &agrave; travers.</p>
+      <p data-lang="en">The mod does not know buildings only from the inside: it describes them as
+      soon as the game loads the terrain they stand on, without waiting for anyone to go in. A horde
+      crossing a town therefore goes around closed houses, not through them.</p>
+    </div>
+
+    <h2 id="etages"><span data-lang="fr">Un &eacute;tage se juge seul</span><span data-lang="en">Each floor is judged on its own</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Chaque niveau d'un b&acirc;timent porte son propre verdict. Un &eacute;tage n'est
+      ouvert que si un escalier y m&egrave;ne depuis un endroit lui-m&ecirc;me ouvert : une seule
+      pi&egrave;ce ouverte au rez-de-chauss&eacute;e ne suffit pas &agrave; ouvrir les
+      &eacute;tages.</p>
+      <p data-lang="en">Each level of a building carries its own verdict. An upper floor is only open
+      if a staircase leads to it from a place that is itself open: a single open room on the ground
+      floor is not enough to open the floors above.</p>
+      <p data-lang="fr">Un &eacute;tage ne touche pas le sol, donc une ouverture n'y est pas une
+      entr&eacute;e. Une fen&ecirc;tre bris&eacute;e ou un balcon au premier n'ouvre rien tant
+      qu'aucun escalier ne se trouve derri&egrave;re : ce qui compte n'est pas l'ouverture, mais
+      ce qu'elle permet d'atteindre.</p>
+      <p data-lang="en">An upper floor does not touch the ground, so an opening there is not an
+      entrance. A broken window or a balcony on the first floor opens nothing as long as no staircase
+      lies behind it: what counts is not the opening, but what it gives access to.</p>
+      <p data-lang="fr">Le corollaire tient en une phrase : casser l'escalier scelle l'&eacute;tage,
+      puisque plus rien ne peut y monter. Un escalier d&eacute;truit cesse aussit&ocirc;t de
+      compter. Et les constructions du joueur au-dessus du rez-de-chauss&eacute;e sont suivies
+      comme celles du sol : un &eacute;tage ferm&eacute; est un &eacute;tage ferm&eacute;, et le
+      panneau de d&eacute;fense le montre.</p>
+      <p data-lang="en">The corollary fits in one sentence: breaking the staircase seals the floor,
+      since nothing can climb up to it any more. A destroyed staircase stops counting at once. And
+      player constructions above the ground floor are tracked like those on the ground: a closed
+      floor is a closed floor, and the defense panel shows it.</p>
+    </div>
+
+    <h2 id="dehors"><span data-lang="fr">Dehors : la carte des obstacles</span><span data-lang="en">Outdoors: the obstacle map</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Le moteur ne dit rien d'une cour. Le mod rel&egrave;ve donc lui-m&ecirc;me, pour
+      chaque case du dehors, ce qui la s&eacute;pare de ses voisines : mur, cl&ocirc;ture, porte,
+      portail, fen&ecirc;tre, construction du joueur.</p>
+      <p data-lang="en">The engine says nothing about a yard. The mod therefore records for itself,
+      for every outdoor tile, what separates it from its neighbours: wall, fence, door, gate,
+      window, player construction.</p>
+      <p data-lang="fr"><strong>Chaque morceau de carte est lu une fois, quand le jeu le
+      charge.</strong> Le mod n'a pas besoin de le relire en permanence : il s'en souvient,
+      m&ecirc;me apr&egrave;s que le joueur s'en est &eacute;loign&eacute;.</p>
+      <p data-lang="en"><strong>Each map chunk is read once, when the game loads it.</strong> The mod
+      does not need to keep rereading it: it remembers it, even after the player has moved
+      away.</p>
+      <p data-lang="fr"><strong>Ce qui change est suivi &agrave; l'instant.</strong> Une porte ou un
+      portail qui s'ouvre ou se ferme, un mur ou une cl&ocirc;ture construits ou
+      d&eacute;truits, une fen&ecirc;tre ou une cl&ocirc;ture bris&eacute;es par des zombies, un
+      incendie : chacun de ces &eacute;v&eacute;nements fait relire l'endroit concern&eacute;,
+      sans attendre.</p>
+      <p data-lang="en"><strong>What changes is followed instantly.</strong> A door or gate opening or
+      closing, a wall or fence built or destroyed, a window or fence broken by zombies, a fire: each
+      of these events gets the spot concerned read again, without waiting.</p>
+      <p data-lang="fr"><strong>Une v&eacute;rification l&eacute;g&egrave;re tourne en fond.</strong> Un
+      morceau de carte est relu chaque seconde, ainsi que les environs du joueur quand il
+      s'arr&ecirc;te. Elle rattrape ce qu'aucun &eacute;v&eacute;nement n'aurait
+      signal&eacute;.</p>
+      <p data-lang="en"><strong>A light check runs in the background.</strong> One map chunk is read
+      again every second, along with the player's surroundings when the player stops. It catches
+      whatever no event would have reported.</p>
+    </div>
+
+    <h2 id="groupes"><span data-lang="fr">Les groupes de sol</span><span data-lang="en">Ground groups</span></h2>
+    <div class="prose">
+      <p data-lang="fr">Une fois la carte connue, trouver les espaces clos devient simple.</p>
+      <p data-lang="en">Once the map is known, finding the enclosed spaces becomes simple.</p>
+      <p data-lang="fr">Chaque morceau de carte est d&eacute;coup&eacute; par ses murs en <strong>morceaux
+      de sol</strong> : des cases qui se rejoignent sans rien traverser. Ces morceaux sont
+      ensuite recoll&eacute;s &agrave; ceux des morceaux de carte voisins quand rien ne les
+      s&eacute;pare, et forment des <strong>groupes</strong>. Un groupe qui touche encore du sol
+      que le mod n'a jamais lu reste en suspens. Un groupe qui ne touche plus aucun sol inconnu,
+      et ne communique avec rien d'ouvert, est ferm&eacute;.</p>
+      <p data-lang="en">Each map chunk is cut up by its walls into <strong>pieces of ground</strong>:
+      tiles that join up without crossing anything. These pieces are then glued to those of the
+      neighbouring map chunks when nothing separates them, and form <strong>groups</strong>. A group
+      that still touches ground the mod has never read stays pending. A group that no longer touches
+      any unknown ground, and connects with nothing open, is closed.</p>
+    </div>
+
+    <figure class="wide-fig" id="groups-fig">
+      <svg class="groups-static" viewBox="0 0 900 290" xmlns="http://www.w3.org/2000/svg" role="img"
+           aria-label="Trois &eacute;tapes : des morceaux de carte d&eacute;coup&eacute;s par les murs, les morceaux de sol recoll&eacute;s en groupes, puis un groupe ferm&eacute;.">
+        <g font-size="11" font-family="ui-monospace, monospace" fill="var(--text-faint)">
+          <text x="30" y="26" data-lang="fr">1. D&Eacute;COUPER</text><text x="30" y="26" data-lang="en">1. CUT</text>
+          <text x="330" y="26" data-lang="fr">2. RECOLLER</text><text x="330" y="26" data-lang="en">2. GLUE</text>
+          <text x="630" y="26" data-lang="fr">3. FERMER</text><text x="630" y="26" data-lang="en">3. CLOSE</text>
+        </g>
+
+        <!-- 1. chaque morceau de carte decoupe par ses murs -->
+        <rect x="30" y="48" width="160" height="160" fill="var(--text-faint)" fill-opacity="0.34"/>
+        <rect x="190" y="48" width="80" height="160" fill="var(--bg-sunken)"
+              stroke="var(--text-faint)" stroke-width="1" stroke-dasharray="4 3"/>
+        <g stroke="var(--bg-raised)" stroke-width="6">
+          <path d="M 110 48 L 110 208"/>
+          <path d="M 30 128 L 190 128"/>
+          <path d="M 190 48 L 190 208"/>
+        </g>
+        <g stroke="var(--text)" stroke-width="4" stroke-linecap="square" opacity="0.85" fill="none">
+          <path d="M 187 76 L 70 76 L 70 180 L 187 180"/>
+        </g>
+        <text x="230" y="134" font-size="22" fill="var(--text-faint)" text-anchor="middle" data-lang="both">?</text>
+        <g font-size="10" font-family="ui-monospace, monospace" fill="var(--text-faint)" text-anchor="middle">
+          <text x="230" y="154" data-lang="fr">jamais lu</text><text x="230" y="154" data-lang="en">unread</text>
+        </g>
+
+        <path d="M 284 128 L 314 128 M 307 122 L 314 128 L 307 134" fill="none"
+              stroke="var(--text-faint)" stroke-width="1.5"/>
+
+        <!-- 2. morceaux recolles en groupes, un groupe en suspens -->
+        <path d="M 330 48 L 490 48 L 490 208 L 330 208 Z M 370 76 L 370 180 L 490 180 L 490 76 Z"
+              fill="var(--l3)" fill-opacity="0.18" fill-rule="evenodd"/>
+        <rect x="370" y="76" width="120" height="104" fill="var(--l2)" fill-opacity="0.34"/>
+        <rect x="490" y="48" width="80" height="160" fill="var(--bg-sunken)"
+              stroke="var(--text-faint)" stroke-width="1" stroke-dasharray="4 3"/>
+        <g stroke="var(--text-faint)" stroke-width="1" stroke-dasharray="3 3">
+          <path d="M 410 48 L 410 208"/>
+          <path d="M 330 128 L 490 128"/>
+        </g>
+        <g stroke="var(--text)" stroke-width="4" stroke-linecap="square" opacity="0.85" fill="none">
+          <path d="M 488 76 L 370 76 L 370 180 L 488 180"/>
+        </g>
+        <text x="530" y="134" font-size="22" fill="var(--text-faint)" text-anchor="middle" data-lang="both">?</text>
+        <g font-size="10" font-family="ui-monospace, monospace" fill="var(--text-faint)" text-anchor="middle">
+          <text x="530" y="154" data-lang="fr">jamais lu</text><text x="530" y="154" data-lang="en">unread</text>
+        </g>
+        <g font-size="10.5" font-family="ui-monospace, monospace" fill="var(--l2)" text-anchor="middle">
+          <text x="450" y="112" data-lang="fr">en suspens</text><text x="450" y="112" data-lang="en">pending</text>
+        </g>
+
+        <path d="M 584 128 L 614 128 M 607 122 L 614 128 L 607 134" fill="none"
+              stroke="var(--text-faint)" stroke-width="1.5"/>
+
+        <!-- 3. un groupe ferme -->
+        <path d="M 630 48 L 870 48 L 870 208 L 630 208 Z M 670 76 L 670 180 L 830 180 L 830 76 Z"
+              fill="var(--l3)" fill-opacity="0.18" fill-rule="evenodd"/>
+        <rect x="670" y="76" width="160" height="104" fill="var(--l1)" fill-opacity="0.34"/>
+        <g stroke="var(--text-faint)" stroke-width="1" stroke-dasharray="3 3">
+          <path d="M 710 48 L 710 208"/>
+          <path d="M 790 48 L 790 208"/>
+          <path d="M 630 128 L 870 128"/>
+        </g>
+        <rect x="670" y="76" width="160" height="104" fill="none"
+              stroke="var(--text)" stroke-width="4" opacity="0.85"/>
+        <g font-size="11" font-family="ui-monospace, monospace" fill="var(--l1)" text-anchor="middle">
+          <text x="750" y="112" data-lang="fr">FERM&Eacute;</text><text x="750" y="112" data-lang="en">CLOSED</text>
+        </g>
+
+        <g font-size="11.5" fill="var(--text-dim)" text-anchor="middle">
+          <text x="150" y="236" data-lang="fr">chaque morceau de carte</text><text x="150" y="236" data-lang="en">each map chunk</text>
+          <text x="150" y="254" data-lang="fr">d&eacute;coup&eacute; par ses murs</text><text x="150" y="254" data-lang="en">cut up by its walls</text>
+          <text x="450" y="236" data-lang="fr">les morceaux recoll&eacute;s en groupes</text><text x="450" y="236" data-lang="en">pieces glued into groups</text>
+          <text x="450" y="254" data-lang="fr">un groupe touche du sol jamais lu</text><text x="450" y="254" data-lang="en">one group touches never-read ground</text>
+          <text x="750" y="236" data-lang="fr">plus de sol inconnu, rien d'ouvert</text><text x="750" y="236" data-lang="en">no unknown ground, nothing open</text>
+          <text x="750" y="254" data-lang="fr">le groupe est ferm&eacute;</text><text x="750" y="254" data-lang="en">the group is closed</text>
+        </g>
+      </svg>
+      <figcaption data-lang="fr">Les murs d&eacute;coupent chaque morceau de carte en morceaux de sol, que le mod
+      recolle en groupes par-dessus les bords des morceaux. Un groupe qui touche du sol jamais lu reste en
+      suspens ; quand plus rien autour n'est inconnu, il est ferm&eacute;. Ouvrir ou fermer le portail ne
+      red&eacute;coupe que son morceau de carte, et la cour change d'&eacute;tat &agrave; l'instant.</figcaption>
+      <figcaption data-lang="en">Walls cut each map piece into pieces of ground, which the mod glues
+      back into groups across piece borders. A group that touches ground never read stays pending; once
+      nothing around it is unknown, it is closed. Opening or closing the gate only re-cuts its own map
+      piece, and the yard changes state at once.</figcaption>
+      <ul class="legend">
+        <li data-lang="fr"><i style="background:var(--bg-sunken);border:1px dashed var(--text-faint)"></i>sol jamais lu</li>
+        <li data-lang="en"><i style="background:var(--bg-sunken);border:1px dashed var(--text-faint)"></i>never-read ground</li>
+        <li data-lang="fr"><i style="background:var(--l2);opacity:.55"></i>groupe en suspens</li>
+        <li data-lang="en"><i style="background:var(--l2);opacity:.55"></i>pending group</li>
+        <li data-lang="fr"><i style="background:var(--l1);opacity:.6"></i>groupe ferm&eacute;</li>
+        <li data-lang="en"><i style="background:var(--l1);opacity:.6"></i>closed group</li>
+      </ul>
+    </figure>
+
+    <div class="prose">
+      <p data-lang="fr">Il n'y a donc pas besoin de parcourir une cour pour la reconna&icirc;tre : elle
+      est reconnue d&egrave;s que le jeu a charg&eacute; le terrain qui l'entoure, quelle que soit
+      sa taille et sans que le joueur y entre. Le p&eacute;nitencier entier se scelle ainsi,
+      enceinte ext&eacute;rieure comprise.</p>
+      <p data-lang="en">There is therefore no need to walk through a yard to recognise it: it is
+      recognised as soon as the game has loaded the terrain around it, whatever its size and without
+      the player going in. The whole penitentiary seals this way, outer enclosure included.</p>
+      <p data-lang="fr">Quand une porte ou un portail change, seul le morceau de carte concern&eacute;
+      est red&eacute;coup&eacute;. Fermer un portail scelle la cour &agrave; l'instant, et l'ouvrir
+      la rouvre de m&ecirc;me.</p>
+      <p data-lang="en">When a door or gate changes, only the map chunk concerned is cut up again.
+      Closing a gate seals the yard instantly, and opening it reopens it just as instantly.</p>
+      <p data-lang="fr">Le m&ecirc;me raisonnement couvre le sol qu'aucun espace ne d&eacute;crit en
+      propre : l'interstice entre deux cours scell&eacute;es, une courette entre deux
+      b&acirc;timents, la case sous une voiture gar&eacute;e. Un tel morceau, cern&eacute;
+      d'espaces clos, ne touche rien d'ouvert : il est prot&eacute;g&eacute; lui aussi, et cesse de
+      l'&ecirc;tre d&egrave;s que l'un de ses voisins s'ouvre.</p>
+      <p data-lang="en">The same reasoning covers ground that no space describes as its own: the gap
+      between two sealed yards, a small courtyard between two buildings, the tile under a parked car.
+      Such a piece, surrounded by enclosed spaces, touches nothing open: it is protected too, and
+      stops being so as soon as one of its neighbours opens.</p>
     </div>
 
     <h2 id="ferme"><span data-lang="fr">Ce qui ferme un espace</span><span data-lang="en">What closes a space</span></h2>
     <div class="prose">
-      <p data-lang="fr">Tout ce qu'un zombie ne peut pas traverser. Murs, portes ferm&eacute;es,
-      fen&ecirc;tres intactes, cl&ocirc;tures, portails. Les constructions du joueur
-      aussi, qui ont en plus des points de vie et peuvent c&eacute;der, ce que traite la
-      <a href="defense.html">page d&eacute;fense de base</a>.</p>
-      <p data-lang="en">Anything a zombie cannot pass through. Walls, closed doors, intact windows,
-      fences, gates. Player constructions too, which additionally have hit points and can give way,
-      which the <a href="defense.html">base defense page</a> covers.</p>
+      <p data-lang="fr">Tout ce qu'un zombie ne peut pas traverser : murs, portes ferm&eacute;es,
+      fen&ecirc;tres intactes, cl&ocirc;tures, portails. Les constructions du joueur aussi, qui
+      ont en plus des points de vie et peuvent c&eacute;der (voir
+      <a href="defense.html">D&eacute;fense</a>).</p>
+      <p data-lang="en">Anything a zombie cannot pass through: walls, closed doors, intact windows,
+      fences, gates. Player constructions too, which additionally have hit points and can give way
+      (see <a href="defense.html">Defense</a>).</p>
       <p data-lang="fr">Et une voiture gar&eacute;e. Bloquer une br&egrave;che avec un v&eacute;hicule
       ferme l'enceinte, parce que c'est une technique que les joueurs emploient depuis
       toujours et qu'il n'y avait aucune raison de faire semblant du contraire. La voiture
-      enti&egrave;re est prise en compte, pas seulement le c&ocirc;t&eacute; par lequel le
-      remplissage l'a rencontr&eacute;e.</p>
+      compte comme un mur d&egrave;s que le conducteur en descend, et l'enceinte se rouvre quand
+      elle repart.</p>
       <p data-lang="en">And a parked car. Blocking a gap with a vehicle closes the enclosure, because
       it is a technique players have always used and there was no reason to pretend otherwise. The
-      whole car is taken into account, not just the side the fill happened to meet it from.</p>
+      car counts as a wall as soon as the driver gets out, and the enclosure reopens when it drives
+      off.</p>
     </div>
 
     <h2 id="retient"><span data-lang="fr">Ce que la zone retient</span><span data-lang="en">What the zone holds</span></h2>
@@ -375,12 +568,12 @@
       <p data-lang="fr">Une zone scell&eacute;e garde ce qu'il y avait dedans au moment o&ugrave; le
       joueur s'est &eacute;loign&eacute;, et le rend quand il revient. Sans cette
       m&eacute;canique, chaque maison verrouill&eacute;e et chaque cour cl&ocirc;tur&eacute;e
-      se viderait dans le dos du joueur, puisqu'un zombie qui quitte le d&eacute;tail
-      redevient un groupe, et qu'un groupe ignore les murs.</p>
+      se viderait dans le dos du joueur, puisqu'un zombie qui quitte les environs du joueur
+      redevient une partie de horde, et qu'une horde ignore les murs.</p>
       <p data-lang="en">A sealed zone keeps what was inside it at the moment the player moved away,
-      and gives it back on their return. Without that mechanism, every locked house and every fenced
-      yard would empty behind the player's back, since a zombie leaving the detailed layer becomes a
-      group again, and a group ignores walls.</p>
+      and gives it back when the player returns. Without that mechanism, every locked house and every
+      fenced yard would empty behind the player's back, since a zombie that leaves the player's
+      surroundings becomes part of a horde again, and a horde ignores walls.</p>
       <p data-lang="fr">Chaque zombie retenu garde sa position exacte et son &eacute;tage. Au retour, il
       revient l&agrave; o&ugrave; il &eacute;tait, l&eacute;g&egrave;rement
       d&eacute;cal&eacute; d'une distance qui grandit avec la dur&eacute;e de l'absence.
@@ -393,13 +586,33 @@
       Past two days of game time the zone is redistributed entirely: finding the same three zombies
       on the same three tiles after two weeks would feel like frozen scenery rather than an enclosed
       place.</p>
+      <p data-lang="fr"><strong>Une horde n'est retenue qu'une fois : quand le lieu est
+      d&eacute;couvert.</strong> Une horde qui se trouvait dans une cour au moment o&ugrave; le mod
+      l'a reconnue comme close y reste enferm&eacute;e, avec sa composition et son comportement, et
+      ressort la m&ecirc;me. Ses zombies reviennent r&eacute;partis dans l'enceinte, puisqu'une
+      horde n'a jamais eu de position par zombie.</p>
+      <p data-lang="en"><strong>A horde is only held once: when the place is discovered.</strong> A
+      horde that was in a yard at the moment the mod recognised it as closed stays shut in there,
+      with its composition and its behaviour, and comes back out the same. Its zombies come back
+      spread across the enclosure, since a horde never had a position per zombie.</p>
+      <p data-lang="fr"><strong>Refermer un lieu ne capture rien.</strong> Quand un portail ou une porte
+      se referme sur un lieu d&eacute;j&agrave; connu, les hordes qui le traversaient &agrave; ce
+      moment sont repouss&eacute;es dehors. Seuls les zombies d&eacute;j&agrave; r&eacute;els
+      autour du joueur restent l&agrave; o&ugrave; ils sont, donc dedans. Une base
+      nettoy&eacute;e ne se remplit pas parce qu'une horde passait au moment o&ugrave; le portail
+      s'est ferm&eacute;.</p>
+      <p data-lang="en"><strong>Closing a place again captures nothing.</strong> When a gate or a door
+      closes on a place already known, the hordes passing through it at that moment are pushed back
+      outside. Only the zombies already real around the player stay where they are, and so inside. A
+      cleared base does not fill up because a horde happened to be passing when the gate
+      closed.</p>
       <p data-lang="fr">La restitution est &eacute;tal&eacute;e, et elle passe avant tout le reste :
       un joueur qui rentre chez lui retrouve sa cour telle qu'il l'a laiss&eacute;e, pas
       remplie par la horde qui passait par l&agrave; au moment o&ugrave; il ouvrait le
       portail.</p>
       <p data-lang="en">The restitution is spread out, and it takes priority over everything else: a
-      player coming home finds their yard as they left it, not filled by whichever horde happened to
-      be passing at the moment they opened the gate.</p>
+      player coming home finds the yard as it was left, not filled by whichever horde happened to
+      be passing at the moment the gate was opened.</p>
     </div>
 
     <h2 id="rompre"><span data-lang="fr">Rompre le scellement</span><span data-lang="en">Breaking the seal</span></h2>
@@ -420,15 +633,21 @@
 
     <h2 id="limites"><span data-lang="fr">Ce qu'il ne fait pas</span><span data-lang="en">What it does not do</span></h2>
     <div class="prose">
-      <p data-lang="fr"><strong>Il ne conna&icirc;t que les lieux visit&eacute;s</strong>, et c'est
-      d&eacute;lib&eacute;r&eacute;. La structure d'un b&acirc;timent ne se lit que dans les
-      zones charg&eacute;es par le jeu, et une cour ne peut &ecirc;tre parcourue que si
-      quelqu'un s'y trouve. Un endroit o&ugrave; personne n'est jamais all&eacute; est du
-      terrain ouvert, ce qui est la r&eacute;ponse prudente.</p>
-      <p data-lang="en"><strong>It only knows the places that have been visited</strong>, and that is
-      deliberate. The structure of a building can only be read in the areas the game has loaded, and
-      a yard can only be walked if somebody is in it. A place nobody has ever been is open ground,
-      which is the cautious answer.</p>
+      <p data-lang="fr"><strong>Il ne conna&icirc;t que ce que le jeu a charg&eacute;.</strong> Une cour
+      ou un b&acirc;timent se lisent quand le jeu charge le terrain autour d'un joueur, pas avant.
+      Il n'est pas n&eacute;cessaire d'y aller, mais il faut &ecirc;tre pass&eacute; assez
+      pr&egrave;s. Une enceinte que le jeu n'a jamais charg&eacute;e est du terrain ouvert, ce qui
+      est la r&eacute;ponse prudente.</p>
+      <p data-lang="en"><strong>It only knows what the game has loaded.</strong> A yard or a building
+      is read when the game loads the terrain around a player, not before. There is no need to go
+      there, but a player has to have passed close enough. An enclosure the game has never loaded is
+      open ground, which is the cautious answer.</p>
+      <p data-lang="fr"><strong>L'absence de donn&eacute;e ne tranche rien.</strong> Ce qui a
+      d&eacute;j&agrave; &eacute;t&eacute; lu n'est pas oubli&eacute;, et un groupe qui touche du
+      sol inconnu reste en suspens au lieu de se fermer ou de s'ouvrir sur une ignorance.</p>
+      <p data-lang="en"><strong>Missing data settles nothing.</strong> What has already been read is
+      not forgotten, and a group that touches unknown ground stays pending instead of closing or
+      opening on the strength of something unknown.</p>
       <p data-lang="fr"><strong>Les caves sont un cas imparfait.</strong> Leur acc&egrave;s est
       parfois class&eacute; comme ext&eacute;rieur par le moteur, et elles se retrouvent
       alors ouvertes alors que le b&acirc;timent est clos.</p>
@@ -438,13 +657,13 @@
     </div>
 
     <div class="note">
-      <p data-lang="fr"><strong>Ce que &ccedil;a change en jeu :</strong> un espace referm&eacute; reste
-      ferm&eacute;, et il retient ce qui &eacute;tait dedans au moment o&ugrave; il l'a
-      &eacute;t&eacute;. &Ccedil;a marche dans les deux sens, et c'est justement ce qui le
-      rend utile.</p>
-      <p data-lang="en"><strong>What this changes in play:</strong> a space closed again stays closed,
-      and it holds what was inside at the moment it closed. It works both ways, and that is precisely
-      what makes it useful.</p>
+      <p data-lang="fr"><strong>Ce que &ccedil;a change en jeu :</strong> un espace ferm&eacute; reste
+      ferm&eacute;, et il garde ce qui s'y trouvait quand il a &eacute;t&eacute;
+      d&eacute;couvert. &Ccedil;a marche dans les deux sens, et c'est justement ce qui le rend
+      utile.</p>
+      <p data-lang="en"><strong>What this changes in play:</strong> a closed space stays closed, and it
+      keeps what was inside it when it was discovered. It works both ways, and that is precisely what
+      makes it useful.</p>
     </div>
   </main>
 </div>
@@ -456,6 +675,8 @@
   </div>
 </footer>
 
+<script src="assets/rooms.js?v=3"></script>
+<script src="assets/groups.js?v=2"></script>
 <script src="assets/site.js?v=6"></script>
 </body>
 </html>

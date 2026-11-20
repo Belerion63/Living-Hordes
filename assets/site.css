@@ -91,6 +91,8 @@ html[data-sitelang="fr"] [data-lang="en"] { display: none !important; }
   --p-defense:    #3d6a94;
   --p-sound:      #97761c;
   --p-sandbox:    #5b6472;
+  --p-immobility: #a33d5c;
+  --p-performance: #6f7d2c;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
@@ -102,6 +104,8 @@ html[data-sitelang="fr"] [data-lang="en"] { display: none !important; }
     --p-defense:    #79a8d4;
     --p-sound:      #d6b455;
     --p-sandbox:    #97a3b3;
+    --p-immobility: #d97a99;
+    --p-performance: #b3c06a;
   }
 }
 :root[data-theme="dark"] {
@@ -113,6 +117,8 @@ html[data-sitelang="fr"] [data-lang="en"] { display: none !important; }
   --p-defense:    #79a8d4;
   --p-sound:      #d6b455;
   --p-sandbox:    #97a3b3;
+  --p-immobility: #d97a99;
+  --p-performance: #b3c06a;
 }
 body[data-page="simulation"] { --page: var(--p-simulation); }
 body[data-page="density"]    { --page: var(--p-density); }
@@ -122,6 +128,8 @@ body[data-page="sealing"]    { --page: var(--p-sealing); }
 body[data-page="defense"]    { --page: var(--p-defense); }
 body[data-page="sound"]      { --page: var(--p-sound); }
 body[data-page="sandbox"]    { --page: var(--p-sandbox); }
+body[data-page="immobility"] { --page: var(--p-immobility); }
+body[data-page="performance"] { --page: var(--p-performance); }
 
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
@@ -252,7 +260,20 @@ details.hood > summary:hover { color: var(--text); }
 .hood-body td.v {
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; white-space: nowrap;
 }
-.tablescroll { overflow-x: auto; }
+.tablescroll { overflow-x: auto; max-width: var(--measure); margin: 0 0 22px; }
+.tablescroll table { width: 100%; border-collapse: collapse; font-size: 15px; line-height: 1.5; }
+.tablescroll th, .tablescroll td {
+  text-align: left; padding: 8px 14px 8px 0; border-bottom: 1px solid var(--rule); vertical-align: top;
+}
+.tablescroll th {
+  color: var(--text-faint); font-weight: 600; font-size: 12px;
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+.tablescroll td.k {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  white-space: nowrap; color: var(--accent);
+}
+.tablescroll td.v { white-space: nowrap; }
 
 /* -------------------------------------------------------------- pagehead */
 .pagehead { position: relative; padding-left: 20px; margin-bottom: 8px; }
@@ -477,12 +498,38 @@ footer { border-top: 1px solid var(--rule); margin-top: 40px; background: var(--
   html:not([data-motion="on"]) { scroll-behavior: auto; }
   html:not([data-motion="on"]) .xfer,
   html:not([data-motion="on"]) .walker,
-  html:not([data-motion="on"]) .cb { animation: none; }
+  html:not([data-motion="on"]) .cb,
+  html:not([data-motion="on"]) .ctapulse { animation: none; }
 }
 html[data-motion="off"] { scroll-behavior: auto; }
 html[data-motion="off"] .xfer,
 html[data-motion="off"] .walker,
-html[data-motion="off"] .cb { animation: none; }
+html[data-motion="off"] .cb,
+html[data-motion="off"] .ctapulse { animation: none; }
+
+/* Invitation a cliquer sur un schema interactif. */
+@keyframes ctapulse { 0%, 100% { stroke-opacity: 1; fill-opacity: 0.16; } 50% { stroke-opacity: 0.35; fill-opacity: 0.30; } }
+.ctapulse { animation: ctapulse 2.2s ease-in-out infinite; }
+/* Boutons dans un schema interactif. */
+.dchip { cursor: pointer; }
+.dchip rect { fill: transparent; stroke: var(--rule); stroke-width: 1.5; }
+.dchip text { fill: var(--text-dim); }
+.dchip:hover rect { stroke: var(--page); }
+.dchip.on rect { fill: var(--page); fill-opacity: 0.22; stroke: var(--page); }
+.dchip.on text { fill: var(--text); font-weight: 600; }
+.dchip.off { opacity: 0.35; }
+.dchip:focus-visible rect, #dissolve-cta:focus-visible rect { stroke-width: 3; }
+#dissolve-cta { cursor: pointer; }
+/* Barres de categories (densite) : survol, toucher, clavier. */
+.catbar { cursor: pointer; outline: none; }
+.catbar .catval { fill: var(--text-faint); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 11.5px; }
+.catbar:hover .catfill, .catbar.on .catfill, .catbar:focus-visible .catfill { stroke: var(--text); stroke-width: 1.5; }
+.catbar.on text, .catbar:hover text { fill: var(--text); }
+/* Liaisons cliquables du graphe de pieces (scellement). */
+.rlink { cursor: pointer; outline: none; }
+.rlink:hover line, .rlink:focus-visible line { stroke-width: 7; }
+.rlink:focus-visible circle { stroke-width: 3; }
+svg[tabindex]:focus-visible { outline: 2px solid var(--page); outline-offset: 4px; border-radius: 10px; }
 
 .motiontoggle {
   border: 1px solid var(--rule); background: none; color: var(--text-dim);
